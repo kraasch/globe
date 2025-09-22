@@ -1,3 +1,4 @@
+// Package geoshow is used to nicely print information calculated or retreiveed from geocalc and geoauto.
 package geoshow
 
 func PrintEarth() string {

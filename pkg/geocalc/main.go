@@ -1,3 +1,4 @@
+// Package geocalc does the main under-the-hood calculations.
 package geocalc
 
 import (
