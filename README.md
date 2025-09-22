@@ -9,6 +9,41 @@ Demo picture:
   <img src="./resources/example.png" width="300"/>
 </p>
 
+## Inspiration
+
+Example print out of some data.
+
+```text
+calculate today's sunrise and sunset.
+┌────────────────────────┐
+│1 9876-4321 1234+6789 12│
+├───────────▼────────────┤
+│    _,--._  _._.--.--.._│
+▶=.--'=_',-,▣`;_      .,'◀
+│,-.  _.)  (``-;_   .'   │
+│   '-:_    `) ) v''=.   │
+│     ) )    ()'    ='   │
+│     |/            (_) =│
+├───────────▲────────────┤
+│   ☼            ●       │
+└────────────────────────┘
+now local:    2025-09-22 20:45:53 +02:00
+now utc:      2025-09-22 18:45:53.623185
+sunrise time: 2025-09-23 06:33:25.927160
+sunset time:  2025-09-22 18:32:28.773175
+lunar phase:   ○ New Moon
+moon position: 0.018
+      0: "○ New Moon",
+      1: "❩ Waxing Crescent",
+      2: "◗ First Quarter",
+      3: "◑ Waxing Gibbous",
+      4: "● Full Moon",
+      5: "◐ Waning Gibbous",
+      6: "◖ Last Quarter",
+      7: "❨ Waning Crescent"
+
+```
+
 ## Features
 
 List of features
