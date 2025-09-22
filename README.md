@@ -5,9 +5,13 @@
 
 Demo picture:
 
+...
+
+<!--
 <p align="center">
-  <img src="./resources/example.png" width="300"/>
+<img src="./resources/example.png" width="300"/>
 </p>
+-->
 
 ## Inspiration
 
@@ -36,6 +40,15 @@ List of features
 
 List of things to do
 
+  - [ ] find out where user is located (ask system or web).
+    - [ ] convert to lat+lon.
+  - [ ] find out what time it is.
+  - [ ] visualizations.
+    - [ ] visualization of lat+lon (user location).
+    - [ ] visualization of moon position with longitude.
+    - [ ] visualization of sun position with longitude.
+  - [ ] conversion function from location+time to timezone.
+    - [ ] find this on github if possible.
   - [ ] xxx
 
 List of ideas
