@@ -13,20 +13,6 @@ Demo picture:
 </p>
 -->
 
-## Inspiration
-
-Example print out of some data.
-
-```text
-now local:    2025-09-22 20:45:53 +02:00
-now utc:      2025-09-22 18:45:53.623185
-```
-
-See inspiration scripts
-
-  - [./inspiration/moon](./inspiration/moon)
-  - [./inspiration/sun](./inspiration/sun)
-
 ## Features
 
 List of features
@@ -42,6 +28,7 @@ List of things to do
     - [ ] visualization of lat+lon (user location).
     - [ ] visualization of moon position with longitude.
     - [ ] visualization of sun position with longitude.
+  - [ ] convert local time of user to UTC.
 
 List of things done
 
