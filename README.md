@@ -16,17 +16,6 @@ Example print out of some data.
 ```text
 now local:    2025-09-22 20:45:53 +02:00
 now utc:      2025-09-22 18:45:53.623185
-lunar phase:   ○ New Moon
-moon position: 0.018
-      0: "○ New Moon",
-      1: "❩ Waxing Crescent",
-      2: "◗ First Quarter",
-      3: "◑ Waxing Gibbous",
-      4: "● Full Moon",
-      5: "◐ Waning Gibbous",
-      6: "◖ Last Quarter",
-      7: "❨ Waning Crescent"
-
 ```
 
 See inspiration scripts
