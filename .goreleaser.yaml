@@ -1,0 +1,7 @@
+
+# docs: https://goreleaser.com/customization/builds/go/
+
+builds:
+  - main: ./cmd/ # for binaries.
+  #  - skip: true # for packages.
+
