@@ -23,6 +23,7 @@ List of features
 
 List of things to do
 
+  - [ ] pull out TUI world map into its own package (within the geo project), eg name the package `map`.
   - [ ] conversion function from location+time to timezone (default to system timezone).
   - [ ] visualizations.
     - [ ] visualization of lat+lon (user location).
@@ -37,10 +38,6 @@ List of things done
   - [X] pretty print earth.
   - [X] calculate today's hours of sunrise and sunset.
   - [X] calculate current phase of moon.
-
-Ideas:
-
-  - [ ] pull out TUI world map into its own package, eg `tuiworld`
 
 ## Installation
 
