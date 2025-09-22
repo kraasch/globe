@@ -9,12 +9,6 @@ Demo picture:
   <img src="./resources/example.png" width="300"/>
 </p>
 
-Demo GIF:
-
-<p align="center">
-  <img src="./resources/demo.gif" width="300"/>
-</p>
-
 ## Features
 
 List of features
@@ -81,6 +75,12 @@ Uses the following software:
 Made by the following people:
 
   - see Github info.
+
+## Misc Info
+
+Other useful packages:
+
+  - https://github.com/nathan-osman/go-sunrise
 
 ## License
 
