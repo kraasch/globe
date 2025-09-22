@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
-// GetCurrentLocation returns values like "America/New_York" or "UTC", by asking the system.
-func GetCurrentLocation() (*time.Location, error) {
+// SimpleSystemLocalization returns values like "America/New_York" or "UTC", by asking the system.
+func SimpleSystemLocalization() (*time.Location, error) {
 	loc, err := time.LoadLocation("")
 	if err != nil {
 		return nil, err
@@ -16,7 +16,7 @@ func GetCurrentLocation() (*time.Location, error) {
 }
 
 func Toast() string {
-	loc, err := GetCurrentLocation()
+	loc, err := SimpleSystemLocalization()
 	result := ""
 	if err != nil {
 		result = "location not found"
