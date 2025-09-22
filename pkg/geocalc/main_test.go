@@ -1,4 +1,4 @@
-package geoshow
+package geocalc
 
 import (
 	"fmt"
