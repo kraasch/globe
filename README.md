@@ -31,6 +31,11 @@ moon position: 0.018
 
 ```
 
+See inspiration scripts
+
+  - [./inspiration/moon](./inspiration/moon)
+  - [./inspiration/sun](./inspiration/sun)
+
 ## Features
 
 List of features
