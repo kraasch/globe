@@ -45,18 +45,20 @@ var suites = []TestSuite{ // All tests.
 		tests: []TestList{
 			{
 				testName: "sun_sunrise+sunset_calculate_00",
-				isMulti:  false,
+				isMulti:  true,
 				inputArr: []string{
 					"2000-01-01", // Some date.
 				},
 				expectedValue: //
-				"The moon is currently AGE days old, and is therefore PHASE " + NL +
-					"It is DIST km from the centre of the Earth." + NL +
-					"It is ILLUM % illuminated." + NL +
-					"The next new moon is at NEXT.",
+				"The moon is 24.38 days old, and is therefore in Last Quarter phase (◖)." + NL +
+					"It is 398596 km from the centre of the Earth." + NL +
+					// TODO: xxx percent of distance between 363104 (min) and 405500 (max).
+					"It is 27% illuminated." + NL +
+					"The next new moon is in 5.8 days (2000-01-06, Thu)." + NL +
+					"The next full moon is in 20.2 days (2000-01-21, Fri).",
 				/* NOTE: other values are:
 				 *  - PHASE:     0.8255741837703208
-				 *  - illum:     0.27139898737765766
+				 *  - ILLUM:     0.27139898737765766
 				 *  - AGE:       24.379691645748075
 				 *  - DIST:      398596.29455439356
 				 *  - angdia:    0.49964879458462286
@@ -65,7 +67,7 @@ var suites = []TestSuite{ // All tests.
 				 *  - pdata:     2.4515445e+06
 				 *  - quarters:  [8]float64{9.446059836222186e+08, 9.453054569995925e+08, 9.458839879086032e+08, 9.46476358262685e+08, 9.471824973697052e+08, 9.478568800435827e+08, 9.484297056796163e+08, 9.490463221789911e+08}
 				 *  - timespace: 9.466848e+08
-				 *  - longitude:217.09009941697522
+				 *  - LONGITUDE: 217.09009941697522
 				 */
 			},
 		},
