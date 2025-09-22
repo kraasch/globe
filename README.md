@@ -31,29 +31,28 @@ See inspiration scripts
 
 List of features
 
-  - [ ] pretty print earth.
-    - [ ] show current location.
-  - [ ] show current phase of moon.
-  - [ ] calculate today's hours of sunrise and sunset.
+  - [ ] xxx
 
 ## Tasks
 
 List of things to do
 
+  - [ ] find out what time it is.
   - [ ] find out where user is located (ask system or web).
     - [ ] convert to lat+lon.
-  - [ ] find out what time it is.
   - [ ] visualizations.
     - [ ] visualization of lat+lon (user location).
     - [ ] visualization of moon position with longitude.
     - [ ] visualization of sun position with longitude.
   - [ ] conversion function from location+time to timezone.
     - [ ] find this on github if possible.
-  - [ ] xxx
+  - [ ] on earth print, show current location.
 
-List of ideas
+List of things done
 
-  - [ ] xxx
+  - [X] pretty print earth.
+  - [X] calculate today's hours of sunrise and sunset.
+  - [X] calculate current phase of moon.
 
 ## Installation
 
