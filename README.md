@@ -14,19 +14,6 @@ Demo picture:
 Example print out of some data.
 
 ```text
-calculate today's sunrise and sunset.
-┌────────────────────────┐
-│1 9876-4321 1234+6789 12│
-├───────────▼────────────┤
-│    _,--._  _._.--.--.._│
-▶=.--'=_',-,▣`;_      .,'◀
-│,-.  _.)  (``-;_   .'   │
-│   '-:_    `) ) v''=.   │
-│     ) )    ()'    ='   │
-│     |/            (_) =│
-├───────────▲────────────┤
-│   ☼            ●       │
-└────────────────────────┘
 now local:    2025-09-22 20:45:53 +02:00
 now utc:      2025-09-22 18:45:53.623185
 sunrise time: 2025-09-23 06:33:25.927160
@@ -48,7 +35,10 @@ moon position: 0.018
 
 List of features
 
-  - [ ] xxx
+  - [ ] pretty print earth.
+    - [ ] show current location.
+  - [ ] show current phase of moon.
+  - [ ] calculate today's hours of sunrise and sunset.
 
 ## Tasks
 
