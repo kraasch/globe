@@ -18,7 +18,6 @@ type TestList struct {
 	testName      string
 	isMulti       bool
 	inputArr      []string
-	inputArr2     []string
 	expectedValue string
 }
 
