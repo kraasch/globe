@@ -37,22 +37,23 @@ List of features
 
 List of things to do
 
-  - [ ] find out what time it is.
-  - [ ] find out where user is located (ask system or web).
-    - [ ] convert to lat+lon.
+  - [ ] conversion function from location+time to timezone (default to system timezone).
   - [ ] visualizations.
     - [ ] visualization of lat+lon (user location).
     - [ ] visualization of moon position with longitude.
     - [ ] visualization of sun position with longitude.
-  - [ ] conversion function from location+time to timezone.
-    - [ ] find this on github if possible.
-  - [ ] on earth print, show current location.
 
 List of things done
 
+  - [X] find out where user is located (ask system).
+  - [X] find web for lat+lon (ask web).
   - [X] pretty print earth.
   - [X] calculate today's hours of sunrise and sunset.
   - [X] calculate current phase of moon.
+
+Ideas:
+
+  - [ ] pull out TUI world map into its own package, eg `tuiworld`
 
 ## Installation
 
@@ -111,6 +112,7 @@ Other useful packages:
 
   - for sunrise and sunset: https://github.com/nathan-osman/go-sunrise
   - for moon phases: https://github.com/janczer/goMoonPhase
+  - for lon+lat to timezone conversion: https://github.com/evanoberholster/timezoneLookup
 
 ## License
 
