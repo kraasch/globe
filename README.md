@@ -16,8 +16,6 @@ Example print out of some data.
 ```text
 now local:    2025-09-22 20:45:53 +02:00
 now utc:      2025-09-22 18:45:53.623185
-sunrise time: 2025-09-23 06:33:25.927160
-sunset time:  2025-09-22 18:32:28.773175
 lunar phase:   ○ New Moon
 moon position: 0.018
       0: "○ New Moon",
@@ -110,7 +108,8 @@ Made by the following people:
 
 Other useful packages:
 
-  - https://github.com/nathan-osman/go-sunrise
+  - for sunrise and sunset: https://github.com/nathan-osman/go-sunrise
+  - for moon phases: https://github.com/janczer/goMoonPhase
 
 ## License
 
