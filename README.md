@@ -13,6 +13,13 @@ Demo picture:
 </p>
 -->
 
+## Inspiration
+
+Some inspiring images:
+
+  - [./inspiration/demo_0.png](./inspiration/demo_0.png)
+  - [./inspiration/demo_1.png](./inspiration/demo_1.png)
+
 ## Features
 
 List of features
