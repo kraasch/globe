@@ -26,23 +26,56 @@ type TestSuite struct {
 	tests           []TestList
 }
 
-var suites = []TestSuite{
+var suites = []TestSuite{ // All tests.
+
 	/*
 	 * Test for the function PrintEarth().
 	 */
 	{
-		testingFunction: func(in TestList) (out string) {
-			out = PrintEarth()
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			out := world.PrintBlank()
 			return out
 		},
 		tests: []TestList{
 			{
-				testName: "earth_pretty-print_overview_00",
+				testName: "map_pretty-print_blank_00",
 				isMulti:  false,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
 				"┌────────────────────────┐" + NL +
-					"│1 9876-4321 1234+6789 12│" + NL +
+					"│1-987654321 123456789+12│" + NL +
+					"├────────────────────────┤" + NL +
+					"│    _,--._  _._.--.--.._│" + NL +
+					"│=.--'=_',-,:`;_      .,'│" + NL +
+					"│,-.  _.)  (``-;_   .'   │" + NL +
+					"│   '-:_    `) ) v''=.   │" + NL +
+					"│     ) )    ()'    ='   │" + NL +
+					"│     |/            (_) =│" + NL +
+					"├────────────────────────┤" + NL +
+					"│                        │" + NL +
+					"└────────────────────────┘",
+			},
+		},
+	}, // End of all tests.
+
+	/*
+	 * Test for the function PrintEarth().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			out := world.PrintDemo()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_pretty-print_demo_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // NOTE: this comment breaks the line.
+				"┌────────────────────────┐" + NL +
+					"│1-987654321 123456789+12│" + NL +
 					"├───────────▼────────────┤" + NL +
 					"│    _,--._  _._.--.--.._│" + NL +
 					"▶=.--'=_',-,▣`;_      .,'◀" + NL +

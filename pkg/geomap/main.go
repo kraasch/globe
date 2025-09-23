@@ -1,10 +1,34 @@
 // Package geomap is is used to show an ASCII world map on the CLI.
 package geomap
 
-func PrintEarth() string {
+type World struct {
+	name string // TODO: delete later.
+}
+
+func NewWorld() World {
+	return World{"default"}
+}
+
+func (w *World) PrintBlank() string {
 	NL := "\n"
 	return "┌────────────────────────┐" + NL +
-		"│1 9876-4321 1234+6789 12│" + NL +
+		"│1-987654321 123456789+12│" + NL +
+		"├────────────────────────┤" + NL +
+		"│    _,--._  _._.--.--.._│" + NL +
+		"│=.--'=_',-,:`;_      .,'│" + NL +
+		"│,-.  _.)  (``-;_   .'   │" + NL +
+		"│   '-:_    `) ) v''=.   │" + NL +
+		"│     ) )    ()'    ='   │" + NL +
+		"│     |/            (_) =│" + NL +
+		"├────────────────────────┤" + NL +
+		"│                        │" + NL +
+		"└────────────────────────┘"
+}
+
+func (w *World) PrintDemo() string {
+	NL := "\n"
+	return "┌────────────────────────┐" + NL +
+		"│1-987654321 123456789+12│" + NL +
 		"├───────────▼────────────┤" + NL +
 		"│    _,--._  _._.--.--.._│" + NL +
 		"▶=.--'=_',-,▣`;_      .,'◀" + NL +
