@@ -12,6 +12,7 @@ import (
 	// basics.
 
 	// local packages.
+
 	geo "github.com/kraasch/geo/pkg/geoshow"
 )
 
@@ -28,8 +29,9 @@ var (
 )
 
 type model struct {
-	width  int
-	height int
+	width   int
+	height  int
+	geoData geo.GeoData
 }
 
 func (m model) Init() tea.Cmd {
@@ -49,6 +51,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		}
 	}
+	// m.geoData.UpdateData() // TODO: use later.
 	return m, cmd
 }
 
@@ -57,9 +60,9 @@ func (m model) View() string {
 	if verbose {
 		str = "bla bla"
 	} else {
-		str = geo.PrintEarth()
+		str = m.geoData.PrintData()
 	}
-	str = styleBox.Render(str)
+	// str = styleBox.Render(str) // To add an outer box. // TODO: maybe use or remove later.
 	return lip.Place(m.width, m.height, lip.Center, lip.Center, str)
 }
 
@@ -70,7 +73,7 @@ func main() {
 	flag.Parse()
 
 	// init model.
-	m := model{0, 0}
+	m := model{0, 0, geo.New()}
 
 	// start bubbletea.
 	if _, err := tea.NewProgram(m, tea.WithAltScreen()).Run(); err != nil {

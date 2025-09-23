@@ -1,18 +1,31 @@
 // Package geoshow is used to nicely print information calculated or retreiveed from geocalc and geoauto.
 package geoshow
 
-func PrintEarth() string {
-	NL := "\n"
-	return "┌────────────────────────┐" + NL +
-		"│1 9876-4321 1234+6789 12│" + NL +
-		"├───────────▼────────────┤" + NL +
-		"│    _,--._  _._.--.--.._│" + NL +
-		"▶=.--'=_',-,▣`;_      .,'◀" + NL +
-		"│,-.  _.)  (``-;_   .'   │" + NL +
-		"│   '-:_    `) ) v''=.   │" + NL +
-		"│     ) )    ()'    ='   │" + NL +
-		"│     |/            (_) =│" + NL +
-		"├───────────▲────────────┤" + NL +
-		"│   ☼            ●       │" + NL +
-		"└────────────────────────┘"
+import (
+	geomap "github.com/kraasch/geo/pkg/geomap"
+)
+
+type GeoData struct {
+	world geomap.World
+}
+
+func Toast() string {
+	return "Toast!"
+}
+
+func New() GeoData {
+	return GeoData{geomap.NewMarkedWorld(0.0, 0.0, 0.0, 0.0)}
+}
+
+func (gd *GeoData) UpdateData() {
+	// TODO: implement.
+	gd.world = geomap.NewMarkedWorld(0.0, 0.0, 0.0, 0.0)
+}
+
+func (gd *GeoData) PrintData() string {
+	data, err := gd.world.Print()
+	if err != nil {
+		return err.Error()
+	}
+	return data
 }

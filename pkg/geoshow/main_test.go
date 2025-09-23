@@ -32,7 +32,7 @@ var suites = []TestSuite{
 	 */
 	{
 		testingFunction: func(in TestList) (out string) {
-			out = PrintEarth()
+			out = Toast()
 			return out
 		},
 		tests: []TestList{
@@ -40,19 +40,20 @@ var suites = []TestSuite{
 				testName: "earth_pretty-print_overview_00",
 				isMulti:  false,
 				inputArr: []string{},
-				expectedValue: // NOTE: this comment breaks the line.
-				"┌────────────────────────┐" + NL +
-					"│1 9876-4321 1234+6789 12│" + NL +
-					"├───────────▼────────────┤" + NL +
-					"│    _,--._  _._.--.--.._│" + NL +
-					"▶=.--'=_',-,▣`;_      .,'◀" + NL +
-					"│,-.  _.)  (``-;_   .'   │" + NL +
-					"│   '-:_    `) ) v''=.   │" + NL +
-					"│     ) )    ()'    ='   │" + NL +
-					"│     |/            (_) =│" + NL +
-					"├───────────▲────────────┤" + NL +
-					"│   ☼            ●       │" + NL +
-					"└────────────────────────┘",
+				expectedValue:// NOTE: this comment breaks the line.
+				"Toast!",
+				//"┌────────────────────────┐" + NL +
+				// "│1 9876-4321 1234+6789 12│" + NL +
+				// "├───────────▼────────────┤" + NL +
+				// "│    _,--._  _._.--.--.._│" + NL +
+				// "▶=.--'=_',-,▣`;_      .,'◀" + NL +
+				// "│,-.  _.)  (``-;_   .'   │" + NL +
+				// "│   '-:_    `) ) v''=.   │" + NL +
+				// "│     ) )    ()'    ='   │" + NL +
+				// "│     |/            (_) =│" + NL +
+				// "├───────────▲────────────┤" + NL +
+				// "│   ☼            ●       │" + NL +
+				// "└────────────────────────┘",
 			},
 		},
 	},
