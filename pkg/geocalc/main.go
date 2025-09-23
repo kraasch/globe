@@ -71,12 +71,36 @@ func diffInDays(date1, date2 time.Time) float64 {
 	return diff.Hours() / 24
 }
 
-func MoonPhase(date time.Time) string {
+func MoonPhaseVerbose(date time.Time) string {
 	phase := mp.New(date)
 	nextNew := unixToDate(phase.NextNewMoon())   // in unix format (ms since 1970) -- i guess.
 	nextFull := unixToDate(phase.NextFullMoon()) // in unix format (ms since 1970) -- i guess.
 	return fmt.Sprintf(
 		"The moon is %.2f days old, and is therefore in %s phase (%s).\nIt is %.0f km from the centre of the Earth.\nIt is %.0f%% illuminated.\nThe next new moon is in %.1f days (%v).\nThe next full moon is in %.1f days (%v).",
+		phase.Age(),                  // age in days -- i guess.
+		PhaseToText(phase.Phase()),   // convert moonphase (0-1 value) to text -- i guess.
+		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.
+		phase.Distance(),             // distance from earth in km -- i guess.
+		phase.Illumination()*100,     // illumination between 0 and 1 -- i guess.
+		diffInDays(date, nextNew),
+		nextNew.Format(DAYFORMAT),
+		diffInDays(date, nextFull),
+		nextFull.Format(DAYFORMAT),
+	)
+}
+
+func MoonPhase(date time.Time) string {
+	phase := mp.New(date)
+	nextNew := unixToDate(phase.NextNewMoon())   // in unix format (ms since 1970) -- i guess.
+	nextFull := unixToDate(phase.NextFullMoon()) // in unix format (ms since 1970) -- i guess.
+	return fmt.Sprintf(
+		`moon:
+  age:       %.2f days
+  phase:     %s (%s)
+  dist.:     %.0f km
+  illum.:    %.0f%%
+  next new:  %.1f days (%v)
+  next full: %.1f days (%v)`,
 		phase.Age(),                  // age in days -- i guess.
 		PhaseToText(phase.Phase()),   // convert moonphase (0-1 value) to text -- i guess.
 		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.

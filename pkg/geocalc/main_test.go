@@ -44,7 +44,38 @@ var suites = []TestSuite{ // All tests.
 		},
 		tests: []TestList{
 			{
-				testName: "sun_sunrise+sunset_calculate_00",
+				testName: "sun_moon-phase_non-verbose_calculate_00",
+				isMulti:  true,
+				inputArr: []string{
+					"2000-01-01", // Some date.
+				},
+				expectedValue: //
+				"moon:" + NL +
+					"  age:       24.38 days" + NL +
+					"  phase:     Last Quarter (◖)" + NL +
+					"  dist.:     398596 km" + NL +
+					"  illum.:    27%" + NL +
+					"  next new:  5.8 days (2000-01-06, Thu)" + NL +
+					"  next full: 20.2 days (2000-01-21, Fri)",
+			},
+		},
+	},
+
+	/*
+	 * Test for the function MoonPhaseVerbose().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			time, err0 := time.Parse(dateLayout, in.inputArr[0])
+			if err0 != nil {
+				return "error in type converstion within the test: date."
+			}
+			out := MoonPhaseVerbose(time)
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "sun_moon-phase_verbose_calculate_00",
 				isMulti:  true,
 				inputArr: []string{
 					"2000-01-01", // Some date.
