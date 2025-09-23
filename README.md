@@ -23,18 +23,18 @@ List of features
 
 List of things to do
 
-  - [ ] pull out TUI world map into its own package (within the geo project), eg name the package `map`.
+  - [ ] make a unified, somewhat pretty display for all data.
+  - [ ] provide an option for an update interval of all displayed data.
   - [ ] conversion function from location+time to timezone (default to system timezone).
   - [ ] visualizations.
-    - [ ] visualization of lat+lon (user location).
+    - [X] visualization of lat+lon (eg user location).
     - [ ] visualization of moon position with longitude.
     - [ ] visualization of sun position with longitude.
   - [ ] convert local time of user to UTC.
-  - [ ] make a unified, somewhat pretty display for all data.
-  - [ ] provide an option for an update interval of all displayed data.
 
 List of things done
 
+  - [X] pull out TUI world map into its own package (within the geo project), eg name the package `geomap`.
   - [X] find out where user is located (ask system).
   - [X] find web for lat+lon (ask web).
   - [X] pretty print earth.
