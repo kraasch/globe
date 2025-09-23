@@ -116,7 +116,7 @@ var suites = []TestSuite{ // All tests.
 					"     -                  ",
 			},
 			{
-				testName: "map_pretty-print_coord_01",
+				testName: "map_pretty-print_coord_02",
 				isMulti:  true,
 				inputArr: []string{
 					"90.0",   // latitude, ie (=).
@@ -132,7 +132,7 @@ var suites = []TestSuite{ // All tests.
 					"     -                  ",
 			},
 			{
-				testName: "map_pretty-print_coord_01",
+				testName: "map_pretty-print_coord_03",
 				isMulti:  true,
 				inputArr: []string{
 					"-90.0",  // latitude, ie (=).
@@ -164,7 +164,7 @@ var suites = []TestSuite{ // All tests.
 					"     -                  ",
 			},
 			{
-				testName: "map_pretty-print_coord_02",
+				testName: "map_pretty-print_coord_04",
 				isMulti:  true,
 				inputArr: []string{
 					"0.0", // latitude, ie (=).
@@ -178,6 +178,70 @@ var suites = []TestSuite{ // All tests.
 					"     ) )    ()'    ='   " + NL +
 					"     |/            (_) =" + NL +
 					"     -                  ",
+			},
+			{
+				testName: "map_pretty-print_coord_05",
+				isMulti:  true,
+				inputArr: []string{
+					"90.0", // latitude, ie (=).
+					"0.0",  // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  ▣._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                  ",
+			},
+			{
+				testName: "map_pretty-print_coord_06",
+				isMulti:  true,
+				inputArr: []string{
+					"-90.0", // latitude, ie (=).
+					"0.0",   // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -      ▣           ",
+			},
+			{
+				testName: "map_pretty-print_coord_07",
+				isMulti:  true,
+				inputArr: []string{
+					"90.0",   // latitude, ie (=).
+					"-180.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"▣   _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                  ",
+			},
+			{
+				testName: "map_pretty-print_coord_08",
+				isMulti:  true,
+				inputArr: []string{
+					"-90.0",  // latitude, ie (=).
+					"-180.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"▣    -                  ",
 			},
 		},
 	}, // End of all tests.
