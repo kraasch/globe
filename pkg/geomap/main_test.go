@@ -3,6 +3,7 @@ package geomap
 import (
 
 	// this is a test.
+	"strconv"
 	"testing"
 
 	// printing and formatting.
@@ -29,6 +30,43 @@ type TestSuite struct {
 var suites = []TestSuite{ // All tests.
 
 	/*
+	 * Test for the function PrintCoord(lon, lat).
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			lat, err0 := strconv.ParseFloat(in.inputArr[0], 64)
+			lon, err1 := strconv.ParseFloat(in.inputArr[1], 64)
+			if err0 != nil {
+				return "error in type converstion within the test: first float."
+			}
+			if err1 != nil {
+				return "error in type converstion within the test: second float."
+			}
+			world := NewWorld()
+			out := world.PrintCoord(lat, lon)
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_pretty-print_coord_00",
+				isMulti:  false,
+				inputArr: []string{
+					"0.0",    // latitude, ie (=).
+					"-180.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                  ",
+			},
+		},
+	}, // End of all tests.
+
+	/*
 	 * Test for the function PrintInner().
 	 */
 	{
@@ -43,13 +81,21 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  false,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"    _,--._  _._.--.--.._" + NL +
-					"=.--'=_',-,:`;_      .,'" + NL +
-					",-.  _.)  (``-;_   .'   " + NL +
-					"   '-:_    `) ) .''=.   " + NL +
-					"     ) )    ()'    ='   " + NL +
-					"     |/            (_) =" + NL +
-					"     -                  ",
+				//"1-987654321 123456789+12"
+				"    _,--._  _._.--.--.._" + NL + //   lon. +50 to +90. = 40 degrees.  + ==> North.
+					"=.--'=_',-,:`;_      .,'" + NL + // lon. +50 to +35. = 15 degrees.  - ==> South.
+					",-.  _.)  (``-;_   .'   " + NL + // lon. +35 to +20. = 15 degrees.
+					"   '-:_    `) ) .''=.   " + NL + // lon. +20 to -20. = 40 degrees.
+					"     ) )    ()'    ='   " + NL + // lon. -20 to -35. = 15 degrees.
+					"     |/            (_) =" + NL + // lon. -35 to -50. = 15 degrees.
+					"     -                  ", //       lon. -50 to -90. = 40 degrees.
+				// A          A           A
+				// |          |           |
+				// |          0           | ==> 360/24 = 15        // 24 columns, 360 degrees on the globe.
+				// |                      |                        // thus: 0-15 degrees are the first column, and so on.
+				// |                      | func lat2col( lat ):   // write a function to translate latitude to columns.
+				// .__ -180(E)  +180(W) __.   lat = lat+180        // start with 0 at the left.
+				//                            return int(lat / 15) // divide without rest.
 			},
 		},
 	}, // End of all tests.
