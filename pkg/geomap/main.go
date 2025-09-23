@@ -151,15 +151,52 @@ func markMap(x, y int, str string, marker rune) (string, error) {
 }
 
 // makeBox creates a box around some string and adds markers around the box.
-func makeBox(lat, lon float64, str string) string { // TODO: implement.
-	return str
+func makeBox(lat, lon float64, str string) (string, error) { // TODO: implement.
+	col, err0 := lon2col(lon)
+	row, err1 := lat2row(lat)
+	if err0 != nil {
+		return "", err0
+	}
+	if err1 != nil {
+		return "", err1
+	}
+	lines := strings.Split(str, "\n")
+	lineLen := 24
+	// Create top and bottom border
+	topBorder := ""
+	topBorder += "├" + strings.Repeat("─", col)
+	topBorder += "▼"
+	topBorder += strings.Repeat("─", lineLen-col-1) + "┤"
+	bottomBorder := strings.Replace(topBorder, "▼", "▲", 1)
+	var boxedLines []string
+	for i, line := range lines {
+		// Surround the line with │ and spaces
+		boxedLine := ""
+		if i == row {
+			boxedLine = fmt.Sprintf("▶%s◀", line)
+		} else {
+			boxedLine = fmt.Sprintf("│%s│", line)
+		}
+		boxedLines = append(boxedLines, boxedLine)
+	}
+	// Combine all parts
+	result := topBorder + "\n"
+	result += strings.Join(boxedLines, "\n") + "\n"
+	result += bottomBorder
+	return result, nil
 }
 
 // PrintCoordBox uses PrintCoord and then creates a box around it.
 func (w *World) PrintCoordBox(lat, lon float64) (string, error) {
-	inner, err := w.PrintCoord(lat, lon)
-	inner = makeBox(lat, lon, inner)
-	return inner, err
+	inner, err0 := w.PrintCoord(lat, lon)
+	if err0 != nil {
+		return "", err0
+	}
+	boxed, err1 := makeBox(lat, lon, inner)
+	if err1 != nil {
+		return "", err1
+	}
+	return boxed, nil
 }
 
 // PrintCoord calculates x and y coordinates within 2D string world map from latitude and longitude values and marks the location within the 2D string.
