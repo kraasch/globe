@@ -25,6 +25,53 @@ type TestSuite struct {
 var suites = []TestSuite{ // All tests.
 
 	/*
+	 * Test for the function Print().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			lat, A := strconv.ParseFloat(in.inputArr[0], 64)
+			lon, B := strconv.ParseFloat(in.inputArr[1], 64)
+			moon, C := strconv.ParseFloat(in.inputArr[2], 64)
+			sun, D := strconv.ParseFloat(in.inputArr[3], 64)
+			if A != nil || B != nil || C != nil || D != nil {
+				return "error in test's type conversions"
+			}
+			world := NewMarkedWorld(lat, lon, moon, sun)
+			out, err := world.Print()
+			if err != nil {
+				return err.Error()
+			}
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_full-print_basic_00",
+				isMulti:  true,
+				inputArr: []string{
+					"0.0",    // spot, latitude, ie (=).
+					"+179.0", // spot, longitude, ie (").
+					"+179.0", // moon, longitude, ie (").
+					"0.0",    // sun, longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"┌────────────────────────┐" + NL +
+					"│1-987654321 123456789+12│" + NL +
+					"├───────────────────────▼┤" + NL +
+					"│    _,--._  _._.--.--.._│" + NL +
+					"│=.--'=_',-,:`;_      .,'│" + NL +
+					"│,-.  _.)  (``-;_   .'   │" + NL +
+					"▶   '-:_    `) ) .''=.  ▣◀" + NL +
+					"│     ) )    ()'    ='   │" + NL +
+					"│     |/            (_) =│" + NL +
+					"│     -                  │" + NL +
+					"├───────────────────────▲┤" + NL +
+					"│            ☼          ●│" + NL +
+					"└────────────────────────┘",
+			},
+		},
+	},
+
+	/*
 	 * Test for the function PrintCoordBox().
 	 */
 	{

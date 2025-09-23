@@ -25,15 +25,22 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 	"     -                  "
 
 type World struct {
-	name string // TODO: delete later.
+	Lat     float64
+	Lon     float64
+	MoonLon float64
+	SunLon  float64
 }
 
 type Subline struct {
 	Line string
 }
 
+func NewMarkedWorld(lat, lon, moonLon, sunLon float64) World {
+	return World{lat, lon, moonLon, sunLon}
+}
+
 func NewWorld() World {
-	return World{"default"}
+	return World{}
 }
 
 func NewSubLine() Subline {
@@ -184,6 +191,30 @@ func makeBox(lat, lon float64, str string) (string, error) { // TODO: implement.
 	result += strings.Join(boxedLines, "\n") + "\n"
 	result += bottomBorder
 	return result, nil
+}
+
+// Print returns a string of the ASCII world data with its current state (defined in the struct variables).
+func (w *World) Print() (string, error) {
+	// create main map in box.
+	res, err0 := w.PrintCoordBox(w.Lat, w.Lon)
+	if err0 != nil {
+		return w.PrintBlank(), err0
+	}
+	// create subline.
+	line := NewSubLine()
+	err1 := line.AddMoon(w.MoonLon)
+	if err1 != nil {
+		return w.PrintBlank(), err1
+	}
+	err2 := line.AddSun(w.SunLon)
+	if err2 != nil {
+		return w.PrintBlank(), err2
+	}
+	sub := line.Line
+	// put it all together.
+	border := "│"
+	res = "┌────────────────────────┐" + NL + "│1-987654321 123456789+12│" + NL + res + NL + border + sub + border + NL + "└────────────────────────┘"
+	return res, nil
 }
 
 // PrintCoordBox uses PrintCoord and then creates a box around it.
