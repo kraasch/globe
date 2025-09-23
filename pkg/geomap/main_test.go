@@ -73,7 +73,7 @@ var suites = []TestSuite{ // All tests.
 				//                            return int(lon / 15) // divide without rest.
 			},
 			{
-				testName: "map_pretty-print_coord_00",
+				testName: "map_pretty-print_coord_01",
 				isMulti:  true,
 				inputArr: []string{
 					"0.0",    // latitude, ie (=).
@@ -89,7 +89,7 @@ var suites = []TestSuite{ // All tests.
 					"     -                  ",
 			},
 			{
-				testName: "map_pretty-print_coord_00",
+				testName: "map_pretty-print_coord_02",
 				isMulti:  true,
 				inputArr: []string{
 					"0.0", // latitude, ie (=).
@@ -99,7 +99,7 @@ var suites = []TestSuite{ // All tests.
 				"    _,--._  _._.--.--.._" + NL +
 					"=.--'=_',-,:`;_      .,'" + NL +
 					",-.  _.)  (``-;_   .'   " + NL +
-					"   '-:_    ▣) ) .''=.   " + NL +
+					"   '-:_    `▣ ) .''=.   " + NL +
 					"     ) )    ()'    ='   " + NL +
 					"     |/            (_) =" + NL +
 					"     -                  ",
