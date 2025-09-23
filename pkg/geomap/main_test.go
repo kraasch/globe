@@ -25,6 +25,48 @@ type TestSuite struct {
 var suites = []TestSuite{ // All tests.
 
 	/*
+	 * Test for the function PrintCoordBox().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			lat, err0 := strconv.ParseFloat(in.inputArr[0], 64)
+			lon, err1 := strconv.ParseFloat(in.inputArr[1], 64)
+			if err0 != nil {
+				return "error in type converstion within the test: first float."
+			}
+			if err1 != nil {
+				return "error in type converstion within the test: second float."
+			}
+			world := NewWorld()
+			out, reserr := world.PrintCoordBox(lat, lon)
+			if reserr != nil {
+				return "error getting a result."
+			}
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_map-in-box_00",
+				isMulti:  true,
+				inputArr: []string{
+					"0.0",    // latitude, ie (=).
+					"+179.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"├───────────────────────▼┤" + NL +
+					"│    _,--._  _._.--.--.._│" + NL +
+					"│=.--'=_',-,:`;_      .,'│" + NL +
+					"│,-.  _.)  (``-;_   .'   │" + NL +
+					"▶   '-:_    `) ) .''=.  ▣◀" + NL +
+					"│     ) )    ()'    ='   │" + NL +
+					"│     |/            (_) =│" + NL +
+					"│     -                  │" + NL +
+					"├───────────────────────▲┤",
+			},
+		},
+	},
+
+	/*
 	 * Test for the function SubLine().
 	 */
 	{
@@ -372,7 +414,7 @@ var suites = []TestSuite{ // All tests.
 			},
 		},
 	},
-}
+} // end of test suite.
 
 func TestAll(t *testing.T) {
 	for _, suite := range suites {

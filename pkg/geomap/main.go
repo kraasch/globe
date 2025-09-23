@@ -150,6 +150,18 @@ func markMap(x, y int, str string, marker rune) (string, error) {
 	return strings.Join(lines, "\n"), nil
 }
 
+// makeBox creates a box around some string and adds markers around the box.
+func makeBox(lat, lon float64, str string) string { // TODO: implement.
+	return str
+}
+
+// PrintCoordBox uses PrintCoord and then creates a box around it.
+func (w *World) PrintCoordBox(lat, lon float64) (string, error) {
+	inner, err := w.PrintCoord(lat, lon)
+	inner = makeBox(lat, lon, inner)
+	return inner, err
+}
+
 // PrintCoord calculates x and y coordinates within 2D string world map from latitude and longitude values and marks the location within the 2D string.
 func (w *World) PrintCoord(lat, lon float64) (string, error) {
 	col, err0 := lon2col(lon)
