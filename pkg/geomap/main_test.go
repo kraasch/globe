@@ -34,6 +34,32 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList) string {
 			world := NewWorld()
+			out := world.PrintInner()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_pretty-print_blank_00",
+				isMulti:  false,
+				inputArr: []string{},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                  ",
+			},
+		},
+	}, // End of all tests.
+
+	/*
+	 * Test for the function PrintEarth().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
 			out := world.PrintBlank()
 			return out
 		},

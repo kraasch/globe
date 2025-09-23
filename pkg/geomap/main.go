@@ -9,6 +9,17 @@ func NewWorld() World {
 	return World{"default"}
 }
 
+func (w *World) PrintInner() string {
+	NL := "\n"
+	return "    _,--._  _._.--.--.._" + NL +
+		"=.--'=_',-,:`;_      .,'" + NL +
+		",-.  _.)  (``-;_   .'   " + NL +
+		"   '-:_    `) ) .''=.   " + NL +
+		"     ) )    ()'    ='   " + NL +
+		"     |/            (_) =" + NL +
+		"     -                  "
+}
+
 func (w *World) PrintBlank() string {
 	NL := "\n"
 	return "┌────────────────────────┐" + NL +
