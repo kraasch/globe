@@ -46,11 +46,26 @@ func lon2col(lon float64) (int, error) {
 	//  |                      | func lon2col( lon ):   // write a function to translate latitude to columns.
 	//  .__ -180(E)  +180(W) __.   lon = lon+180        // start with 0 at the left.
 	//                             return int(lon / 15) // divide without rest.
-	if lon < -180 || lon > +180 {
+	if lon < -180 || lon > +180 { // this allows lon to be equal to +180.
 		return 0, errors.New("longitude value out of bounds (lon < -180 || lon > +180)")
 	}
 	lon = lon + 180
-	return int(lon / 15), nil
+
+	// // NOTE: optional, correct to the left.
+	// // NOTE: implement later, maybe.
+	// correction := -7.5 // correct 7.5 degrees to the left, in order to center around each column.
+	// lon = lon + correction
+
+	// divide into 24 zones (of 15 degrees each).
+	res := int(lon / 15)
+
+	// keep value in bounds in case lon was exactly +180.
+	if res == 24 {
+		res = 23
+	}
+
+	// return result.
+	return res, nil
 }
 
 // lat2row turns a latitude between -90 and +90 into a value from 0 to 6.

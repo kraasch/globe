@@ -64,11 +64,40 @@ var suites = []TestSuite{ // All tests.
 					"     -                  ", //       lat. -50 to -90. = 40 degrees.
 				// A          A           A
 				// |          |           |
-				// |          0           | ==> 360/24 = 15        // 24 columns, 360 degrees on the globe.
-				// |                      |                        // thus: 0-15 degrees are the first column, and so on.
+				// |        0 to 15       | ==> 360/24 = 15        // 24 columns, 360 degrees on the globe.
+				// |     -7.5 to 7.5      |                        // thus: 0-15 degrees are the first column, and so on.
 				// |                      | func lon2col( lon ):   // write a function to translate latitude to columns.
-				// .__ -180(E)  +180(W) __.   lon = lon+180        // start with 0 at the left.
-				//                            return int(lon / 15) // divide without rest.
+				// ._ -180(E)    +165(W) _.   lon = lon+180        // start with 0 at the left.
+				//  to-165(E)  to+180(W)      return int(lon / 15) // divide without rest.
+
+				// NOTE: idea: center around each of the 24 zones (with each 15 degrees) by subtracting half of 15 = 7.5.
+				// NOTE: implement another time.
+				// column |       +180 |          -7.5 |
+				// -------+------------+---------------+
+				// 00     |   0 to  15 |  -7.5 to   7.5|
+				// 01     |  15 to  30 |   7.5 to  22.5|
+				// 02     |  30 to  45 |  22.5 to  37.5|
+				// 03     |  45 to  60 |  37.5 to  52.5|
+				// 04     |  60 to  75 |  52.5 to  67.5|
+				// 05     |  75 to  90 |  67.5 to  82.5|
+				// 06     |  90 to 105 |  82.5 to  97.5|
+				// 07     | 105 to 120 |  97.5 to 112.5|
+				// 08     | 120 to 135 | 112.5 to 127.5|
+				// 09     | 135 to 150 | 127.5 to 142.5|
+				// 10     | 150 to 165 | 142.5 to 157.5|
+				// 11     | 165 to 180 | 157.5 to 172.5|
+				// 12     | 180 to 195 | 172.5 to 187.5|
+				// 13     | 195 to 210 | 187.5 to 202.5|
+				// 14     | 210 to 225 | 202.5 to 217.5|
+				// 15     | 225 to 240 | 217.5 to 232.5|
+				// 16     | 240 to 255 | 232.5 to 247.5|
+				// 17     | 255 to 270 | 247.5 to 262.5|
+				// 18     | 270 to 285 | 262.5 to 277.5|
+				// 19     | 285 to 300 | 277.5 to 292.5|
+				// 20     | 300 to 315 | 292.5 to 307.5|
+				// 21     | 315 to 330 | 307.5 to 322.5|
+				// 22     | 330 to 345 | 322.5 to 337.5|
+				// 23     | 345 to 360 | 337.5 to 352.5|
 			},
 			{
 				testName: "map_pretty-print_coord_01",
@@ -76,6 +105,22 @@ var suites = []TestSuite{ // All tests.
 				inputArr: []string{
 					"0.0",    // latitude, ie (=).
 					"+179.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.  ▣" + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                  ",
+			},
+			{
+				testName: "map_pretty-print_coord_allow-full180_00",
+				isMulti:  true,
+				inputArr: []string{
+					"0.0",    // latitude, ie (=).
+					"+180.0", // longitude, ie (").
 				},
 				expectedValue: // NOTE: this comment breaks the line.
 				"    _,--._  _._.--.--.._" + NL +
