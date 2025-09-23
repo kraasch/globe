@@ -94,7 +94,7 @@ func lat2row(lat float64) (int, error) {
 		row = 4
 	case lat <= -35 && lat > -50:
 		row = 5
-	case lat <= -50 && lat > -90:
+	case lat <= -50 && lat >= -90: // NOTE: allows values to be from +90 to -90 including both borders.
 		row = 6
 	}
 	return row, nil

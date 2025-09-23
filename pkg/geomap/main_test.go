@@ -116,6 +116,38 @@ var suites = []TestSuite{ // All tests.
 					"     -                  ",
 			},
 			{
+				testName: "map_pretty-print_coord_01",
+				isMulti:  true,
+				inputArr: []string{
+					"90.0",   // latitude, ie (=).
+					"+179.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--..▣" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                  ",
+			},
+			{
+				testName: "map_pretty-print_coord_01",
+				isMulti:  true,
+				inputArr: []string{
+					"-90.0",  // latitude, ie (=).
+					"+179.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                 ▣",
+			},
+			{
 				testName: "map_pretty-print_coord_allow-full180_00",
 				isMulti:  true,
 				inputArr: []string{
