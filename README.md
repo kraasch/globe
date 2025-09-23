@@ -106,6 +106,7 @@ Other useful packages:
   - for sunrise and sunset: https://github.com/nathan-osman/go-sunrise
   - for moon phases: https://github.com/janczer/goMoonPhase
   - for lon+lat to timezone conversion: https://github.com/evanoberholster/timezoneLookup
+  - more symbols: https://en.wikipedia.org/wiki/Geometric_Shapes_(Unicode_block)
 
 ## License
 
