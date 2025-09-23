@@ -20,9 +20,9 @@ var (
 	verbose  = false
 	suppress = false
 	// styles.
-	// styleBox = lip.NewStyle().
-	// 		BorderStyle(lip.NormalBorder()).
-	// 		BorderForeground(lip.Color("56"))
+	styleBox = lip.NewStyle().
+			BorderStyle(lip.NormalBorder()).
+			BorderForeground(lip.Color("56"))
 )
 
 type model struct {
@@ -59,7 +59,7 @@ func (m model) View() string {
 	} else {
 		str = m.geoData.PrintData()
 	}
-	// str = styleBox.Render(str) // To add an outer box. // TODO: maybe use or remove later.
+	str = styleBox.Render(str) // To add an outer box. // TODO: maybe use or remove later.
 	return lip.Place(m.width, m.height, lip.Center, lip.Center, str)
 }
 
