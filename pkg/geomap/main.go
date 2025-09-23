@@ -24,7 +24,7 @@ func NewWorld() World {
 }
 
 func (w *World) PrintCoord(lat, lon float64) (string, error) {
-	return "", nil
+	return MAP, nil
 }
 
 func (w *World) PrintInner() string {

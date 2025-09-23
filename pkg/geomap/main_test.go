@@ -49,7 +49,7 @@ var suites = []TestSuite{ // All tests.
 		tests: []TestList{
 			{
 				testName: "map_pretty-print_coord_00",
-				isMulti:  false,
+				isMulti:  true,
 				inputArr: []string{
 					// mark the following location with '▣'.
 					"0.0",    // latitude, ie (=).
@@ -60,7 +60,7 @@ var suites = []TestSuite{ // All tests.
 				"    _,--._  _._.--.--.._" + NL + //   lat. +50 to +90. = 40 degrees.  + ==> North.
 					"=.--'=_',-,:`;_      .,'" + NL + // lat. +50 to +35. = 15 degrees.  - ==> South.
 					",-.  _.)  (``-;_   .'   " + NL + // lat. +35 to +20. = 15 degrees.
-					"   '-:_    `) ) .''=.   " + NL + // lat. +20 to -20. = 40 degrees.
+					"▣  '-:_    `) ) .''=.   " + NL + // lat. +20 to -20. = 40 degrees.
 					"     ) )    ()'    ='   " + NL + // lat. -20 to -35. = 15 degrees.
 					"     |/            (_) =" + NL + // lat. -35 to -50. = 15 degrees.
 					"     -                  ", //       lat. -50 to -90. = 40 degrees.
@@ -71,6 +71,38 @@ var suites = []TestSuite{ // All tests.
 				// |                      | func lon2col( lon ):   // write a function to translate latitude to columns.
 				// .__ -180(E)  +180(W) __.   lon = lon+180        // start with 0 at the left.
 				//                            return int(lon / 15) // divide without rest.
+			},
+			{
+				testName: "map_pretty-print_coord_00",
+				isMulti:  true,
+				inputArr: []string{
+					"0.0",    // latitude, ie (=).
+					"+179.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    `) ) .''=.  ▣" + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                  ",
+			},
+			{
+				testName: "map_pretty-print_coord_00",
+				isMulti:  true,
+				inputArr: []string{
+					"0.0", // latitude, ie (=).
+					"0.0", // longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"    _,--._  _._.--.--.._" + NL +
+					"=.--'=_',-,:`;_      .,'" + NL +
+					",-.  _.)  (``-;_   .'   " + NL +
+					"   '-:_    ▣) ) .''=.   " + NL +
+					"     ) )    ()'    ='   " + NL +
+					"     |/            (_) =" + NL +
+					"     -                  ",
 			},
 		},
 	}, // End of all tests.
