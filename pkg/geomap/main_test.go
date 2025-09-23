@@ -29,7 +29,7 @@ type TestSuite struct {
 var suites = []TestSuite{ // All tests.
 
 	/*
-	 * Test for the function PrintEarth().
+	 * Test for the function PrintInner().
 	 */
 	{
 		testingFunction: func(in TestList) string {
@@ -39,7 +39,7 @@ var suites = []TestSuite{ // All tests.
 		},
 		tests: []TestList{
 			{
-				testName: "map_pretty-print_blank_00",
+				testName: "map_pretty-print_inner_00",
 				isMulti:  false,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
@@ -55,7 +55,7 @@ var suites = []TestSuite{ // All tests.
 	}, // End of all tests.
 
 	/*
-	 * Test for the function PrintEarth().
+	 * Test for the function PrintBlank().
 	 */
 	{
 		testingFunction: func(in TestList) string {
@@ -87,7 +87,7 @@ var suites = []TestSuite{ // All tests.
 	}, // End of all tests.
 
 	/*
-	 * Test for the function PrintEarth().
+	 * Test for the function PrintDemo().
 	 */
 	{
 		testingFunction: func(in TestList) string {
