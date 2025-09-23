@@ -8,7 +8,10 @@ import (
 )
 
 const (
-	marker = '▣'
+	markerSpot     = '▣'
+	markerMoon     = '●'
+	markerSun      = '☼'
+	defaultSubLine = "                        " // 24 spaces.
 )
 
 var NL = fmt.Sprintln()
@@ -25,8 +28,37 @@ type World struct {
 	name string // TODO: delete later.
 }
 
+type Subline struct {
+	Line string
+}
+
 func NewWorld() World {
 	return World{"default"}
+}
+
+func NewSubLine() Subline {
+	return Subline{defaultSubLine}
+}
+
+// AddMoon adds a moon symbol.
+func (s *Subline) AddMoon(lon float64) error {
+	return s.Add(lon, markerMoon)
+}
+
+// AddSun adds a sun symbol.
+func (s *Subline) AddSun(lon float64) error {
+	return s.Add(lon, markerSun)
+}
+
+// Add adds a character into the marker line under the world map (which is of length 24).
+func (s *Subline) Add(lon float64, marker rune) error {
+	col, err0 := lon2col(lon)
+	if err0 != nil {
+		return err0
+	}
+	markedLine, reserr := markMap(col, 0, s.Line, marker)
+	s.Line = markedLine
+	return reserr
 }
 
 // lon2col turns a longitude between -180 and +180 into a value from 0 to 23.
@@ -101,7 +133,7 @@ func lat2row(lat float64) (int, error) {
 }
 
 // markMap replaces the character at (x, y) in the multi-line string MAP with a mark.
-func markMap(x, y int, str string) (string, error) {
+func markMap(x, y int, str string, marker rune) (string, error) {
 	lines := strings.Split(str, "\n")
 	if y < 0 || y >= len(lines) {
 		return "", fmt.Errorf("y coordinate out of range")
@@ -128,7 +160,7 @@ func (w *World) PrintCoord(lat, lon float64) (string, error) {
 	if err1 != nil {
 		return MAP, err1
 	}
-	markedMap, err2 := markMap(col, row, MAP)
+	markedMap, err2 := markMap(col, row, MAP, markerSpot)
 	return markedMap, err2
 }
 

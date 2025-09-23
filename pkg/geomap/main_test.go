@@ -25,6 +25,43 @@ type TestSuite struct {
 var suites = []TestSuite{ // All tests.
 
 	/*
+	 * Test for the function SubLine().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			lon0, err0 := strconv.ParseFloat(in.inputArr[0], 64)
+			lon1, err1 := strconv.ParseFloat(in.inputArr[1], 64)
+			if err0 != nil {
+				return "error in type converstion within the test: first float."
+			}
+			if err1 != nil {
+				return "error in type converstion within the test: second float."
+			}
+			line := NewSubLine()
+			reserr0 := line.AddMoon(lon0)
+			reserr1 := line.AddSun(lon1)
+			out := line.Line
+			if reserr0 != nil || reserr1 != nil {
+				return "error getting a result."
+			}
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_line-under-display_00",
+				isMulti:  true,
+				inputArr: []string{
+					"-180.0", // longitude, ie (").
+					"+180.0", // longitude, ie (").
+				},
+				expectedValue:// NOTE: this comment breaks the line.
+				//"1-987654321 123456789+12"
+				"●                      ☼",
+			},
+		},
+	},
+
+	/*
 	 * Test for the function PrintCoord(lon, lat).
 	 */
 	{
