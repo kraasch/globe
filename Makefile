@@ -1,4 +1,7 @@
 
+tst:
+	@make test | grep -E '    --- (FAIL)'
+
 test:
 	go clean -testcache
 	go test -v ./...
