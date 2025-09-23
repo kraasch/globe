@@ -39,7 +39,7 @@ var suites = []TestSuite{ // All tests.
 				inputArr: []string{
 					"2000-01-01", // Some date.
 				},
-				expectedValue: "Toast!",
+				expectedValue: "zone: UTC, lon: 53.48, lat: 10.22",
 			},
 		},
 	},

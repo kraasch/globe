@@ -68,14 +68,14 @@ func SimpleSystemLocalization() (*time.Location, error) {
 	return loc, nil
 }
 
-func Toast() string {
+func Toast() string { // TODO: implement better tests and functions in this package.
 	loc, err0 := SimpleSystemLocalization()
 	lon, lat, err1 := complicatedWebLocalization()
 	result := ""
 	if err0 != nil || err1 != nil {
 		result = "location not found"
 	} else {
-		result = fmt.Sprintf("zone: %#v, lon: %.2f, lat: %.2f", loc.String(), lon, lat)
+		result = fmt.Sprintf("zone: %s, lon: %.2f, lat: %.2f", loc.String(), lon, lat)
 	}
 	return result
 }
