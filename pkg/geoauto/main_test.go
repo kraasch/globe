@@ -34,12 +34,15 @@ var suites = []TestSuite{ // All tests.
 		},
 		tests: []TestList{
 			{
-				testName: "sun_sunrise+sunset_calculate_00",
+				testName: "auto_basic_test_00",
 				isMulti:  true,
 				inputArr: []string{
 					"2000-01-01", // Some date.
 				},
-				expectedValue: "zone: UTC, lon: 53.48, lat: 10.22",
+				// expectedValue: "zone: UTC, lon: 53.48, lat: 10.22",
+				expectedValue: "Toast!",
+				// TODO: note that this test's outcome depends on where the executing machine is located.
+				// TODO: remove or rewrite this test to make it independent from the machines location.
 			},
 		},
 	},

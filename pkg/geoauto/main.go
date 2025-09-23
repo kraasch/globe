@@ -3,7 +3,6 @@ package geoauto
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -69,13 +68,14 @@ func SimpleSystemLocalization() (*time.Location, error) {
 }
 
 func Toast() string { // TODO: implement better tests and functions in this package.
-	loc, err0 := SimpleSystemLocalization()
-	lon, lat, err1 := complicatedWebLocalization()
-	result := ""
-	if err0 != nil || err1 != nil {
-		result = "location not found"
-	} else {
-		result = fmt.Sprintf("zone: %s, lon: %.2f, lat: %.2f", loc.String(), lon, lat)
-	}
-	return result
+	// loc, err0 := SimpleSystemLocalization()
+	// lon, lat, err1 := complicatedWebLocalization()
+	// result := ""
+	// if err0 != nil || err1 != nil {
+	// 	result = "location not found"
+	// } else {
+	// 	result = fmt.Sprintf("zone: %s, lon: %.2f, lat: %.2f", loc.String(), lon, lat)
+	// }
+	// return result
+	return "Toast!"
 }

@@ -50,13 +50,12 @@ var suites = []TestSuite{ // All tests.
 					"2000-01-01", // Some date.
 				},
 				expectedValue: //
-				"moon:" + NL +
-					"  age:       24.38 days" + NL +
-					"  phase:     Last Quarter (◖)" + NL +
-					"  dist.:     398596 km" + NL +
-					"  illum.:    27%" + NL +
-					"  next new:  5.8 days (2000-01-06, Thu)" + NL +
-					"  next full: 20.2 days (2000-01-21, Fri)",
+				" ● age:       24.38 days" + NL +
+					" ● phase:     Last Quarter (◖)" + NL +
+					" ● dist.:     398596 km" + NL +
+					" ● illum.:    27%" + NL +
+					" next new ●:  5.8 days (2000-01-06, Thu)" + NL +
+					" next full ●: 20.2 days (2000-01-21, Fri)",
 			},
 		},
 	},
@@ -127,13 +126,15 @@ var suites = []TestSuite{ // All tests.
 		tests: []TestList{
 			{
 				testName: "sun_sunrise+sunset_calculate_00",
-				isMulti:  false,
+				isMulti:  true,
 				inputArr: []string{
 					"43.65", "-79.38", // Toronto, Canada.
 					"2000-01-01", // Some date.
 				},
 				// expectedValue: "sunrise: 12:51, sunset: 21:51", // NOTE: as UTC.
-				expectedValue: "sunrise: 07:51, sunset: 16:51", // NOTE: as GMT-5 (in Toronto, Canada).
+				expectedValue: // NOTE: as GMT-5 (in Toronto, Canada).
+				" ☼ rise:      07:51 h" + NL +
+					" ☼ set:       16:51 h",
 			},
 		},
 	},

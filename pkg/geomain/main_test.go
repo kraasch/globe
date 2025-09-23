@@ -54,7 +54,15 @@ var suites = []TestSuite{
 					"│     -                  │" + NL +
 					"├────────────▲───────────┤" + NL +
 					"│            ☼           │" + NL +
-					"└────────────────────────┘",
+					"└────────────────────────┘" + NL +
+					" ● age:       19.76 days" + NL +
+					" ● phase:     Waning Gibbous (◐)" + NL +
+					" ● dist.:     371578 km" + NL +
+					" ● illum.:    74%" + NL +
+					" next new ●:  10.6 days (0001-01-11, Thu)" + NL +
+					" next full ●: 25.2 days (0001-01-26, Fri)" + NL +
+					" ☼ rise:      01:10 h" + NL +
+					" ☼ set:       13:17 h",
 			},
 		},
 	},

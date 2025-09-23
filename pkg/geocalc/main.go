@@ -94,13 +94,12 @@ func MoonPhase(date time.Time) string {
 	nextNew := unixToDate(phase.NextNewMoon())   // in unix format (ms since 1970) -- i guess.
 	nextFull := unixToDate(phase.NextFullMoon()) // in unix format (ms since 1970) -- i guess.
 	return fmt.Sprintf(
-		`moon:
-  age:       %.2f days
-  phase:     %s (%s)
-  dist.:     %.0f km
-  illum.:    %.0f%%
-  next new:  %.1f days (%v)
-  next full: %.1f days (%v)`,
+		` ● age:       %.2f days
+ ● phase:     %s (%s)
+ ● dist.:     %.0f km
+ ● illum.:    %.0f%%
+ next new ●:  %.1f days (%v)
+ next full ●: %.1f days (%v)`,
 		phase.Age(),                  // age in days -- i guess.
 		PhaseToText(phase.Phase()),   // convert moonphase (0-1 value) to text -- i guess.
 		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.
@@ -126,5 +125,5 @@ func SunRiseAndSet(lat, lon float64, date time.Time) string {
 	if localSet.Second() > 30 {
 		localSet = localSet.Add(time.Minute)
 	}
-	return fmt.Sprintf("sunrise: %02d:%02d, sunset: %02d:%02d", localRise.Hour(), localRise.Minute(), localSet.Hour(), localSet.Minute())
+	return fmt.Sprintf(" ☼ rise:      %02d:%02d h\n ☼ set:       %02d:%02d h", localRise.Hour(), localRise.Minute(), localSet.Hour(), localSet.Minute())
 }
