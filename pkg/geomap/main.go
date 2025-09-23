@@ -1,6 +1,20 @@
 // Package geomap is is used to show an ASCII world map on the CLI.
 package geomap
 
+import (
+	"fmt"
+)
+
+var NL = fmt.Sprintln()
+
+var MAP = "    _,--._  _._.--.--.._" + NL +
+	"=.--'=_',-,:`;_      .,'" + NL +
+	",-.  _.)  (``-;_   .'   " + NL +
+	"   '-:_    `) ) .''=.   " + NL +
+	"     ) )    ()'    ='   " + NL +
+	"     |/            (_) =" + NL +
+	"     -                  "
+
 type World struct {
 	name string // TODO: delete later.
 }
@@ -9,8 +23,11 @@ func NewWorld() World {
 	return World{"default"}
 }
 
+func (w *World) PrintCoord(lat, lon float64) (string, error) {
+	return "", nil
+}
+
 func (w *World) PrintInner() string {
-	NL := "\n"
 	return "    _,--._  _._.--.--.._" + NL +
 		"=.--'=_',-,:`;_      .,'" + NL +
 		",-.  _.)  (``-;_   .'   " + NL +
@@ -21,7 +38,6 @@ func (w *World) PrintInner() string {
 }
 
 func (w *World) PrintBlank() string {
-	NL := "\n"
 	return "┌────────────────────────┐" + NL +
 		"│1-987654321 123456789+12│" + NL +
 		"├────────────────────────┤" + NL +
@@ -38,7 +54,6 @@ func (w *World) PrintBlank() string {
 }
 
 func (w *World) PrintDemo() string {
-	NL := "\n"
 	return "┌────────────────────────┐" + NL +
 		"│1-987654321 123456789+12│" + NL +
 		"├───────────▼────────────┤" + NL +
