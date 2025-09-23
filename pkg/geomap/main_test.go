@@ -6,8 +6,6 @@ import (
 	"strconv"
 	"testing"
 
-	// printing and formatting.
-
 	// other imports.
 	"github.com/kraasch/godiff/godiff"
 )
