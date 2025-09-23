@@ -10,7 +10,7 @@ import (
 	lip "github.com/charmbracelet/lipgloss"
 
 	// local packages.
-	geo "github.com/kraasch/geo/pkg/geoshow"
+	geo "github.com/kraasch/geo/pkg/geomain"
 )
 
 var (

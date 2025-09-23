@@ -1,5 +1,5 @@
-// Package geoshow is used to nicely print information calculated or retreiveed from geocalc and geoauto.
-package geoshow
+// Package geomain is used to nicely print information calculated or retreiveed from geocalc and geoauto.
+package geomain
 
 import (
 	geomap "github.com/kraasch/geo/pkg/geomap"
