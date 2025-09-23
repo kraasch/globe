@@ -1,6 +1,6 @@
 
 tst:
-	@make test | grep -E '    --- (FAIL)'
+	@make test | grep -E '    --- (FAIL|PASS)'
 
 test:
 	go clean -testcache
