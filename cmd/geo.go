@@ -5,14 +5,11 @@ import (
 	"fmt"
 	"os"
 
-	// for making a nice centred box.
+	// for making the TUI.
 	tea "github.com/charmbracelet/bubbletea"
 	lip "github.com/charmbracelet/lipgloss"
 
-	// basics.
-
 	// local packages.
-
 	geo "github.com/kraasch/geo/pkg/geoshow"
 )
 
@@ -23,9 +20,9 @@ var (
 	verbose  = false
 	suppress = false
 	// styles.
-	styleBox = lip.NewStyle().
-			BorderStyle(lip.NormalBorder()).
-			BorderForeground(lip.Color("56"))
+	// styleBox = lip.NewStyle().
+	// 		BorderStyle(lip.NormalBorder()).
+	// 		BorderForeground(lip.Color("56"))
 )
 
 type model struct {

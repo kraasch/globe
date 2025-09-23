@@ -28,32 +28,33 @@ type TestSuite struct {
 
 var suites = []TestSuite{
 	/*
-	 * Test for the function PrintEarth().
+	* Test for the function PrintEarth().
 	 */
 	{
 		testingFunction: func(in TestList) (out string) {
-			out = Toast()
+			geodata := New()
+			out = geodata.PrintData()
 			return out
 		},
 		tests: []TestList{
 			{
 				testName: "earth_pretty-print_overview_00",
-				isMulti:  false,
+				isMulti:  true,
 				inputArr: []string{},
-				expectedValue:// NOTE: this comment breaks the line.
-				"Toast!",
-				//"┌────────────────────────┐" + NL +
-				// "│1 9876-4321 1234+6789 12│" + NL +
-				// "├───────────▼────────────┤" + NL +
-				// "│    _,--._  _._.--.--.._│" + NL +
-				// "▶=.--'=_',-,▣`;_      .,'◀" + NL +
-				// "│,-.  _.)  (``-;_   .'   │" + NL +
-				// "│   '-:_    `) ) v''=.   │" + NL +
-				// "│     ) )    ()'    ='   │" + NL +
-				// "│     |/            (_) =│" + NL +
-				// "├───────────▲────────────┤" + NL +
-				// "│   ☼            ●       │" + NL +
-				// "└────────────────────────┘",
+				expectedValue: // NOTE: this comment breaks the line.
+				"┌────────────────────────┐" + NL +
+					"│1-987654321 123456789+12│" + NL +
+					"├────────────▼───────────┤" + NL +
+					"│    _,--._  _._.--.--.._│" + NL +
+					"│=.--'=_',-,:`;_      .,'│" + NL +
+					"│,-.  _.)  (``-;_   .'   │" + NL +
+					"▶   '-:_    `▣ ) .''=.   ◀" + NL +
+					"│     ) )    ()'    ='   │" + NL +
+					"│     |/            (_) =│" + NL +
+					"│     -                  │" + NL +
+					"├────────────▲───────────┤" + NL +
+					"│            ☼           │" + NL +
+					"└────────────────────────┘",
 			},
 		},
 	},
