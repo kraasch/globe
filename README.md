@@ -30,6 +30,8 @@ List of things to do
     - [ ] visualization of moon position with longitude.
     - [ ] visualization of sun position with longitude.
   - [ ] convert local time of user to UTC.
+  - [ ] make a unified, somewhat pretty display for all data.
+  - [ ] provide an option for an update interval of all displayed data.
 
 List of things done
 
