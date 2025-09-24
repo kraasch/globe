@@ -6,7 +6,7 @@
 Demo picture:
 
 <p align="center">
-<img src="./resources/example.png" width="300"/>
+<img src="./resources/example.png" width="500"/>
 </p>
 
 ## Features
