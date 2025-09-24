@@ -59,7 +59,7 @@ func (m model) View() string {
 	// } else {
 	// 	str = "bla bla"
 	// }
-	str := m.geoData.PrintHorizontally()
+	str := m.geoData.PrintDataHorizontally()
 	str = styleBox.Render(str) // To add an outer box. // TODO: maybe use or remove later.
 	return lip.Place(m.width, m.height, lip.Center, lip.Center, str)
 }

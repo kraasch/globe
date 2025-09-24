@@ -57,7 +57,7 @@ func (gd *GeoData) UpdateData() {
 	gd.time = time.Now()
 }
 
-func (gd *GeoData) PrintData() string {
+func (gd *GeoData) PrintDataVertically() string {
 	NL := fmt.Sprintln()
 	data, err := gd.world.Print()
 	moon := geocalc.MoonPhase(gd.time)
@@ -86,7 +86,7 @@ func (gd *GeoData) PrintInfo() string {
 	return where + NL + utc + NL + sun + NL + moon
 }
 
-func (gd *GeoData) PrintHorizontally() string {
+func (gd *GeoData) PrintDataHorizontally() string {
 	world := gd.PrintWorld()
 	info := gd.PrintInfo()
 	str := concatenateHorizontally(world, info)

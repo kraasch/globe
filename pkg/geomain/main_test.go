@@ -29,13 +29,14 @@ type TestSuite struct {
 
 var suites = []TestSuite{
 	/*
-	* Test for the function PrintEarth().
+	* Test for the function PrintDataVertically().
+	* Also kind of tests PrintDataHorizontally(), because it uses the same data.
 	 */
 	{
 		testingFunction: func(in TestList) (out string) {
 			geodata := New()
-			out = geodata.PrintData()
-			out = util.AnonymizeTimeStrings(out)
+			out = geodata.PrintDataVertically()
+			out = util.Anonymize(out)
 			return out
 		},
 		tests: []TestList{
@@ -57,16 +58,18 @@ var suites = []TestSuite{
 					"├────────────▲───────────┤" + NL +
 					"│            ☼           │" + NL +
 					"└────────────────────────┘" + NL +
-					" ● age:       19.76 days" + NL +
-					" ● phase:     Waning Gibbous (◐)" + NL +
-					" ● dist.:     371578 km" + NL +
-					" ● illum.:    74%" + NL +
-					" ● new in:    10.6 days (0001-01-11, Thu)" + NL +
-					" ● full in:   25.2 days (0001-01-26, Fri)" + NL +
-					util.AnonymizeTimeStrings(" ▣ time:      22:02 h") + NL +
-					util.AnonymizeTimeStrings(" UTC time:    20:02 h") + NL +
-					util.AnonymizeTimeStrings(" ☼ rise:      01:10 h") + NL +
-					util.AnonymizeTimeStrings(" ☼ set:       13:17 h"),
+					" ● phase:   Waning Gibbous (◐)" + NL +
+					util.Anonymize(" ● age:     19.76 days") + NL +
+					util.Anonymize(" ● dist.:   371578 km") + NL +
+					util.Anonymize(" ● illum.:  74%") + NL +
+					util.Anonymize(" ● new in:  5.8 days") + NL +
+					util.Anonymize(" ● full in: 20.2 days") + NL +
+					util.Anonymize(" ● new on:  2000-01-06, Thu") + NL +
+					util.Anonymize(" ● full on: 2000-01-21, Fri") + NL +
+					util.Anonymize(" ▣ time:    22:02 h") + NL +
+					util.Anonymize(" ▣ utc:     20:02 h") + NL +
+					util.Anonymize(" ☼ rise:    01:10 h") + NL +
+					util.Anonymize(" ☼ set:     13:17 h"),
 			},
 		},
 	},
