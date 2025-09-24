@@ -5,20 +5,9 @@
 
 Demo picture:
 
-...
-
-<!--
 <p align="center">
 <img src="./resources/example.png" width="300"/>
 </p>
--->
-
-## Inspiration
-
-Some inspiring images:
-
-  - [./inspiration/demo_0.png](./inspiration/demo_0.png)
-  - [./inspiration/demo_1.png](./inspiration/demo_1.png)
 
 ## Features
 
@@ -30,7 +19,8 @@ List of features
 
 List of things to do
 
-  - [ ] update data and show current data into display automatically.
+  - [ ] make sure every data in the display is read in automatically.
+  - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
 
 List of things done
@@ -81,6 +71,13 @@ import (
 
 geo.DoSomething("Hello")
 ```
+
+## Inspiration
+
+Some inspiring images for future development of this project:
+
+  - [./inspiration/demo_0.png](./inspiration/demo_0.png)
+  - [./inspiration/demo_1.png](./inspiration/demo_1.png)
 
 ## Feedback
 
