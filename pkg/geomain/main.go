@@ -32,9 +32,10 @@ func (gd *GeoData) PrintData() string {
 	NL := fmt.Sprintln()
 	data, err := gd.world.Print()
 	moon := geocalc.MoonPhase(gd.time)
+	utc := geocalc.LocalAndUtcTime()
 	sun := geocalc.SunRiseAndSet(0.0, 0.0, gd.time) // TODO: insert lon and lat from gd.world.
 	if err != nil {
 		return err.Error()
 	}
-	return data + NL + moon + NL + sun
+	return data + NL + moon + NL + utc + NL + sun
 }

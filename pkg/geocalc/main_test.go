@@ -2,13 +2,13 @@ package geocalc
 
 import (
 	"fmt"
-	"regexp"
 	"strconv"
 	"testing"
 	"time"
 
 	// other imports.
-	"github.com/kraasch/godiff/godiff"
+	util "github.com/kraasch/geo/pkg/testutil"
+	godiff "github.com/kraasch/godiff/godiff"
 )
 
 const (
@@ -27,13 +27,6 @@ type TestList struct {
 type TestSuite struct {
 	testingFunction func(in TestList) string
 	tests           []TestList
-}
-
-func anonymizeTimeStrings(timestr string) string {
-	pattern := `[0-9]{2}:[0-9]{2}`
-	re := regexp.MustCompile(pattern)
-	result := re.ReplaceAllString(timestr, "xx:yy")
-	return result
 }
 
 var suites = []TestSuite{ // All tests.
@@ -153,7 +146,7 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList) string {
 			t := LocalAndUtcTime()
-			return anonymizeTimeStrings(t)
+			return util.AnonymizeTimeStrings(t)
 		},
 		tests: []TestList{
 			{
@@ -161,8 +154,8 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // line break.
-				anonymizeTimeStrings(" ▣ time:      17:00 h") + NL +
-					anonymizeTimeStrings(" UTC time:    03:12 h"),
+				util.AnonymizeTimeStrings(" ▣ time:      17:00 h") + NL +
+					util.AnonymizeTimeStrings(" UTC time:    03:12 h"),
 			},
 		},
 	},

@@ -9,7 +9,8 @@ import (
 	"fmt"
 
 	// other imports.
-	"github.com/kraasch/godiff/godiff"
+	util "github.com/kraasch/geo/pkg/testutil"
+	godiff "github.com/kraasch/godiff/godiff"
 )
 
 var NL = fmt.Sprintln()
@@ -34,6 +35,7 @@ var suites = []TestSuite{
 		testingFunction: func(in TestList) (out string) {
 			geodata := New()
 			out = geodata.PrintData()
+			out = util.AnonymizeTimeStrings(out)
 			return out
 		},
 		tests: []TestList{
@@ -61,8 +63,10 @@ var suites = []TestSuite{
 					" ● illum.:    74%" + NL +
 					" next new ●:  10.6 days (0001-01-11, Thu)" + NL +
 					" next full ●: 25.2 days (0001-01-26, Fri)" + NL +
-					" ☼ rise:      01:10 h" + NL +
-					" ☼ set:       13:17 h",
+					util.AnonymizeTimeStrings(" ▣ time:      22:02 h") + NL +
+					util.AnonymizeTimeStrings(" UTC time:    20:02 h") + NL +
+					util.AnonymizeTimeStrings(" ☼ rise:      01:10 h") + NL +
+					util.AnonymizeTimeStrings(" ☼ set:       13:17 h"),
 			},
 		},
 	},
