@@ -10,8 +10,17 @@ import (
 )
 
 const (
-	DAYFORMAT = "2006-01-02, Mon" // A Go-style format string.
+	DAYFORMAT  = "2006-01-02, Mon" // A Go-style format string for dates.
+	TIMEFORMAT = "15:04"           // A Go-style format string for time (with leading zero: ie. 07:45h )
 )
+
+func LocalAndUtcTime() string {
+	now := time.Now()
+	formattedNow := now.Format(TIMEFORMAT)
+	utc := now.UTC()
+	formattedUtc := utc.Format(TIMEFORMAT)
+	return fmt.Sprintf(" ▣ time:      %s h\n UTC time:    %s h", formattedNow, formattedUtc)
+}
 
 func PhaseToText(phase float64) string {
 	stage := ""

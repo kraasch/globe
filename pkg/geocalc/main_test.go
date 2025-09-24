@@ -2,6 +2,7 @@ package geocalc
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"testing"
 	"time"
@@ -26,6 +27,13 @@ type TestList struct {
 type TestSuite struct {
 	testingFunction func(in TestList) string
 	tests           []TestList
+}
+
+func anonymizeTimeStrings(timestr string) string {
+	pattern := `[0-9]{2}:[0-9]{2}`
+	re := regexp.MustCompile(pattern)
+	result := re.ReplaceAllString(timestr, "xx:yy")
+	return result
 }
 
 var suites = []TestSuite{ // All tests.
@@ -110,7 +118,7 @@ var suites = []TestSuite{ // All tests.
 		testingFunction: func(in TestList) string {
 			lat, err0 := strconv.ParseFloat(in.inputArr[0], 64)
 			lon, err1 := strconv.ParseFloat(in.inputArr[1], 64)
-			time, err2 := time.Parse(dateLayout, in.inputArr[2])
+			date, err2 := time.Parse(dateLayout, in.inputArr[2])
 			if err0 != nil {
 				return "error in type converstion within the test: first float."
 			}
@@ -120,7 +128,7 @@ var suites = []TestSuite{ // All tests.
 			if err2 != nil {
 				return "error in type converstion within the test: date."
 			}
-			out := SunRiseAndSet(lat, lon, time)
+			out := SunRiseAndSet(lat, lon, date)
 			return out
 		},
 		tests: []TestList{
@@ -135,6 +143,26 @@ var suites = []TestSuite{ // All tests.
 				expectedValue: // NOTE: as GMT-5 (in Toronto, Canada).
 				" ☼ rise:      07:51 h" + NL +
 					" ☼ set:       16:51 h",
+			},
+		},
+	},
+
+	/*
+	 * Test for the function LocalAndUtcTime().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			t := LocalAndUtcTime()
+			return anonymizeTimeStrings(t)
+		},
+		tests: []TestList{
+			{
+				testName: "sun_sunrise+sunset_calculate_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // line break.
+				anonymizeTimeStrings(" ▣ time:      17:00 h") + NL +
+					anonymizeTimeStrings(" UTC time:    03:12 h"),
 			},
 		},
 	},
