@@ -107,16 +107,18 @@ func MoonPhase(date time.Time) string {
  ● phase:     %s (%s)
  ● dist.:     %.0f km
  ● illum.:    %.0f%%
- next new ●:  %.1f days (%v)
- next full ●: %.1f days (%v)`,
+ ● new in:    %.1f days
+ ● full in:   %.1f days
+ ● new on:    %v
+ ● full on:   %v`,
 		phase.Age(),                  // age in days -- i guess.
 		PhaseToText(phase.Phase()),   // convert moonphase (0-1 value) to text -- i guess.
 		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.
 		phase.Distance(),             // distance from earth in km -- i guess.
 		phase.Illumination()*100,     // illumination between 0 and 1 -- i guess.
 		diffInDays(date, nextNew),
-		nextNew.Format(DAYFORMAT),
 		diffInDays(date, nextFull),
+		nextNew.Format(DAYFORMAT),
 		nextFull.Format(DAYFORMAT),
 	)
 }

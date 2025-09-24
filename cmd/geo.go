@@ -53,12 +53,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	var str string
-	if verbose {
-		str = "bla bla"
-	} else {
-		str = m.geoData.PrintData()
-	}
+	// var str string
+	// if verbose {
+	// 	str = "bla bla bla"
+	// } else {
+	// 	str = "bla bla"
+	// }
+	str := m.geoData.PrintHorizontally()
 	str = styleBox.Render(str) // To add an outer box. // TODO: maybe use or remove later.
 	return lip.Place(m.width, m.height, lip.Center, lip.Center, str)
 }

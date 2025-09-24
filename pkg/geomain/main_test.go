@@ -61,8 +61,8 @@ var suites = []TestSuite{
 					" ● phase:     Waning Gibbous (◐)" + NL +
 					" ● dist.:     371578 km" + NL +
 					" ● illum.:    74%" + NL +
-					" next new ●:  10.6 days (0001-01-11, Thu)" + NL +
-					" next full ●: 25.2 days (0001-01-26, Fri)" + NL +
+					" ● new in:    10.6 days (0001-01-11, Thu)" + NL +
+					" ● full in:   25.2 days (0001-01-26, Fri)" + NL +
 					util.AnonymizeTimeStrings(" ▣ time:      22:02 h") + NL +
 					util.AnonymizeTimeStrings(" UTC time:    20:02 h") + NL +
 					util.AnonymizeTimeStrings(" ☼ rise:      01:10 h") + NL +
