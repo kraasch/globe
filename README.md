@@ -1,7 +1,7 @@
 
 # geo
 
-An uncluttered, minimal and clean display of commonly used every-day astronomical data about the moon, sun, earth and the computers location.
+An uncluttered, minimal and clean display of commonly used every-day astronomical data about the moon, sun, earth and the computer's location.
 
 ## Demo
 
