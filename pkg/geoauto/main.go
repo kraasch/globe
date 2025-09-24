@@ -3,6 +3,7 @@ package geoauto
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -34,6 +35,11 @@ func bufferWebLocalization() (float64, float64, error) {
 	// rawData := config.AutoReadConfig()
 	// TODO: implement.
 	return 0.1, 0.1, nil
+}
+
+func LatAndLon() string {
+	lat, lon, _ := complicatedWebLocalization()
+	return fmt.Sprintf(" ▣ lat+lon: %.2f, %.2f", lat, lon)
 }
 
 // complicatedWebLocalization gets user's location based on IP.

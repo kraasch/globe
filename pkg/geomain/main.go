@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kraasch/geo/pkg/geoauto"
 	geocalc "github.com/kraasch/geo/pkg/geocalc"
 	geomap "github.com/kraasch/geo/pkg/geomap"
 )
@@ -78,10 +79,11 @@ func (gd *GeoData) PrintWorld() string {
 
 func (gd *GeoData) PrintInfo() string {
 	NL := fmt.Sprintln()
+	where := geoauto.LatAndLon()
 	moon := geocalc.MoonPhase(gd.time)
 	utc := geocalc.LocalAndUtcTime()
 	sun := geocalc.SunRiseAndSet(0.0, 0.0, gd.time) // TODO: insert lon and lat from gd.world.
-	return utc + NL + sun + NL + moon
+	return where + NL + utc + NL + sun + NL + moon
 }
 
 func (gd *GeoData) PrintHorizontally() string {

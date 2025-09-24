@@ -19,7 +19,7 @@ func LocalAndUtcTime() string {
 	formattedNow := now.Format(TIMEFORMAT)
 	utc := now.UTC()
 	formattedUtc := utc.Format(TIMEFORMAT)
-	return fmt.Sprintf(" ▣ time:      %s h\n UTC time:    %s h", formattedNow, formattedUtc)
+	return fmt.Sprintf(" ▣ time:    %s h\n ▣ utc:     %s h", formattedNow, formattedUtc)
 }
 
 func PhaseToText(phase float64) string {
@@ -103,17 +103,17 @@ func MoonPhase(date time.Time) string {
 	nextNew := unixToDate(phase.NextNewMoon())   // in unix format (ms since 1970) -- i guess.
 	nextFull := unixToDate(phase.NextFullMoon()) // in unix format (ms since 1970) -- i guess.
 	return fmt.Sprintf(
-		` ● age:       %.2f days
- ● phase:     %s (%s)
- ● dist.:     %.0f km
- ● illum.:    %.0f%%
- ● new in:    %.1f days
- ● full in:   %.1f days
- ● new on:    %v
- ● full on:   %v`,
-		phase.Age(),                  // age in days -- i guess.
+		` ● phase:   %s (%s)
+ ● age:     %.2f days
+ ● dist.:   %.0f km
+ ● illum.:  %.0f%%
+ ● new in:  %.1f days
+ ● full in: %.1f days
+ ● new on:  %v
+ ● full on: %v`,
 		PhaseToText(phase.Phase()),   // convert moonphase (0-1 value) to text -- i guess.
 		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.
+		phase.Age(),                  // age in days -- i guess.
 		phase.Distance(),             // distance from earth in km -- i guess.
 		phase.Illumination()*100,     // illumination between 0 and 1 -- i guess.
 		diffInDays(date, nextNew),
@@ -136,5 +136,5 @@ func SunRiseAndSet(lat, lon float64, date time.Time) string {
 	if localSet.Second() > 30 {
 		localSet = localSet.Add(time.Minute)
 	}
-	return fmt.Sprintf(" ☼ rise:      %02d:%02d h\n ☼ set:       %02d:%02d h", localRise.Hour(), localRise.Minute(), localSet.Hour(), localSet.Minute())
+	return fmt.Sprintf(" ☼ rise:    %02d:%02d h\n ☼ set:     %02d:%02d h", localRise.Hour(), localRise.Minute(), localSet.Hour(), localSet.Minute())
 }
