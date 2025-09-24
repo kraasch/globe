@@ -30,14 +30,14 @@ List of features
 
 List of things to do
 
-  - [ ] in geocalc: convert local time of user to UTC.
-  - [ ] in geocalc: conversion function from location+time to timezone (default to system timezone).
-  - [ ] make a unified, somewhat pretty display for all data.
-  - [ ] read data in automatically.
+  - [ ] update data and show current data into display automatically.
   - [ ] provide an option for an update interval of all displayed data.
 
 List of things done
 
+  - [X] make a unified, somewhat pretty display for all data.
+  - [X] in geocalc: convert local time of user to UTC.
+  - [X] in geocalc: conversion function from location+time to timezone (default to system timezone).
   - [X] visualizations.
     - [X] visualization of lat+lon (eg user location).
     - [X] visualization of moon position with longitude.
