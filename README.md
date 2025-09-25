@@ -15,15 +15,21 @@ Demo picture:
 
 List of features
 
-  - [ ] xxx
+  - [X] show commonly needed astronomical data at one glance.
+  - [X] local calculations (except location of computer which uses web request).
+
+## Warning
+
+This is an early version, the web requests are not buffered yet.
+Executing the program or the tests too often will probably lead to being denied further requests.
 
 ## Tasks
 
 List of things to do
 
+  - [ ] buffer web retrieved lat+lon data as a text file somewhere.
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
-  - [ ] buffer web retrieved lat+lon data as a text file somewhere.
   - [ ] fix sunrise and sunset time (match the local time in the timezone).
   - [ ] refine tests and explicitly test data of
     - [ ] `▣ lat+lon: 53.48, 10.22`
