@@ -42,6 +42,16 @@ List of things to do
     - [ ] `● full on: 2001-01-26, Fri`
     - [ ] `● lat+lon.`
 
+List of things to do maybe later
+
+  - [ ] introduce time zone detection.
+    - [ ] find existing go package for this.
+    - [ ] define tests.
+      - [ ] find out user's time zone code, eg 'GMT'.
+      - [ ] find out user's utc shift for his time zone.
+        - eg pst=>utc-8, mst=>utc-7, cst=>utc-6, est=>utc-5.
+        - eg pdt=>utc-7, mdt=>utc-6, cdt=>utc-5, edt=>utc-4.
+
 List of things done
 
   - [X] make a unified, somewhat pretty display for all data.
