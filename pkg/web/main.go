@@ -1,5 +1,5 @@
-// Package geoauto can get the location or time zone of a user machine automatically. This package is also not easily testable.
-package geoauto
+// Package web can get the location or time zone of a user machine from the web.
+package web
 
 import (
 	"encoding/json"

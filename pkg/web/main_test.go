@@ -1,4 +1,4 @@
-package geoauto
+package web
 
 import (
 	"fmt"

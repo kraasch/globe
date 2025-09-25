@@ -1,14 +1,14 @@
-// Package geomain is used to nicely print information calculated or retreiveed from geocalc and geoauto.
-package geomain
+// Package geotop is used to nicely print information calculated or retreiveed from geocalc and geoauto.
+package geotop
 
 import (
 	"fmt"
 	"strings"
 	"time"
 
-	"github.com/kraasch/geo/pkg/geoauto"
 	geocalc "github.com/kraasch/geo/pkg/geocalc"
 	geomap "github.com/kraasch/geo/pkg/geomap"
+	web "github.com/kraasch/geo/pkg/web"
 )
 
 const (
@@ -112,7 +112,7 @@ func colorizeSymbols(in string) string {
 
 func (gd *GeoData) PrintInfo() string {
 	NL := fmt.Sprintln()
-	where := geoauto.LatAndLonAndTz()
+	where := web.LatAndLonAndTz()
 	moon := geocalc.MoonPhase(gd.time)
 	utc := geocalc.LocalAndUtcTime()
 	sun := geocalc.SunRiseAndSet(0.0, 0.0, gd.time) // TODO: insert lon and lat from gd.world.
