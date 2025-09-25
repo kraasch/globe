@@ -25,6 +25,22 @@ List of things to do
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
   - [ ] buffer web retreived lat+lon data as a text file somewhere.
+  - [ ] refine tests and explicitly test data of
+    - [ ] `▣ lat+lon: 53.48, 10.22`
+    - [ ] `▣ time:    12:52 h`
+    - [ ] `▣ utc:     10:52 h`
+    - [ ] `☼ rise:    01:10 h`
+    - [ ] `☼ set:     13:17 h`
+    - [ ] `☼ lat+lon.`
+    - [ ] `● phase:   Waning Gibbous (◐)`
+    - [ ] `● age:     19.76 days`
+    - [ ] `● dist.:   371578 km`
+    - [ ] `● illum.:  74%`
+    - [ ] `● new in:  10.6 days`
+    - [ ] `● full in: 25.2 days`
+    - [ ] `● new on:  2001-01-11, Thu`
+    - [ ] `● full on: 2001-01-26, Fri`
+    - [ ] `● lat+lon.`
 
 List of things done
 
