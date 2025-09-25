@@ -60,6 +60,12 @@ func LatAndLon() string {
 	return fmt.Sprintf(" ▣ lat+lon: %.2f, %.2f", lat, lon)
 }
 
+func UtcOffsetFromTimezone(tz string) string {
+	// now := time.Now()
+	// utc := now.UTC()
+	return ""
+}
+
 func LatAndLonAndTz() string {
 	lat, lon, _ := complicatedWebLocalization()
 	tz := ConvertLatAndLonToTimezone(lat, lon)

@@ -11,6 +11,22 @@ import (
 	geomap "github.com/kraasch/geo/pkg/geomap"
 )
 
+const (
+	A0 = "\x1b[1;38;2;0;0;0m"       // ANSI foreground color (= black).
+	A1 = "\x1b[1;38;2;100;100;100m" // ANSI foreground color (= gray 1).
+	A2 = "\x1b[1;38;2;150;150;150m" // ANSI foreground color (= gray 2).
+	A3 = "\x1b[1;38;2;200;200;200m" // ANSI foreground color (= gray 3).
+	A4 = "\x1b[1;38;2;255;255;255m" // ANSI foreground color (= white).
+	R1 = "\x1b[1;38;2;255;0;0m"     // ANSI foreground color (= red).
+	G1 = "\x1b[1;38;2;0;255;0m"     // ANSI foreground color (= green).
+	B1 = "\x1b[1;38;2;0;0;255m"     // ANSI foreground color (= blue).
+	O1 = "\x1b[1;38;2;255;150;0m"   // ANSI foreground color (= orange).
+	Y1 = "\x1b[1;38;2;255;255;0m"   // ANSI foreground color (= yellow).
+	N0 = "\x1b[0m"                  // ANSI clear formatting.
+	// B1 = "\x1b[48;5;56m"            // ANSI background color (= purple). // TODO: remove later.
+	// B2 = "\x1b[1;38;2;100;100;100m" // ANSI foreground color (= gray). // TODO: remove later.
+)
+
 type GeoData struct {
 	world geomap.World
 	time  time.Time
@@ -77,6 +93,22 @@ func (gd *GeoData) PrintWorld() string {
 	return data
 }
 
+func surround(str, find, prefix, suffix string) string {
+	return strings.ReplaceAll(str, find, prefix+find+suffix)
+}
+
+func colorizeSymbols(in string) string {
+	in = surround(in, "▣", O1, N0)
+	in = surround(in, "🜃", B1, N0)
+	in = surround(in, "☼", R1, N0)
+	in = surround(in, "●", A3, N0)
+	in = surround(in, "▼", A2, N0)
+	in = surround(in, "◀", A2, N0)
+	in = surround(in, "▲", A2, N0)
+	in = surround(in, "▶", A2, N0)
+	return in
+}
+
 func (gd *GeoData) PrintInfo() string {
 	NL := fmt.Sprintln()
 	where := geoauto.LatAndLonAndTz()
@@ -90,5 +122,7 @@ func (gd *GeoData) PrintDataHorizontally() string {
 	world := gd.PrintWorld()
 	info := gd.PrintInfo()
 	str := concatenateHorizontally(world, info)
+	// TODO: implement color flag and check for it here.
+	str = colorizeSymbols(str)
 	return str
 }
