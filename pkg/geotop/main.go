@@ -8,7 +8,7 @@ import (
 
 	geocalc "github.com/kraasch/geo/pkg/geocalc"
 	geomap "github.com/kraasch/geo/pkg/geomap"
-	web "github.com/kraasch/geo/pkg/web"
+	geoweb "github.com/kraasch/geo/pkg/geoweb"
 )
 
 const (
@@ -112,7 +112,7 @@ func colorizeSymbols(in string) string {
 
 func (gd *GeoData) PrintInfo() string {
 	NL := fmt.Sprintln()
-	where := web.LatAndLonAndTz()
+	where := geoweb.LatAndLonAndTz()
 	moon := geocalc.MoonPhase(gd.time)
 	utc := geocalc.LocalAndUtcTime()
 	sun := geocalc.SunRiseAndSet(0.0, 0.0, gd.time) // TODO: insert lon and lat from gd.world.

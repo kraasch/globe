@@ -1,5 +1,5 @@
-// Package web can get the location or time zone of a user machine from the web.
-package web
+// Package geoweb can get the location or time zone of a user machine from the web.
+package geoweb
 
 import (
 	"encoding/json"
