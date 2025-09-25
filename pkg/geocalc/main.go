@@ -103,8 +103,8 @@ func MoonPhase(date time.Time) string {
 	nextNew := unixToDate(phase.NextNewMoon())   // in unix format (ms since 1970) -- i guess.
 	nextFull := unixToDate(phase.NextFullMoon()) // in unix format (ms since 1970) -- i guess.
 	return fmt.Sprintf(
-		` ● phase:   %s (%s)
- ● age:     %.2f days
+		` ● phase:   %s
+ ● age:     %.2f days (%s)
  ● dist.:   %.0f km
  ● illum.:  %.0f%%
  ● new in:  %.1f days
@@ -112,8 +112,8 @@ func MoonPhase(date time.Time) string {
  ● new on:  %v
  ● full on: %v`,
 		PhaseToText(phase.Phase()),   // convert moonphase (0-1 value) to text -- i guess.
-		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.
 		phase.Age(),                  // age in days -- i guess.
+		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.
 		phase.Distance(),             // distance from earth in km -- i guess.
 		phase.Illumination()*100,     // illumination between 0 and 1 -- i guess.
 		diffInDays(date, nextNew),

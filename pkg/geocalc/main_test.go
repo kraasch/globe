@@ -51,8 +51,8 @@ var suites = []TestSuite{ // All tests.
 					"2000-01-01", // Some date.
 				},
 				expectedValue: //
-				" ● phase:   Last Quarter (◖)" + NL +
-					" ● age:     24.38 days" + NL +
+				" ● phase:   Last Quarter" + NL +
+					" ● age:     24.38 days (◖)" + NL +
 					" ● dist.:   398596 km" + NL +
 					" ● illum.:  27%" + NL +
 					" ● new in:  5.8 days" + NL +

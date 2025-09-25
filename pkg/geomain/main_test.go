@@ -58,8 +58,8 @@ var suites = []TestSuite{
 					"├────────────▲───────────┤" + NL +
 					"│            ☼           │" + NL +
 					"└────────────────────────┘" + NL +
-					" ● phase:   Waning Gibbous (◐)" + NL +
-					util.Anonymize(" ● age:     19.76 days") + NL +
+					" ● phase:   Waning Gibbous" + NL +
+					util.Anonymize(" ● age:     19.76 days (◐)") + NL +
 					util.Anonymize(" ● dist.:   371578 km") + NL +
 					util.Anonymize(" ● illum.:  74%") + NL +
 					util.Anonymize(" ● new in:  5.8 days") + NL +
