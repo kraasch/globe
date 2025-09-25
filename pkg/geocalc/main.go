@@ -57,6 +57,14 @@ func ConvertLatAndLonToTimezone(lat, lon float64) string {
 	return tz
 }
 
+func WebBufUpdate() {
+	webBuf.Update()
+}
+
+func WebBufCoords() (float64, float64) {
+	return webBuf.GetCoords()
+}
+
 func LatAndLonAndTz() string {
 	lat, lon := webBuf.GetCoords()
 	tz := ConvertLatAndLonToTimezone(lat, lon)
@@ -134,6 +142,15 @@ func unixToDate(unixDate float64) time.Time {
 func diffInDays(date1, date2 time.Time) float64 {
 	diff := date2.Sub(date1)
 	return diff.Hours() / 24
+}
+
+func MoonLon(date time.Time) float64 {
+	phase := mp.New(date)
+	return phase.Longitude() - 180.0
+}
+
+func SunLon(date time.Time) float64 {
+	return +80.0 // TODO: implement for real.
 }
 
 func MoonPhaseVerbose(date time.Time) string {

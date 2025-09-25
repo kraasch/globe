@@ -38,8 +38,12 @@ type GeoLocation struct {
 	Lon float64 `json:"longitude"`
 }
 
-func (wb *WebBuffer) GetCoords() (float64, float64) {
+func (wb *WebBuffer) Update() {
 	wb.Lat, wb.Lon, _ = complicatedWebLocalization()
+}
+
+func (wb *WebBuffer) GetCoords() (float64, float64) {
+	wb.Update() // TODO: remove this from here.
 	return wb.Lat, wb.Lon
 }
 
@@ -52,8 +56,11 @@ func bufferWebLocalization() (float64, float64, error) {
 }
 
 // complicatedWebLocalization gets user's location based on IP.
-func complicatedWebLocalization() (float64, float64, error) {
-	return 53.48, 10.22, nil // TODO: use the real thing later when buffering is implemented.
+func complicatedWebLocalization() (lat float64, lon float64, err error) {
+	// lat = -41.48
+	// lon = 120.22
+	// err = nil
+	// return lat, lon, err // TODO: use the real thing later when buffering is implemented.
 	// Use an IP geolocation API (e.g., ip-api.com)
 	resp, err := http.Get("http://ip-api.com/json/")
 	if err != nil {

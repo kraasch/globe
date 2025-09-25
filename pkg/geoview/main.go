@@ -28,11 +28,11 @@ const (
 )
 
 type GeoData struct {
-	world geomap.World
 	time  time.Time
+	world geomap.World
 }
 
-func Toast() string {
+func Toast() string { // TODO: remove later.
 	return "Toast!"
 }
 
@@ -68,13 +68,14 @@ func concatenateHorizontally(str1, str2 string) string {
 }
 
 func (gd *GeoData) UpdateData() {
-	// TODO: implement.
-	gd.world = geomap.NewWorld()
-	gd.world.Lat = 0.0
-	gd.world.Lon = 0.0
-	gd.world.MoonLon = 0.0
-	gd.world.SunLon = 0.0
 	gd.time = time.Now()
+	gd.world = geomap.NewWorld()
+	geocalc.WebBufUpdate()
+	lat, lon := geocalc.WebBufCoords()
+	gd.world.Lat = lat
+	gd.world.Lon = lon
+	gd.world.MoonLon = geocalc.MoonLon(gd.time)
+	gd.world.SunLon = geocalc.SunLon(gd.time)
 }
 
 func (gd *GeoData) PrintDataVertically() string {
@@ -124,6 +125,7 @@ func (gd *GeoData) PrintInfo() string {
 }
 
 func (gd *GeoData) PrintDataHorizontally() string {
+	gd.UpdateData()
 	world := gd.PrintWorld()
 	info := gd.PrintInfo()
 	str := concatenateHorizontally(world, info)
