@@ -108,6 +108,7 @@ func colorizeSymbols(in string) string {
 	in = surround(in, "🜃", B1, N0)
 	in = surround(in, "☼", R1, N0)
 	in = surround(in, "○", A3, N0)
+	in = surround(in, "●", A3, N0)
 	// in = surround(in, "▼", A0, N0)
 	// in = surround(in, "◀", A0, N0)
 	// in = surround(in, "▲", A0, N0)
