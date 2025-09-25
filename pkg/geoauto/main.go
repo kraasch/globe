@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	configName  = "renamer.toml"
+	configName  = "geo.toml"
 	configPath  = ".config/geo/"
 	defaultData = ""
 )
