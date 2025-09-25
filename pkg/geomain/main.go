@@ -79,11 +79,11 @@ func (gd *GeoData) PrintWorld() string {
 
 func (gd *GeoData) PrintInfo() string {
 	NL := fmt.Sprintln()
-	where := geoauto.LatAndLon()
+	where := geoauto.LatAndLonAndTz()
 	moon := geocalc.MoonPhase(gd.time)
 	utc := geocalc.LocalAndUtcTime()
 	sun := geocalc.SunRiseAndSet(0.0, 0.0, gd.time) // TODO: insert lon and lat from gd.world.
-	return where + NL + utc + NL + sun + NL + moon
+	return where + utc + NL + sun + NL + moon
 }
 
 func (gd *GeoData) PrintDataHorizontally() string {

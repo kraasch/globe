@@ -34,7 +34,7 @@ List of things to do
   - [ ] refine tests and explicitly test data of
     - [ ] `▣ lat+lon: 53.48, 10.22`
     - [ ] `▣ time:    12:52 h`
-    - [ ] `▣ utc:     10:52 h`
+    - [ ] `🜃 utc:     10:52 h`
     - [ ] `☼ rise:    01:10 h`
     - [ ] `☼ set:     13:17 h`
     - [ ] `☼ lat+lon.`

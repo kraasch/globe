@@ -157,7 +157,7 @@ var suites = []TestSuite{ // All tests.
 				inputArr: []string{},
 				expectedValue: // line break.
 				util.AnonymizeTimeStrings(" ▣ time:    17:00 h") + NL +
-					util.AnonymizeTimeStrings(" ▣ utc:     03:12 h"),
+					util.AnonymizeTimeStrings(" 🜃 utc:     03:12 h"),
 			},
 		},
 	},

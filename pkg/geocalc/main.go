@@ -19,7 +19,7 @@ func LocalAndUtcTime() string {
 	formattedNow := now.Format(TIMEFORMAT)
 	utc := now.UTC()
 	formattedUtc := utc.Format(TIMEFORMAT)
-	return fmt.Sprintf(" ▣ time:    %s h\n ▣ utc:     %s h", formattedNow, formattedUtc)
+	return fmt.Sprintf(" ▣ time:    %s h\n 🜃 utc:     %s h", formattedNow, formattedUtc)
 }
 
 func PhaseToText(phase float64) string {

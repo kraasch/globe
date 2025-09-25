@@ -67,7 +67,7 @@ var suites = []TestSuite{
 					util.Anonymize(" ● new on:  2000-01-06, Thu") + NL +
 					util.Anonymize(" ● full on: 2000-01-21, Fri") + NL +
 					util.Anonymize(" ▣ time:    22:02 h") + NL +
-					util.Anonymize(" ▣ utc:     20:02 h") + NL +
+					util.Anonymize(" 🜃 utc:     20:02 h") + NL +
 					util.Anonymize(" ☼ rise:    01:10 h") + NL +
 					util.Anonymize(" ☼ set:     13:17 h"),
 			},

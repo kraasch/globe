@@ -9,6 +9,7 @@ import (
 	"time"
 
 	ctor "github.com/kraasch/goconf/pkg/configurator"
+	tzf "github.com/ringsaturn/tzf"
 )
 
 const (
@@ -23,10 +24,27 @@ var config = ctor.Configurator{
 	DefaultConfig:  defaultData,
 }
 
+var tzFinder tzf.F
+
+func initTzf() {
+	if tzFinder == nil {
+		var err error
+		tzFinder, err = tzf.NewDefaultFinder()
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
 // GeoLocation struct to parse JSON response from IP geolocation API.
 type GeoLocation struct {
 	Lat float64 `json:"latitude"`
 	Lon float64 `json:"longitude"`
+}
+
+func ConvertLatAndLonToTimezone(lat, lon float64) string {
+	initTzf()                                               // init tzFinder variable.
+	return fmt.Sprintln(tzFinder.GetTimezoneName(lon, lat)) // NOTE: Takes longitude-latitude order.
 }
 
 // bufferWebLocalization looks if lon+lat have been stored recently in ~/.local/geo/data.txt
@@ -42,8 +60,16 @@ func LatAndLon() string {
 	return fmt.Sprintf(" ▣ lat+lon: %.2f, %.2f", lat, lon)
 }
 
+func LatAndLonAndTz() string {
+	lat, lon, _ := complicatedWebLocalization()
+	tz := ConvertLatAndLonToTimezone(lat, lon)
+	utcOffset := "utc+42" // TODO: impelement.
+	return fmt.Sprintf(" ▣ lat+lon: %.2f, %.2f\n ▣ zone:    %s ▣ offset:  %s\n", lat, lon, tz, utcOffset)
+}
+
 // complicatedWebLocalization gets user's location based on IP.
 func complicatedWebLocalization() (float64, float64, error) {
+	return 53.48, 10.22, nil // TODO: use the real thing later when buffering is implemented.
 	// Use an IP geolocation API (e.g., ip-api.com)
 	resp, err := http.Get("http://ip-api.com/json/")
 	if err != nil {
