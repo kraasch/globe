@@ -1,5 +1,5 @@
-// Package geotop is used to nicely print information calculated or retreiveed from geocalc and geoauto.
-package geotop
+// Package geoview is used to nicely print information calculated or retreiveed from geocalc and geoauto.
+package geoview
 
 import (
 	"fmt"

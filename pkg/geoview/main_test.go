@@ -1,4 +1,4 @@
-package geotop
+package geoview
 
 import (
 
