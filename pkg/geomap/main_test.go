@@ -69,7 +69,7 @@ var suites = []TestSuite{ // All tests.
 					"└────────────────────────┘",
 			},
 		},
-	},
+	}, // End of this test.
 
 	/*
 	 * Test for the function PrintCoordBox().
@@ -111,7 +111,7 @@ var suites = []TestSuite{ // All tests.
 					"├───────────────────────▲┤",
 			},
 		},
-	},
+	}, // End of this test.
 
 	/*
 	 * Test for the function SubLine().
@@ -148,7 +148,7 @@ var suites = []TestSuite{ // All tests.
 				"●                      ☼",
 			},
 		},
-	},
+	}, // End of this test.
 
 	/*
 	 * Test for the function PrintCoord(lon, lat).
@@ -370,7 +370,7 @@ var suites = []TestSuite{ // All tests.
 					"▣    -                  ",
 			},
 		},
-	}, // End of all tests.
+	}, // End of this test.
 
 	/*
 	 * Test for the function PrintInner().
@@ -396,7 +396,7 @@ var suites = []TestSuite{ // All tests.
 					"     -                  ",
 			},
 		},
-	}, // End of all tests.
+	}, // End of this test.
 
 	/*
 	 * Test for the function PrintBlank().
@@ -428,39 +428,8 @@ var suites = []TestSuite{ // All tests.
 					"└────────────────────────┘",
 			},
 		},
-	}, // End of all tests.
+	}, // End of this test.
 
-	/*
-	 * Test for the function PrintDemo().
-	 */
-	{
-		testingFunction: func(in TestList) string {
-			world := NewWorld()
-			out := world.PrintDemo()
-			return out
-		},
-		tests: []TestList{
-			{
-				testName: "map_pretty-print_demo_00",
-				isMulti:  true,
-				inputArr: []string{},
-				expectedValue: // NOTE: this comment breaks the line.
-				"┌────────────────────────┐" + NL +
-					"│1-987654321 123456789+12│" + NL +
-					"├───────────▼────────────┤" + NL +
-					"│    _,--._  _._.--.--.._│" + NL +
-					"▶=.--'=_',-,▣`;_      .,'◀" + NL +
-					"│,-.  _.)  (``-;_   .'   │" + NL +
-					"│   '-:_    `) ) .''=.   │" + NL +
-					"│     ) )    ()'    ='   │" + NL +
-					"│     |/            (_) =│" + NL +
-					"│     -                  │" + NL +
-					"├───────────▲────────────┤" + NL +
-					"│   ☼            ●       │" + NL +
-					"└────────────────────────┘",
-			},
-		},
-	},
 } // end of test suite.
 
 func TestAll(t *testing.T) {

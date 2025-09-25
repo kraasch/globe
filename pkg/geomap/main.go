@@ -263,19 +263,3 @@ func (w *World) PrintBlank() string { // TODO: use MAP variable and do not dupli
 		"│                        │" + NL +
 		"└────────────────────────┘"
 }
-
-func (w *World) PrintDemo() string { // TODO: use MAP variable and do not duplicated ASCII map.
-	return "┌────────────────────────┐" + NL +
-		"│1-987654321 123456789+12│" + NL +
-		"├───────────▼────────────┤" + NL +
-		"│    _,--._  _._.--.--.._│" + NL +
-		"▶=.--'=_',-,▣`;_      .,'◀" + NL +
-		"│,-.  _.)  (``-;_   .'   │" + NL +
-		"│   '-:_    `) ) .''=.   │" + NL +
-		"│     ) )    ()'    ='   │" + NL +
-		"│     |/            (_) =│" + NL +
-		"│     -                  │" + NL +
-		"├───────────▲────────────┤" + NL +
-		"│   ☼            ●       │" + NL +
-		"└────────────────────────┘"
-}
