@@ -125,7 +125,7 @@ Made by the following people:
 
 ## Misc Info
 
-Other useful packages:
+Used packages and other useful packages:
 
   - for sunrise and sunset: https://github.com/nathan-osman/go-sunrise
   - for moon phases: https://github.com/janczer/goMoonPhase
