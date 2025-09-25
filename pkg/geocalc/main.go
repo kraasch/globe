@@ -6,7 +6,9 @@ import (
 	"time"
 
 	mp "github.com/janczer/goMoonPhase"
+	"github.com/kraasch/geo/pkg/geoweb"
 	sr "github.com/nathan-osman/go-sunrise"
+	"github.com/ringsaturn/tzf"
 )
 
 const (
@@ -15,6 +17,58 @@ const (
 	DAYFORMATSHORT  = "06-01-02"        // A Go-style format string for dates.
 	TIMEFORMAT      = "15:04"           // A Go-style format string for time (with leading zero: ie. 07:45h )
 )
+
+var tzFinder tzf.F
+
+var webBuf geoweb.WebBuffer = geoweb.NewWebBuffer()
+
+func initTzf() {
+	if tzFinder == nil {
+		var err error
+		tzFinder, err = tzf.NewDefaultFinder()
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
+func timeToUtcOffset(t time.Time) string {
+	// Get the zone name and offset in seconds
+	zoneName, offsetSeconds := t.Zone()
+	// Calculate hours and minutes from seconds
+	sign := "+"
+	if offsetSeconds < 0 {
+		sign = "-"
+		offsetSeconds = -offsetSeconds
+	}
+	hours := offsetSeconds / 3600
+	minutes := (offsetSeconds % 3600) / 60
+	// Format as UTC+X or UTC-X
+	offsetStr := fmt.Sprintf("UTC%s%d", sign, hours)
+	if minutes != 0 {
+		offsetStr += fmt.Sprintf(":%02d", minutes)
+	}
+	return fmt.Sprintf("%s (%s)", offsetStr, zoneName)
+}
+
+func ConvertLatAndLonToTimezone(lat, lon float64) string {
+	initTzf()                                // init tzFinder variable.
+	tz := tzFinder.GetTimezoneName(lon, lat) // NOTE: Takes longitude-latitude order.
+	return tz
+}
+
+func LatAndLonAndTz() string {
+	lat, lon := webBuf.GetCoords()
+	tz := ConvertLatAndLonToTimezone(lat, lon)
+	now := time.Now()
+	utcOffset := timeToUtcOffset(now)
+	return fmt.Sprintf(" □ lat+lon: %.2f, %.2f\n □ zone:    %s\n □ offset:  %s\n", lat, lon, tz, utcOffset)
+}
+
+func LatAndLon() string {
+	lat, lon := webBuf.GetCoords()
+	return fmt.Sprintf(" ▣ lat+lon: %.2f, %.2f", lat, lon)
+}
 
 func LocalAndUtcTime() string {
 	now := time.Now()

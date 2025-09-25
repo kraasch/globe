@@ -3,13 +3,11 @@ package geoweb
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"time"
 
 	ctor "github.com/kraasch/goconf/pkg/configurator"
-	tzf "github.com/ringsaturn/tzf"
 )
 
 const (
@@ -18,22 +16,20 @@ const (
 	defaultData = ""
 )
 
+func NewWebBuffer() WebBuffer {
+	return WebBuffer{}
+}
+
+type WebBuffer struct {
+	Lat         float64
+	Lon         float64
+	LastRequest time.Time // TODO: use this in order not to make too many web requests.
+}
+
 var config = ctor.Configurator{
 	ConfigFileName: configName,
 	PathToConfig:   configPath,
 	DefaultConfig:  defaultData,
-}
-
-var tzFinder tzf.F
-
-func initTzf() {
-	if tzFinder == nil {
-		var err error
-		tzFinder, err = tzf.NewDefaultFinder()
-		if err != nil {
-			panic(err)
-		}
-	}
 }
 
 // GeoLocation struct to parse JSON response from IP geolocation API.
@@ -42,10 +38,9 @@ type GeoLocation struct {
 	Lon float64 `json:"longitude"`
 }
 
-func ConvertLatAndLonToTimezone(lat, lon float64) string {
-	initTzf()                                // init tzFinder variable.
-	tz := tzFinder.GetTimezoneName(lon, lat) // NOTE: Takes longitude-latitude order.
-	return tz
+func (wb *WebBuffer) GetCoords() (float64, float64) {
+	wb.Lat, wb.Lon, _ = complicatedWebLocalization()
+	return wb.Lat, wb.Lon
 }
 
 // bufferWebLocalization looks if lon+lat have been stored recently in ~/.local/geo/data.txt
@@ -54,38 +49,6 @@ func bufferWebLocalization() (float64, float64, error) {
 	// rawData := config.AutoReadConfig()
 	// TODO: implement.
 	return 0.1, 0.1, nil
-}
-
-func LatAndLon() string {
-	lat, lon, _ := complicatedWebLocalization()
-	return fmt.Sprintf(" ▣ lat+lon: %.2f, %.2f", lat, lon)
-}
-
-func timeToUtcOffset(t time.Time) string {
-	// Get the zone name and offset in seconds
-	zoneName, offsetSeconds := t.Zone()
-	// Calculate hours and minutes from seconds
-	sign := "+"
-	if offsetSeconds < 0 {
-		sign = "-"
-		offsetSeconds = -offsetSeconds
-	}
-	hours := offsetSeconds / 3600
-	minutes := (offsetSeconds % 3600) / 60
-	// Format as UTC+X or UTC-X
-	offsetStr := fmt.Sprintf("UTC%s%d", sign, hours)
-	if minutes != 0 {
-		offsetStr += fmt.Sprintf(":%02d", minutes)
-	}
-	return fmt.Sprintf("%s (%s)", offsetStr, zoneName)
-}
-
-func LatAndLonAndTz() string {
-	lat, lon, _ := complicatedWebLocalization()
-	tz := ConvertLatAndLonToTimezone(lat, lon)
-	now := time.Now()
-	utcOffset := timeToUtcOffset(now)
-	return fmt.Sprintf(" □ lat+lon: %.2f, %.2f\n □ zone:    %s\n □ offset:  %s\n", lat, lon, tz, utcOffset)
 }
 
 // complicatedWebLocalization gets user's location based on IP.
@@ -109,15 +72,6 @@ func complicatedWebLocalization() (float64, float64, error) {
 		return 0, 0, err
 	}
 	return result.Lat, result.Lon, nil
-}
-
-// SimpleSystemLocalization returns values like "America/New_York" or "UTC", by asking the system.
-func SimpleSystemLocalization() (*time.Location, error) {
-	loc, err := time.LoadLocation("")
-	if err != nil {
-		return nil, err
-	}
-	return loc, nil
 }
 
 func Toast() string { // TODO: implement better tests and functions in this package.

@@ -31,6 +31,7 @@ var suites = []TestSuite{
 	/*
 	* Test for the function PrintDataVertically().
 	* Also kind of tests PrintDataHorizontally(), because it uses the same data.
+	* NOTE: vertical alignment is easier to test AND redundant tests would be annoying if things change.
 	 */
 	{
 		testingFunction: func(in TestList) (out string) {
