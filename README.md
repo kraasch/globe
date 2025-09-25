@@ -111,7 +111,7 @@ var geoData geo.GeoData
 geoData.PrintDataHorizontally()
 ```
 
-## Inspiration
+## Future Inspiration
 
 Some inspiring images for future development of this project:
 
