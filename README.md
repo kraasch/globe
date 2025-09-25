@@ -24,6 +24,7 @@ List of things to do
   - [ ] make sure every data in the display is read in automatically.
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
+  - [ ] buffer web retreived lat+lon data as a text file somewhere.
 
 List of things done
 
