@@ -46,7 +46,7 @@ var suites = []TestSuite{
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
 				"┌────────────────────────┐" + NL +
-					"│1-987654321 123456789+12│" + NL +
+					util.AnonymizeNumberStrings("│1-987654321 123456789+12│") + NL +
 					"├────────────▼───────────┤" + NL +
 					"│    _,--._  _._.--.--.._│" + NL +
 					"│=.--'=_',-,:`;_      .,'│" + NL +

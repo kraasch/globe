@@ -41,7 +41,7 @@ var suites = []TestSuite{ // All tests.
 				return "error in type converstion within the test: date."
 			}
 			out := MoonPhase(time)
-			return out
+			return util.Anonymize(out)
 		},
 		tests: []TestList{
 			{
@@ -52,11 +52,11 @@ var suites = []TestSuite{ // All tests.
 				},
 				expectedValue: //
 				" ○ phase:   Last Quarter" + NL +
-					" ○ age:     24.38 days (◖)" + NL +
-					" ○ dist.:   398596 km" + NL +
-					" ○ illum.:  27%" + NL +
-					" ○ new in:  05.8d 2000-01-06" + NL +
-					" ○ full in: 20.2d 1999-01-21",
+					util.AnonymizeFloatStrings(" ○ age:     24.38 days (◖)") + NL +
+					util.AnonymizeNumberStrings(" ○ dist.:   398596 km") + NL +
+					util.AnonymizeNumberStrings(" ○ illum.:  27%") + NL +
+					util.Anonymize(" ○ new in:  05.8d 2000-01-06") + NL +
+					util.Anonymize(" ○ full in: 20.2d 1999-01-21"),
 			},
 		},
 	},
@@ -122,7 +122,7 @@ var suites = []TestSuite{ // All tests.
 				return "error in type converstion within the test: date."
 			}
 			out := SunRiseAndSet(lat, lon, date)
-			return out
+			return util.Anonymize(out)
 		},
 		tests: []TestList{
 			{
@@ -134,8 +134,8 @@ var suites = []TestSuite{ // All tests.
 				},
 				// expectedValue: "sunrise: 12:51, sunset: 21:51", // NOTE: as UTC.
 				expectedValue: // NOTE: as GMT-5 (in Toronto, Canada).
-				" ☼ rise:    07:51 h" + NL +
-					" ☼ set:     16:51 h",
+				util.Anonymize(" ☼ rise:    07:51 h") + NL +
+					util.Anonymize(" ☼ set:     16:51 h"),
 			},
 		},
 	},

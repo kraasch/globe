@@ -10,6 +10,7 @@ func Anonymize(input string) string {
 	input = AnonymizeDateStrings(input)
 	input = AnonymizeShortDateStrings(input)
 	input = AnonymizeFloatStrings(input)
+	input = AnonymizeNumberStrings(input)
 	input = AnonymizeWeekdayStrings(input)
 	return input
 }
@@ -19,6 +20,13 @@ func AnonymizeWeekdayStrings(input string) string {
 	pattern := `\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b`
 	re := regexp.MustCompile(pattern)
 	result := re.ReplaceAllString(input, "aaa")
+	return result
+}
+
+func AnonymizeNumberStrings(input string) string {
+	pattern := `[0-9]+`
+	re := regexp.MustCompile(pattern)
+	result := re.ReplaceAllString(input, "NNNN")
 	return result
 }
 
