@@ -10,8 +10,10 @@ import (
 )
 
 const (
-	DAYFORMAT  = "2006-01-02, Mon" // A Go-style format string for dates.
-	TIMEFORMAT = "15:04"           // A Go-style format string for time (with leading zero: ie. 07:45h )
+	DAYFORMAT       = "2006-01-02, Mon" // A Go-style format string for dates.
+	DAYFORMATMIDDLE = "2006-01-02"      // A Go-style format string for dates.
+	DAYFORMATSHORT  = "06-01-02"        // A Go-style format string for dates.
+	TIMEFORMAT      = "15:04"           // A Go-style format string for time (with leading zero: ie. 07:45h )
 )
 
 func LocalAndUtcTime() string {
@@ -107,19 +109,17 @@ func MoonPhase(date time.Time) string {
  ○ age:     %.2f days (%s)
  ○ dist.:   %.0f km
  ○ illum.:  %.0f%%
- ○ new in:  %.1f days
- ○ full in: %.1f days
- ○ new on:  %v
- ○ full on: %v`,
+ ○ new in:  %04.1fd %s
+ ○ full in: %04.1fd %s`,
 		PhaseToText(phase.Phase()),   // convert moonphase (0-1 value) to text -- i guess.
 		phase.Age(),                  // age in days -- i guess.
 		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.
 		phase.Distance(),             // distance from earth in km -- i guess.
 		phase.Illumination()*100,     // illumination between 0 and 1 -- i guess.
 		diffInDays(date, nextNew),
+		nextNew.Format(DAYFORMATMIDDLE),
 		diffInDays(date, nextFull),
-		nextNew.Format(DAYFORMAT),
-		nextFull.Format(DAYFORMAT),
+		nextFull.Format(DAYFORMATMIDDLE),
 	)
 }
 

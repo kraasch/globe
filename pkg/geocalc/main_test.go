@@ -55,10 +55,8 @@ var suites = []TestSuite{ // All tests.
 					" ○ age:     24.38 days (◖)" + NL +
 					" ○ dist.:   398596 km" + NL +
 					" ○ illum.:  27%" + NL +
-					" ○ new in:  5.8 days" + NL +
-					" ○ full in: 20.2 days" + NL +
-					" ○ new on:  2000-01-06, Thu" + NL +
-					" ○ full on: 1999-01-21, Fri",
+					" ○ new in:  05.8d 2000-01-06" + NL +
+					" ○ full in: 20.2d 1999-01-21",
 			},
 		},
 	},
