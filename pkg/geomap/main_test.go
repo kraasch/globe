@@ -41,6 +41,7 @@ var suites = []TestSuite{ // All tests.
 			world.Lon = lon
 			world.MoonLon = moon
 			world.SunLon = sun
+			world.Inactive = false
 			out, err := world.Print()
 			if err != nil {
 				return err.Error()
@@ -89,7 +90,10 @@ var suites = []TestSuite{ // All tests.
 				return "error in type converstion within the test: second float."
 			}
 			world := NewWorld()
-			out, reserr := world.PrintCoordBox(lat, lon)
+			world.Lat = lat
+			world.Lon = lon
+			world.Inactive = false
+			out, reserr := world.PrintCoordBox()
 			if reserr != nil {
 				return "error getting a result."
 			}
@@ -131,8 +135,8 @@ var suites = []TestSuite{ // All tests.
 				return "error in type converstion within the test: second float."
 			}
 			line := NewSubLine()
-			reserr0 := line.AddMoon(lon0)
-			reserr1 := line.AddSun(lon1)
+			reserr0 := line.AddMoon(lon0, false)
+			reserr1 := line.AddSun(lon1, false)
 			out := line.Line
 			if reserr0 != nil || reserr1 != nil {
 				return "error getting a result."
@@ -168,7 +172,10 @@ var suites = []TestSuite{ // All tests.
 				return "error in type converstion within the test: second float."
 			}
 			world := NewWorld()
-			out, reserr := world.PrintCoord(lat, lon)
+			world.Lat = lat
+			world.Lon = lon
+			world.Inactive = false
+			out, reserr := world.PrintCoord()
 			if reserr != nil {
 				return "error getting a result."
 			}
@@ -377,44 +384,19 @@ var suites = []TestSuite{ // All tests.
 	}, // End of this test.
 
 	/*
-	 * Test for the function PrintInner().
+	 * Test for the function Print(), but without values, thus result should be a blank map.
 	 */
 	{
 		testingFunction: func(in TestList) string {
 			world := NewWorld()
-			out := world.PrintInner()
-			return out
-		},
-		tests: []TestList{
-			{
-				testName: "map_pretty-print_inner_00",
-				isMulti:  false,
-				inputArr: []string{},
-				expectedValue: // NOTE: this comment breaks the line.
-				"    _,--._  _._.--.--.._" + NL +
-					"=.--'=_',-,:`;_      .,'" + NL +
-					",-.  _.)  (``-;_   .'   " + NL +
-					"   '-:_    `) ) .''=.   " + NL +
-					"     ) )    ()'    ='   " + NL +
-					"     |/            (_) =" + NL +
-					"     -                  ",
-			},
-		},
-	}, // End of this test.
-
-	/*
-	 * Test for the function PrintBlank().
-	 */
-	{
-		testingFunction: func(in TestList) string {
-			world := NewWorld()
-			out := world.PrintBlank()
+			world.Inactive = true
+			out, _ := world.Print()
 			return out
 		},
 		tests: []TestList{
 			{
 				testName: "map_pretty-print_blank_00",
-				isMulti:  false,
+				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
 				"┌────────────────────────┐" + NL +
@@ -434,7 +416,7 @@ var suites = []TestSuite{ // All tests.
 		},
 	}, // End of this test.
 
-} // end of test suite.
+} // End of test suite.
 
 func TestAll(t *testing.T) {
 	for _, suite := range suites {

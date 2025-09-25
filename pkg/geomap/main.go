@@ -12,6 +12,10 @@ const (
 	markerMoon     = '●'
 	markerSun      = '☼'
 	defaultSubLine = "                        " // 24 spaces.
+	DIV            = "│"
+	TOP            = "┌────────────────────────┐"
+	NUM            = "│1-987654321 123456789+12│"
+	BOT            = "└────────────────────────┘"
 )
 
 var NL = fmt.Sprintln()
@@ -25,10 +29,11 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 	"     -                  "
 
 type World struct {
-	Lat     float64
-	Lon     float64
-	MoonLon float64
-	SunLon  float64
+	Inactive bool
+	Lat      float64
+	Lon      float64
+	MoonLon  float64
+	SunLon   float64
 }
 
 type Subline struct {
@@ -44,22 +49,22 @@ func NewSubLine() Subline {
 }
 
 // AddMoon adds a moon symbol.
-func (s *Subline) AddMoon(lon float64) error {
-	return s.Add(lon, markerMoon)
+func (s *Subline) AddMoon(lon float64, skipMark bool) error {
+	return s.Add(lon, markerMoon, skipMark)
 }
 
 // AddSun adds a sun symbol.
-func (s *Subline) AddSun(lon float64) error {
-	return s.Add(lon, markerSun)
+func (s *Subline) AddSun(lon float64, skipMark bool) error {
+	return s.Add(lon, markerSun, skipMark)
 }
 
 // Add adds a character into the marker line under the world map (which is of length 24).
-func (s *Subline) Add(lon float64, marker rune) error {
+func (s *Subline) Add(lon float64, marker rune, skipMark bool) error {
 	col, err0 := lon2col(lon)
 	if err0 != nil {
 		return err0
 	}
-	markedLine, reserr := markMap(col, 0, s.Line, marker)
+	markedLine, reserr := markMap(col, 0, s.Line, marker, skipMark)
 	s.Line = markedLine
 	return reserr
 }
@@ -136,7 +141,7 @@ func lat2row(lat float64) (int, error) {
 }
 
 // markMap replaces the character at (x, y) in the multi-line string MAP with a mark.
-func markMap(x, y int, str string, marker rune) (string, error) {
+func markMap(x, y int, str string, marker rune, markerSkip bool) (string, error) {
 	lines := strings.Split(str, "\n")
 	if y < 0 || y >= len(lines) {
 		return "", fmt.Errorf("y coordinate out of range")
@@ -147,14 +152,16 @@ func markMap(x, y int, str string, marker rune) (string, error) {
 	}
 	// Replace character at position x
 	runes := []rune(line)
-	runes[x] = marker
+	if !markerSkip {
+		runes[x] = marker
+	}
 	lines[y] = string(runes)
 
 	return strings.Join(lines, "\n"), nil
 }
 
 // makeBox creates a box around some string and adds markers around the box.
-func makeBox(lat, lon float64, str string) (string, error) { // TODO: implement.
+func makeBox(lat, lon float64, str string, skipMark bool) (string, error) { // TODO: implement.
 	col, err0 := lon2col(lon)
 	row, err1 := lat2row(lat)
 	if err0 != nil {
@@ -168,15 +175,28 @@ func makeBox(lat, lon float64, str string) (string, error) { // TODO: implement.
 	// Create top and bottom border
 	topBorder := ""
 	topBorder += "├" + strings.Repeat("─", col)
-	topBorder += "▼"
+	if skipMark {
+		topBorder += "─"
+	} else {
+		topBorder += "▼"
+	}
 	topBorder += strings.Repeat("─", lineLen-col-1) + "┤"
-	bottomBorder := strings.Replace(topBorder, "▼", "▲", 1)
+	bottomBorder := topBorder
+	if skipMark {
+		bottomBorder = strings.Replace(bottomBorder, "▼", "─", 1)
+	} else {
+		bottomBorder = strings.Replace(bottomBorder, "▼", "▲", 1)
+	}
 	var boxedLines []string
 	for i, line := range lines {
 		// Surround the line with │ and spaces
 		boxedLine := ""
 		if i == row {
-			boxedLine = fmt.Sprintf("▶%s◀", line)
+			if skipMark {
+				boxedLine = fmt.Sprintf("│%s│", line)
+			} else {
+				boxedLine = fmt.Sprintf("▶%s◀", line)
+			}
 		} else {
 			boxedLine = fmt.Sprintf("│%s│", line)
 		}
@@ -190,36 +210,26 @@ func makeBox(lat, lon float64, str string) (string, error) { // TODO: implement.
 }
 
 // Print returns a string of the ASCII world data with its current state (defined in the struct variables).
-func (w *World) Print() (string, error) {
+func (w *World) Print() (string, error) { // TODO: do error handling.
 	// create main map in box.
-	res, err0 := w.PrintCoordBox(w.Lat, w.Lon)
-	if err0 != nil {
-		return w.PrintBlank(), err0
-	}
+	box, _ := w.PrintCoordBox()
 	// create subline.
 	line := NewSubLine()
-	err1 := line.AddMoon(w.MoonLon)
-	if err1 != nil {
-		return w.PrintBlank(), err1
-	}
-	err2 := line.AddSun(w.SunLon)
-	if err2 != nil {
-		return w.PrintBlank(), err2
-	}
+	_ = line.AddMoon(w.MoonLon, w.Inactive)
+	_ = line.AddSun(w.SunLon, w.Inactive)
 	sub := line.Line
 	// put it all together.
-	border := "│"
-	res = "┌────────────────────────┐" + NL + "│1-987654321 123456789+12│" + NL + res + NL + border + sub + border + NL + "└────────────────────────┘"
+	res := TOP + NL + NUM + NL + box + NL + DIV + sub + DIV + NL + BOT
 	return res, nil
 }
 
 // PrintCoordBox uses PrintCoord and then creates a box around it.
-func (w *World) PrintCoordBox(lat, lon float64) (string, error) {
-	inner, err0 := w.PrintCoord(lat, lon)
+func (w *World) PrintCoordBox() (string, error) {
+	inner, err0 := w.PrintCoord()
 	if err0 != nil {
 		return "", err0
 	}
-	boxed, err1 := makeBox(lat, lon, inner)
+	boxed, err1 := makeBox(w.Lat, w.Lon, inner, w.Inactive)
 	if err1 != nil {
 		return "", err1
 	}
@@ -227,35 +237,15 @@ func (w *World) PrintCoordBox(lat, lon float64) (string, error) {
 }
 
 // PrintCoord calculates x and y coordinates within 2D string world map from latitude and longitude values and marks the location within the 2D string.
-func (w *World) PrintCoord(lat, lon float64) (string, error) {
-	col, err0 := lon2col(lon)
-	row, err1 := lat2row(lat)
+func (w *World) PrintCoord() (string, error) {
+	col, err0 := lon2col(w.Lon)
+	row, err1 := lat2row(w.Lat)
 	if err0 != nil {
 		return MAP, err0
 	}
 	if err1 != nil {
 		return MAP, err1
 	}
-	markedMap, err2 := markMap(col, row, MAP, markerSpot)
+	markedMap, err2 := markMap(col, row, MAP, markerSpot, w.Inactive)
 	return markedMap, err2
-}
-
-func (w *World) PrintInner() string {
-	return MAP
-}
-
-func (w *World) PrintBlank() string { // TODO: use MAP variable and do not duplicated ASCII map.
-	return "┌────────────────────────┐" + NL +
-		"│1-987654321 123456789+12│" + NL +
-		"├────────────────────────┤" + NL +
-		"│    _,--._  _._.--.--.._│" + NL +
-		"│=.--'=_',-,:`;_      .,'│" + NL +
-		"│,-.  _.)  (``-;_   .'   │" + NL +
-		"│   '-:_    `) ) .''=.   │" + NL +
-		"│     ) )    ()'    ='   │" + NL +
-		"│     |/            (_) =│" + NL +
-		"│     -                  │" + NL +
-		"├────────────────────────┤" + NL +
-		"│                        │" + NL +
-		"└────────────────────────┘"
 }
