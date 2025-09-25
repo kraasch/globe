@@ -70,7 +70,11 @@ func concatenateHorizontally(str1, str2 string) string {
 
 func (gd *GeoData) UpdateData() {
 	// TODO: implement.
-	gd.world = geomap.NewMarkedWorld(0.0, 0.0, 0.0, 0.0)
+	gd.world = geomap.NewWorld()
+	gd.world.Lat = 0.0
+	gd.world.Lon = 0.0
+	gd.world.MoonLon = 0.0
+	gd.world.SunLon = 0.0
 	gd.time = time.Now()
 }
 

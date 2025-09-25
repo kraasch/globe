@@ -35,10 +35,6 @@ type Subline struct {
 	Line string
 }
 
-func NewMarkedWorld(lat, lon, moonLon, sunLon float64) World {
-	return World{lat, lon, moonLon, sunLon}
-}
-
 func NewWorld() World {
 	return World{}
 }

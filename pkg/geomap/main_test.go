@@ -36,7 +36,11 @@ var suites = []TestSuite{ // All tests.
 			if A != nil || B != nil || C != nil || D != nil {
 				return "error in test's type conversions"
 			}
-			world := NewMarkedWorld(lat, lon, moon, sun)
+			world := NewWorld()
+			world.Lat = lat
+			world.Lon = lon
+			world.MoonLon = moon
+			world.SunLon = sun
 			out, err := world.Print()
 			if err != nil {
 				return err.Error()
