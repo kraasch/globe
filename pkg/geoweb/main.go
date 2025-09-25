@@ -61,6 +61,7 @@ func complicatedWebLocalization() (lat float64, lon float64, err error) {
 	// lon = 120.22
 	// err = nil
 	// return lat, lon, err // TODO: use the real thing later when buffering is implemented.
+
 	// Use an IP geolocation API (e.g., ip-api.com)
 	resp, err := http.Get("http://ip-api.com/json/")
 	if err != nil {

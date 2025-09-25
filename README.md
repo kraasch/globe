@@ -3,13 +3,18 @@
 
 An uncluttered, minimal and clean display of commonly used every-day astronomical data about the moon, sun, earth and the computer's location.
 
-## Demo
+## Demo and Basic Info
 
 Demo picture:
 
 <p align="center">
 <img src="./resources/example.png" width="600"/>
 </p>
+
+User interaction on the TUI:
+
+  - `u` for updating the data.
+  - `q` for quitting the program.
 
 ## Features
 
@@ -18,7 +23,7 @@ List of features
   - [X] show commonly needed astronomical data at one glance.
   - [X] local calculations (except location of computer which uses web request).
 
-## Warning
+## Usage Limits
 
 This is an early version, the web requests are not buffered yet.
 Executing the program or the tests too often will probably lead to being denied further requests.
@@ -28,10 +33,11 @@ See the section on usage limits on [ip-api.com/legal](https://ip-api.com/docs/le
 
 List of things to do
 
-  - [ ] buffer web retrieved lat+lon data as a text file somewhere.
+  - [ ] fix: buffer web retrieved lat+lon data as a text file somewhere.
+  - [ ] fix: sunrise and sunset time is not accurate (1 or 2 hours off), match the local time in the timezone.
+  - [ ] fix: sun longitude not calculated yet.
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
-  - [ ] fix sunrise and sunset time (match the local time in the timezone).
   - [ ] refine tests and explicitly test data of
     - [ ] `▣ lat+lon: 53.48, 10.22`
     - [ ] `▣ zone:    Europe/Berlin`
@@ -86,7 +92,7 @@ Get the package:
 go get github.com/kraasch/geo
 ```
 
-## Usage
+## In-Code Usage
 
 Use the program:
 
@@ -99,10 +105,10 @@ Use the package:
 
 ```go
 import (
-  "github.com/kraasch/geo"
+  geo "github.com/kraasch/geo"
 )
-
-geo.DoSomething("Hello")
+var geoData geo.GeoData
+geoData.PrintDataHorizontally()
 ```
 
 ## Inspiration

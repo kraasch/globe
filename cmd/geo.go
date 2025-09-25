@@ -17,7 +17,8 @@ var (
 	// return value.
 	output = ""
 	// flags.
-	verbose  = false
+	maponly  = false
+	infoonly = false
 	suppress = false
 	// styles.
 	styleBox = lip.NewStyle().
@@ -43,31 +44,35 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "q":
-			output = "You quit on me!"
+		case "q": // quit!
+			output = "You quit."
 			return m, tea.Quit
+		case "u": // update!
+			m.geoData.UpdateData()
+			return m, nil
 		}
 	}
-	// m.geoData.UpdateData() // TODO: use later.
 	return m, cmd
 }
 
 func (m model) View() string {
-	// var str string
-	// if verbose {
-	// 	str = "bla bla bla"
-	// } else {
-	// 	str = "bla bla"
-	// }
-	str := m.geoData.PrintDataHorizontally()
-	str = styleBox.Render(str) // To add an outer box. // TODO: maybe use or remove later.
+	var str string
+	if infoonly {
+		// TODO: implement.
+	} else if infoonly {
+		// TODO: implement.
+	} else {
+		str = m.geoData.PrintDataHorizontally()
+	}
+	str = styleBox.Render(str) // To add an outer box.
 	return lip.Place(m.width, m.height, lip.Center, lip.Center, str)
 }
 
 func main() {
 	// parse flags.
-	flag.BoolVar(&verbose, "verbose", false, "Show info")
-	flag.BoolVar(&suppress, "suppress", false, "Print nothing")
+	flag.BoolVar(&maponly, "maponly", false, "Only show the map section.")
+	flag.BoolVar(&infoonly, "infoonly", false, "Only show the info section.")
+	flag.BoolVar(&suppress, "suppress", false, "Suppress final output.")
 	flag.Parse()
 
 	// init model.
