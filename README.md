@@ -24,15 +24,11 @@ List of things to do
   - [ ] make sure every data in the display is read in automatically.
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
-  - [ ] buffer web retreived lat+lon data as a text file somewhere.
-  - [ ] introduce time zone detection.
-  - [ ] define time zone tests.
-    - [ ] find out user's time zone code, eg 'GMT'.
-    - [ ] find out user's utc shift for his time zone.
-      - eg pst=>utc-8, mst=>utc-7, cst=>utc-6, est=>utc-5.
-      - eg pdt=>utc-7, mdt=>utc-6, cdt=>utc-5, edt=>utc-4.
+  - [ ] buffer web retrieved lat+lon data as a text file somewhere.
   - [ ] refine tests and explicitly test data of
     - [ ] `▣ lat+lon: 53.48, 10.22`
+    - [ ] `▣ zone:    Europe/Berlin`
+    - [ ] `▣ offset:  UTC+2 (CEST)`
     - [ ] `▣ time:    12:52 h`
     - [ ] `🜃 utc:     10:52 h`
     - [ ] `☼ rise:    01:10 h`
@@ -50,6 +46,9 @@ List of things to do
 
 List of things done
 
+  - [X] add time zone detection.
+  - [X] find out user's time zone code, eg 'GMT'.
+  - [X] find out user's utc shift for his time zone.
   - [X] find existing go package for timezone conversion (and maybe detection).
   - [X] make a unified, somewhat pretty display for all data.
   - [X] in geocalc: convert local time of user to UTC.
