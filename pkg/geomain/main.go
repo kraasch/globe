@@ -98,15 +98,15 @@ func surround(str, find, prefix, suffix string) string {
 }
 
 func colorizeSymbols(in string) string {
-	in = surround(in, "▣", O1, N0+P9)
+	in = surround(in, "▣", O1, N0)
 	in = surround(in, "□", O1, N0)
 	in = surround(in, "🜃", B1, N0)
 	in = surround(in, "☼", R1, N0)
 	in = surround(in, "○", A3, N0)
 	in = surround(in, "▼", A2, N0)
-	in = surround(in, "◀", N0+A2, N0)
+	in = surround(in, "◀", A2, N0)
 	in = surround(in, "▲", A2, N0)
-	in = surround(in, "▶", A2, N0+P9)
+	in = surround(in, "▶", A2, N0)
 	return in
 }
 
