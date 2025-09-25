@@ -245,16 +245,10 @@ func (w *World) PrintCoord(lat, lon float64) (string, error) {
 }
 
 func (w *World) PrintInner() string {
-	return "    _,--._  _._.--.--.._" + NL +
-		"=.--'=_',-,:`;_      .,'" + NL +
-		",-.  _.)  (``-;_   .'   " + NL +
-		"   '-:_    `) ) .''=.   " + NL +
-		"     ) )    ()'    ='   " + NL +
-		"     |/            (_) =" + NL +
-		"     -                  "
+	return MAP
 }
 
-func (w *World) PrintBlank() string {
+func (w *World) PrintBlank() string { // TODO: use MAP variable and do not duplicated ASCII map.
 	return "┌────────────────────────┐" + NL +
 		"│1-987654321 123456789+12│" + NL +
 		"├────────────────────────┤" + NL +
@@ -270,7 +264,7 @@ func (w *World) PrintBlank() string {
 		"└────────────────────────┘"
 }
 
-func (w *World) PrintDemo() string {
+func (w *World) PrintDemo() string { // TODO: use MAP variable and do not duplicated ASCII map.
 	return "┌────────────────────────┐" + NL +
 		"│1-987654321 123456789+12│" + NL +
 		"├───────────▼────────────┤" + NL +
