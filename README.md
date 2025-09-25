@@ -22,7 +22,7 @@ List of features
 
 This is an early version, the web requests are not buffered yet.
 Executing the program or the tests too often will probably lead to being denied further requests.
-See the section on usage limits on [https://ip-api.com/docs/legal](ip-api.com/legal) .
+See the section on usage limits on [ip-api.com/legal](https://ip-api.com/docs/legal) .
 
 ## Tasks
 
