@@ -25,6 +25,12 @@ List of things to do
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
   - [ ] buffer web retreived lat+lon data as a text file somewhere.
+  - [ ] introduce time zone detection.
+  - [ ] define time zone tests.
+    - [ ] find out user's time zone code, eg 'GMT'.
+    - [ ] find out user's utc shift for his time zone.
+      - eg pst=>utc-8, mst=>utc-7, cst=>utc-6, est=>utc-5.
+      - eg pdt=>utc-7, mdt=>utc-6, cdt=>utc-5, edt=>utc-4.
   - [ ] refine tests and explicitly test data of
     - [ ] `▣ lat+lon: 53.48, 10.22`
     - [ ] `▣ time:    12:52 h`
@@ -42,18 +48,9 @@ List of things to do
     - [ ] `● full on: 2001-01-26, Fri`
     - [ ] `● lat+lon.`
 
-List of things to do maybe later
-
-  - [ ] introduce time zone detection.
-    - [ ] find existing go package for this.
-    - [ ] define tests.
-      - [ ] find out user's time zone code, eg 'GMT'.
-      - [ ] find out user's utc shift for his time zone.
-        - eg pst=>utc-8, mst=>utc-7, cst=>utc-6, est=>utc-5.
-        - eg pdt=>utc-7, mdt=>utc-6, cdt=>utc-5, edt=>utc-4.
-
 List of things done
 
+  - [X] find existing go package for timezone conversion (and maybe detection).
   - [X] make a unified, somewhat pretty display for all data.
   - [X] in geocalc: convert local time of user to UTC.
   - [X] in geocalc: conversion function from location+time to timezone (default to system timezone).
@@ -133,6 +130,7 @@ Other useful packages:
   - for sunrise and sunset: https://github.com/nathan-osman/go-sunrise
   - for moon phases: https://github.com/janczer/goMoonPhase
   - for lon+lat to timezone conversion: https://github.com/evanoberholster/timezoneLookup
+  - for timzeones: https://github.com/ringsaturn/tzf.
   - more symbols: https://en.wikipedia.org/wiki/Geometric_Shapes_(Unicode_block)
 
 ## License
