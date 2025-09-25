@@ -43,8 +43,9 @@ type GeoLocation struct {
 }
 
 func ConvertLatAndLonToTimezone(lat, lon float64) string {
-	initTzf()                                               // init tzFinder variable.
-	return fmt.Sprintln(tzFinder.GetTimezoneName(lon, lat)) // NOTE: Takes longitude-latitude order.
+	initTzf()                                // init tzFinder variable.
+	tz := tzFinder.GetTimezoneName(lon, lat) // NOTE: Takes longitude-latitude order.
+	return tz
 }
 
 // bufferWebLocalization looks if lon+lat have been stored recently in ~/.local/geo/data.txt
@@ -60,17 +61,31 @@ func LatAndLon() string {
 	return fmt.Sprintf(" ▣ lat+lon: %.2f, %.2f", lat, lon)
 }
 
-func UtcOffsetFromTimezone(tz string) string {
-	// now := time.Now()
-	// utc := now.UTC()
-	return ""
+func timeToUtcOffset(t time.Time) string {
+	// Get the zone name and offset in seconds
+	zoneName, offsetSeconds := t.Zone()
+	// Calculate hours and minutes from seconds
+	sign := "+"
+	if offsetSeconds < 0 {
+		sign = "-"
+		offsetSeconds = -offsetSeconds
+	}
+	hours := offsetSeconds / 3600
+	minutes := (offsetSeconds % 3600) / 60
+	// Format as UTC+X or UTC-X
+	offsetStr := fmt.Sprintf("UTC%s%d", sign, hours)
+	if minutes != 0 {
+		offsetStr += fmt.Sprintf(":%02d", minutes)
+	}
+	return fmt.Sprintf("%s (%s)", offsetStr, zoneName)
 }
 
 func LatAndLonAndTz() string {
 	lat, lon, _ := complicatedWebLocalization()
 	tz := ConvertLatAndLonToTimezone(lat, lon)
-	utcOffset := "utc+42" // TODO: impelement.
-	return fmt.Sprintf(" □ lat+lon: %.2f, %.2f\n □ zone:    %s □ offset:  %s\n", lat, lon, tz, utcOffset)
+	now := time.Now()
+	utcOffset := timeToUtcOffset(now)
+	return fmt.Sprintf(" □ lat+lon: %.2f, %.2f\n □ zone:    %s\n □ offset:  %s\n", lat, lon, tz, utcOffset)
 }
 
 // complicatedWebLocalization gets user's location based on IP.
