@@ -12,11 +12,12 @@ import (
 )
 
 const (
-	A0 = "\x1b[1;38;2;0;0;0m"       // ANSI foreground color (= black).
+	B0 = "\x1b[1;38;2;0;0;0m"       // ANSI foreground color (= black).
+	A0 = "\x1b[1;38;2;10;10;10m"    // ANSI foreground color (= gray 0).
 	A1 = "\x1b[1;38;2;100;100;100m" // ANSI foreground color (= gray 1).
 	A2 = "\x1b[1;38;2;150;150;150m" // ANSI foreground color (= gray 2).
 	A3 = "\x1b[1;38;2;200;200;200m" // ANSI foreground color (= gray 3).
-	A4 = "\x1b[1;38;2;255;255;255m" // ANSI foreground color (= white).
+	W0 = "\x1b[1;38;2;255;255;255m" // ANSI foreground color (= white).
 	R1 = "\x1b[1;38;2;255;0;0m"     // ANSI foreground color (= red).
 	G1 = "\x1b[1;38;2;0;255;0m"     // ANSI foreground color (= green).
 	B1 = "\x1b[1;38;2;0;0;255m"     // ANSI foreground color (= blue).
@@ -103,10 +104,10 @@ func colorizeSymbols(in string) string {
 	in = surround(in, "🜃", B1, N0)
 	in = surround(in, "☼", R1, N0)
 	in = surround(in, "○", A3, N0)
-	in = surround(in, "▼", A2, N0)
-	in = surround(in, "◀", A2, N0)
-	in = surround(in, "▲", A2, N0)
-	in = surround(in, "▶", A2, N0)
+	// in = surround(in, "▼", A0, N0)
+	// in = surround(in, "◀", A0, N0)
+	// in = surround(in, "▲", A0, N0)
+	// in = surround(in, "▶", A0, N0)
 	return in
 }
 
