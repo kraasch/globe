@@ -6,7 +6,7 @@ import (
 	"time"
 
 	mp "github.com/janczer/goMoonPhase"
-	gw "github.com/kraasch/geo/pkg/geoweb"
+	geoweb "github.com/kraasch/geo/pkg/geoweb"
 	sr "github.com/nathan-osman/go-sunrise"
 	tzf "github.com/ringsaturn/tzf"
 )
@@ -20,7 +20,7 @@ const (
 
 var tzFinder tzf.F
 
-var webBuf gw.WebBuffer = gw.NewWebBuffer()
+var webBuf geoweb.WebBuffer = geoweb.NewWebBuffer()
 
 func initTzf() {
 	if tzFinder == nil {
