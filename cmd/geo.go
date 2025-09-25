@@ -44,10 +44,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "q": // quit!
+		case "q": // quit.
 			output = "You quit."
 			return m, tea.Quit
-		case "u": // update!
+		case "u": // update.
 			m.geoData.UpdateData()
 			return m, nil
 		}
@@ -59,7 +59,7 @@ func (m model) View() string {
 	var str string
 	if infoonly {
 		// TODO: implement.
-	} else if infoonly {
+	} else if maponly {
 		// TODO: implement.
 	} else {
 		str = m.geoData.PrintDataHorizontally()
