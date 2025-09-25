@@ -19,7 +19,7 @@ func LocalAndUtcTime() string {
 	formattedNow := now.Format(TIMEFORMAT)
 	utc := now.UTC()
 	formattedUtc := utc.Format(TIMEFORMAT)
-	return fmt.Sprintf(" ▣ time:    %s h\n 🜃 utc:     %s h", formattedNow, formattedUtc)
+	return fmt.Sprintf(" □ time:    %s h\n 🜃 utc:     %s h", formattedNow, formattedUtc)
 }
 
 func PhaseToText(phase float64) string {
@@ -103,14 +103,14 @@ func MoonPhase(date time.Time) string {
 	nextNew := unixToDate(phase.NextNewMoon())   // in unix format (ms since 1970) -- i guess.
 	nextFull := unixToDate(phase.NextFullMoon()) // in unix format (ms since 1970) -- i guess.
 	return fmt.Sprintf(
-		` ● phase:   %s
- ● age:     %.2f days (%s)
- ● dist.:   %.0f km
- ● illum.:  %.0f%%
- ● new in:  %.1f days
- ● full in: %.1f days
- ● new on:  %v
- ● full on: %v`,
+		` ○ phase:   %s
+ ○ age:     %.2f days (%s)
+ ○ dist.:   %.0f km
+ ○ illum.:  %.0f%%
+ ○ new in:  %.1f days
+ ○ full in: %.1f days
+ ○ new on:  %v
+ ○ full on: %v`,
 		PhaseToText(phase.Phase()),   // convert moonphase (0-1 value) to text -- i guess.
 		phase.Age(),                  // age in days -- i guess.
 		PhaseToSymbol(phase.Phase()), // convert moonphase (0-1 value) to symbol -- i guess.

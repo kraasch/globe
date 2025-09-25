@@ -70,7 +70,7 @@ func LatAndLonAndTz() string {
 	lat, lon, _ := complicatedWebLocalization()
 	tz := ConvertLatAndLonToTimezone(lat, lon)
 	utcOffset := "utc+42" // TODO: impelement.
-	return fmt.Sprintf(" ▣ lat+lon: %.2f, %.2f\n ▣ zone:    %s ▣ offset:  %s\n", lat, lon, tz, utcOffset)
+	return fmt.Sprintf(" □ lat+lon: %.2f, %.2f\n □ zone:    %s □ offset:  %s\n", lat, lon, tz, utcOffset)
 }
 
 // complicatedWebLocalization gets user's location based on IP.

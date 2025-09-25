@@ -58,15 +58,15 @@ var suites = []TestSuite{
 					"├────────────▲───────────┤" + NL +
 					"│            ☼           │" + NL +
 					"└────────────────────────┘" + NL +
-					" ● phase:   Waning Gibbous" + NL +
-					util.Anonymize(" ● age:     19.76 days (◐)") + NL +
-					util.Anonymize(" ● dist.:   371578 km") + NL +
-					util.Anonymize(" ● illum.:  74%") + NL +
-					util.Anonymize(" ● new in:  5.8 days") + NL +
-					util.Anonymize(" ● full in: 20.2 days") + NL +
-					util.Anonymize(" ● new on:  2000-01-06, Thu") + NL +
-					util.Anonymize(" ● full on: 2000-01-21, Fri") + NL +
-					util.Anonymize(" ▣ time:    22:02 h") + NL +
+					" ○ phase:   Waning Gibbous" + NL +
+					util.Anonymize(" ○ age:     19.76 days (◐)") + NL +
+					util.Anonymize(" ○ dist.:   371578 km") + NL +
+					util.Anonymize(" ○ illum.:  74%") + NL +
+					util.Anonymize(" ○ new in:  5.8 days") + NL +
+					util.Anonymize(" ○ full in: 20.2 days") + NL +
+					util.Anonymize(" ○ new on:  2000-01-06, Thu") + NL +
+					util.Anonymize(" ○ full on: 2000-01-21, Fri") + NL +
+					util.Anonymize(" □ time:    22:02 h") + NL +
 					util.Anonymize(" 🜃 utc:     20:02 h") + NL +
 					util.Anonymize(" ☼ rise:    01:10 h") + NL +
 					util.Anonymize(" ☼ set:     13:17 h"),

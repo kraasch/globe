@@ -23,7 +23,7 @@ const (
 	O1 = "\x1b[1;38;2;255;150;0m"   // ANSI foreground color (= orange).
 	Y1 = "\x1b[1;38;2;255;255;0m"   // ANSI foreground color (= yellow).
 	N0 = "\x1b[0m"                  // ANSI clear formatting.
-	// B1 = "\x1b[48;5;56m"            // ANSI background color (= purple). // TODO: remove later.
+	P9 = "\x1b[48;5;56m"            // ANSI background color (= purple). // TODO: remove later.
 	// B2 = "\x1b[1;38;2;100;100;100m" // ANSI foreground color (= gray). // TODO: remove later.
 )
 
@@ -98,14 +98,15 @@ func surround(str, find, prefix, suffix string) string {
 }
 
 func colorizeSymbols(in string) string {
-	in = surround(in, "▣", O1, N0)
+	in = surround(in, "▣", O1, N0+P9)
+	in = surround(in, "□", O1, N0)
 	in = surround(in, "🜃", B1, N0)
 	in = surround(in, "☼", R1, N0)
-	in = surround(in, "●", A3, N0)
+	in = surround(in, "○", A3, N0)
 	in = surround(in, "▼", A2, N0)
-	in = surround(in, "◀", A2, N0)
+	in = surround(in, "◀", N0+A2, N0)
 	in = surround(in, "▲", A2, N0)
-	in = surround(in, "▶", A2, N0)
+	in = surround(in, "▶", A2, N0+P9)
 	return in
 }
 

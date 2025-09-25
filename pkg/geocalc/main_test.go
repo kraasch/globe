@@ -51,14 +51,14 @@ var suites = []TestSuite{ // All tests.
 					"2000-01-01", // Some date.
 				},
 				expectedValue: //
-				" ● phase:   Last Quarter" + NL +
-					" ● age:     24.38 days (◖)" + NL +
-					" ● dist.:   398596 km" + NL +
-					" ● illum.:  27%" + NL +
-					" ● new in:  5.8 days" + NL +
-					" ● full in: 20.2 days" + NL +
-					" ● new on:  2000-01-06, Thu" + NL +
-					" ● full on: 2000-01-21, Fri",
+				" ○ phase:   Last Quarter" + NL +
+					" ○ age:     24.38 days (◖)" + NL +
+					" ○ dist.:   398596 km" + NL +
+					" ○ illum.:  27%" + NL +
+					" ○ new in:  5.8 days" + NL +
+					" ○ full in: 20.2 days" + NL +
+					" ○ new on:  2000-01-06, Thu" + NL +
+					" ○ full on: 1999-01-21, Fri",
 			},
 		},
 	},
@@ -156,7 +156,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // line break.
-				util.AnonymizeTimeStrings(" ▣ time:    17:00 h") + NL +
+				util.AnonymizeTimeStrings(" □ time:    17:00 h") + NL +
 					util.AnonymizeTimeStrings(" 🜃 utc:     03:12 h"),
 			},
 		},
