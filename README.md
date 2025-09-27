@@ -136,6 +136,24 @@ Made by the following people:
 
   - see Github info.
 
+## Mini Astronomical Primer
+
+**Geographic Coordinate System**
+Data: Longitude and latitude.
+Use: Stable reference on earth, navigating earth's surface, i.e. use of GPS or Google maps.
+
+**Ecliptic Coordinate System**
+Data: Ecliptic longitude and ecliptic latitude.
+Use: Stable reference frame for sun and its planets, same for all observers on earth.
+
+**Horizontal Coordinate System**
+Data: Altitude (angle of an observed object), Azimuth (direction of the object along the horizon).
+Use: References observed objects in the night sky, local to observer, changes during night with earth's rotation.
+
+**Equatorial Coordinate System**
+Data: Declination (how far north or south a celestial object is from the celestial equator), Right Ascension (hours, minutes and seconds along the celestial equator from a reference point called vernal equinox).
+Use: Reference system fixed with respect to distant stars, slowly changing over long periods of time.
+
 ## Misc Info
 
 Used packages:
