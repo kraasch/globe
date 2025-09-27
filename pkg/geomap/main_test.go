@@ -31,6 +31,64 @@ var suites = []TestSuite{ // All tests.
 		testingFunction: func(in TestList) string {
 			lat, A := strconv.ParseFloat(in.inputArr[0], 64)
 			lon, B := strconv.ParseFloat(in.inputArr[1], 64)
+			moonLat, C1 := strconv.ParseFloat(in.inputArr[2], 64)
+			moonLon, C2 := strconv.ParseFloat(in.inputArr[3], 64)
+			sunLat, D1 := strconv.ParseFloat(in.inputArr[4], 64)
+			sunLon, D2 := strconv.ParseFloat(in.inputArr[5], 64)
+			if A != nil || B != nil || C1 != nil || C2 != nil || D1 != nil || D2 != nil {
+				return "error in test's type conversions"
+			}
+			world := NewWorld()
+			world.Lat = lat
+			world.Lon = lon
+			world.MoonLat = moonLat
+			world.MoonLon = moonLon
+			world.SunLat = sunLat
+			world.SunLon = sunLon
+			world.ShowSidebar = true
+			world.Inactive = false
+			out, err := world.Print()
+			if err != nil {
+				return err.Error()
+			}
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_full-print_basic_00",
+				isMulti:  true,
+				inputArr: []string{
+					"0.0",    // spot, latitude, ie (=).
+					"+179.0", // spot, longitude, ie (").
+					"-89.0",  // moon, latitude, ie (=).
+					"+179.0", // moon, longitude, ie (").
+					"0.0",    // sun, latitude, ie (=).
+					"0.0",    // sun, longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"..┌────────────────────────┐" + NL +
+					"..│1-987654321 123456789+12│" + NL +
+					"┌─├───────────────────────▼┤" + NL +
+					"│ │    _,--._  _._.--.--.._│" + NL +
+					"│ │=.--'=_',-,:`;_      .,'│" + NL +
+					"│ │,-.  _.)  (``-;_   .'   │" + NL +
+					"│☼▶   '-:_    `) ) .''=.  ▣◀" + NL +
+					"│ │     ) )    ()'    ='   │" + NL +
+					"│ │     |/            (_) =│" + NL +
+					"│●│     -                  │" + NL +
+					"└─├───────────────────────▲┤" + NL +
+					"..│            ☼          ●│" + NL +
+					"..└────────────────────────┘",
+			},
+		},
+	}, // End of this test.
+	/*
+	 * Test for the function Print().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			lat, A := strconv.ParseFloat(in.inputArr[0], 64)
+			lon, B := strconv.ParseFloat(in.inputArr[1], 64)
 			moon, C := strconv.ParseFloat(in.inputArr[2], 64)
 			sun, D := strconv.ParseFloat(in.inputArr[3], 64)
 			if A != nil || B != nil || C != nil || D != nil {

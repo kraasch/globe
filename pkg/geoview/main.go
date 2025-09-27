@@ -40,33 +40,6 @@ func New() GeoData {
 	return GeoData{}
 }
 
-// concatenateHorizontally concatenates two multi-line strings horizontally
-func concatenateHorizontally(str1, str2 string) string {
-	// Split the input strings into slices of strings (lines)
-	lines1 := strings.Split(str1, "\n")
-	lines2 := strings.Split(str2, "\n")
-	// Determine the maximum number of lines in both input strings
-	maxLines := max(len(lines2), len(lines1))
-	// Prepare an output slice of strings
-	var result []string
-	// Iterate through each line, combining lines horizontally
-	for i := range maxLines {
-		// Ensure we don't exceed the length of either slice by checking bounds
-		line1 := ""
-		line2 := ""
-		if i < len(lines1) {
-			line1 = lines1[i]
-		}
-		if i < len(lines2) {
-			line2 = lines2[i]
-		}
-		// Concatenate the lines horizontally
-		result = append(result, line1+line2)
-	}
-	// Join the result lines into a single string, separated by newlines
-	return strings.Join(result, "\n")
-}
-
 func (gd *GeoData) UpdateData() {
 	gd.time = time.Now()
 	gd.world = geomap.NewWorld()
@@ -129,7 +102,7 @@ func (gd *GeoData) PrintDataHorizontally() string {
 	gd.UpdateData()
 	world := gd.PrintWorld()
 	info := gd.PrintInfo()
-	str := concatenateHorizontally(world, info)
+	str := geomap.ConcatenateHorizontally(world, info)
 	// TODO: implement color flag and check for it here.
 	str = colorizeSymbols(str)
 	return str

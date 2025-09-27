@@ -12,10 +12,14 @@ const (
 	markerMoon     = '●'
 	markerSun      = '☼'
 	defaultSubLine = "                        " // 24 spaces.
+	defaultSidebar = " \n \n \n \n \n \n "      // 7 spaces.
 	DIV            = "│"
 	TOP            = "┌────────────────────────┐"
 	NUM            = "│1-987654321 123456789+12│"
 	BOT            = "└────────────────────────┘"
+	SIDETOP        = "..\n..\n┌─"
+	SIDEBOT        = "└─\n..\n.."
+	SIDESIDE       = "│\n│\n│\n│\n│\n│\n│"
 )
 
 var NL = fmt.Sprintln()
@@ -29,11 +33,18 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 	"     -                  "
 
 type World struct {
-	Inactive bool
-	Lat      float64
-	Lon      float64
-	MoonLon  float64
-	SunLon   float64
+	Inactive    bool
+	ShowSidebar bool
+	Lat         float64
+	Lon         float64
+	MoonLat     float64
+	MoonLon     float64
+	SunLat      float64
+	SunLon      float64
+}
+
+type Sidebar struct {
+	Bar string
 }
 
 type Subline struct {
@@ -44,8 +55,20 @@ func NewWorld() World {
 	return World{}
 }
 
+func NewSidebar() Sidebar {
+	return Sidebar{defaultSidebar}
+}
+
 func NewSubLine() Subline {
 	return Subline{defaultSubLine}
+}
+
+func (s *Sidebar) AddMoon(lat float64, skipMark bool) error {
+	return s.Add(lat, markerMoon, skipMark)
+}
+
+func (s *Sidebar) AddSun(lat float64, skipMark bool) error {
+	return s.Add(lat, markerSun, skipMark)
 }
 
 // AddMoon adds a moon symbol.
@@ -66,6 +89,16 @@ func (s *Subline) Add(lon float64, marker rune, skipMark bool) error {
 	}
 	markedLine, reserr := markMap(col, 0, s.Line, marker, skipMark)
 	s.Line = markedLine
+	return reserr
+}
+
+func (s *Sidebar) Add(lat float64, marker rune, skipMark bool) error {
+	row, err0 := lat2row(lat)
+	if err0 != nil {
+		return err0
+	}
+	markedBar, reserr := markMap(0, row, s.Bar, marker, skipMark)
+	s.Bar = markedBar
 	return reserr
 }
 
@@ -220,7 +253,18 @@ func (w *World) Print() (string, error) { // TODO: do error handling.
 	sub := line.Line
 	// put it all together.
 	res := TOP + NL + NUM + NL + box + NL + DIV + sub + DIV + NL + BOT
-	return res, nil
+	if !w.ShowSidebar {
+		return res, nil
+	} else {
+		side := NewSidebar()
+		_ = side.AddMoon(w.MoonLat, w.Inactive)
+		_ = side.AddSun(w.SunLat, w.Inactive)
+		bar := side.Bar
+		bar = ConcatenateHorizontally(SIDESIDE, bar)
+		bar = SIDETOP + NL + bar + NL + SIDEBOT
+		res2 := ConcatenateHorizontally(bar, res)
+		return res2, nil
+	}
 }
 
 // PrintCoordBox uses PrintCoord and then creates a box around it.
@@ -248,4 +292,31 @@ func (w *World) PrintCoord() (string, error) {
 	}
 	markedMap, err2 := markMap(col, row, MAP, markerSpot, w.Inactive)
 	return markedMap, err2
+}
+
+// ConcatenateHorizontally concatenates two multi-line strings horizontally
+func ConcatenateHorizontally(str1, str2 string) string {
+	// Split the input strings into slices of strings (lines)
+	lines1 := strings.Split(str1, "\n")
+	lines2 := strings.Split(str2, "\n")
+	// Determine the maximum number of lines in both input strings
+	maxLines := max(len(lines2), len(lines1))
+	// Prepare an output slice of strings
+	var result []string
+	// Iterate through each line, combining lines horizontally
+	for i := range maxLines {
+		// Ensure we don't exceed the length of either slice by checking bounds
+		line1 := ""
+		line2 := ""
+		if i < len(lines1) {
+			line1 = lines1[i]
+		}
+		if i < len(lines2) {
+			line2 = lines2[i]
+		}
+		// Concatenate the lines horizontally
+		result = append(result, line1+line2)
+	}
+	// Join the result lines into a single string, separated by newlines
+	return strings.Join(result, "\n")
 }
