@@ -35,7 +35,7 @@ List of things to do
 
   - [ ] fix: buffer web retrieved lat+lon data as a text file somewhere.
   - [ ] fix: sunrise and sunset time is not accurate (1 or 2 hours off), match the local time in the timezone.
-  - [ ] fix: sun longitude not calculated yet.
+  - [ ] fix: sun and moon location (lat+lon) seem delayed. Either visual bug or wrong calculation. Create some tests.
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
   - [ ] refine tests and explicitly test data of
