@@ -45,9 +45,12 @@ func (gd *GeoData) UpdateData() {
 	gd.world = geomap.NewWorld()
 	geocalc.WebBufUpdate()
 	lat, lon := geocalc.WebBufCoords()
+	gd.world.ShowSidebar = true
 	gd.world.Lat = lat
 	gd.world.Lon = lon
+	gd.world.MoonLat = geocalc.MoonLat(gd.time)
 	gd.world.MoonLon = geocalc.MoonLon(gd.time)
+	gd.world.SunLat = geocalc.SunLat(gd.time)
 	gd.world.SunLon = geocalc.SunLon(gd.time)
 }
 
