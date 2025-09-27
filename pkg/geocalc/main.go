@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/hablullah/go-sampa"
 	mp "github.com/janczer/goMoonPhase"
 	geoweb "github.com/kraasch/geo/pkg/geoweb"
 	sr "github.com/nathan-osman/go-sunrise"
+	solar "github.com/observerly/sidera/pkg/solar"
 	tzf "github.com/ringsaturn/tzf"
 )
 
@@ -144,13 +146,25 @@ func diffInDays(date1, date2 time.Time) float64 {
 	return diff.Hours() / 24
 }
 
+func MoonLat(date time.Time) float64 { // TODO: implement.
+	return -80.0
+}
+
 func MoonLon(date time.Time) float64 {
 	phase := mp.New(date)
 	return phase.Longitude() - 180.0
 }
 
+func SunLat(date time.Time) float64 {
+	equatorialCoord := solar.GetEquatorialCoordinate(date)
+	return equatorialCoord.Declination
+}
+
 func SunLon(date time.Time) float64 {
-	return -80.0
+	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81} // NOTE: just somewhere on this planet, to kick off a calculation with much overhead.
+	sunpos, _ := sampa.GetSunPosition(date, jakarta, nil)
+	sl := sunpos.GeocentricLongitude
+	return sl - 180.0
 }
 
 func MoonPhaseVerbose(date time.Time) string {
