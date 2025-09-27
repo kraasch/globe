@@ -147,6 +147,8 @@ Used packages:
 
 Other useful packages:
 
+  - all kinds of astronomical algorithms: https://github.com/observerly
+    - might contain sun position algorithm: https://github.com/observerly/sidera
   - for sun and moon position, dependent on the observer's location on earth: https://github.com/hablullah/go-sampa
     - NOTE: this package can calculate location-dependent sunrise and sunset.
   - can provide the sun's position (latitude and longitude): https://github.com/sj14/astral
