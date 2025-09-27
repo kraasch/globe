@@ -179,6 +179,7 @@ Other useful resources:
   - gist with usage example of soniakeys/meeus: https://gist.github.com/soniakeys/b066347d58a59ac6f3b4
   - info about different coordinate systems: https://pkg.go.dev/github.com/observerly/sidera@v0.7.0/pkg/coordinates
   - info on side real time: https://astro.dur.ac.uk/~ams/users/lst.html
+  - calculator for sub-solar point from NASA: https://wgc.jpl.nasa.gov:8443/webgeocalc/#SubSolarPoint
 
 ## License
 
