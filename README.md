@@ -178,6 +178,7 @@ Other useful resources:
   - info and implementation of some known algorithms: https://pkg.go.dev/github.com/soniakeys/meeus/v3
   - gist with usage example of soniakeys/meeus: https://gist.github.com/soniakeys/b066347d58a59ac6f3b4
   - info about different coordinate systems: https://pkg.go.dev/github.com/observerly/sidera@v0.7.0/pkg/coordinates
+  - info on side real time: https://astro.dur.ac.uk/~ams/users/lst.html
 
 ## License
 
