@@ -155,6 +155,7 @@ Other useful resources:
 
   - more symbols: https://en.wikipedia.org/wiki/Geometric_Shapes_(Unicode_block)
   - good info on calculating sun's position: https://observablehq.com/@danleesmith/meeus-solar-position-calculations
+  - info and implementation of some known algorithms: https://pkg.go.dev/github.com/soniakeys/meeus/v3
 
 ## License
 
