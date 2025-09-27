@@ -146,21 +146,24 @@ func diffInDays(date1, date2 time.Time) float64 {
 	return diff.Hours() / 24
 }
 
-func MoonLat(date time.Time) float64 { // TODO: implement.
-	return -80.0
+func MoonLat(date time.Time) float64 { // TODO: fix.
+	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81} // NOTE: just somewhere on this planet, to kick off a calculation with much overhead.
+	moonpos, _ := sampa.GetMoonPosition(date, jakarta, nil)
+	ml := moonpos.GeocentricLongitude
+	return ml - 180.0
 }
 
-func MoonLon(date time.Time) float64 {
+func MoonLon(date time.Time) float64 { // TODO: fix.
 	phase := mp.New(date)
 	return phase.Longitude() - 180.0
 }
 
-func SunLat(date time.Time) float64 {
+func SunLat(date time.Time) float64 { // TODO: fix.
 	equatorialCoord := solar.GetEquatorialCoordinate(date)
 	return equatorialCoord.Declination
 }
 
-func SunLon(date time.Time) float64 {
+func SunLon(date time.Time) float64 { // TODO: fix.
 	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81} // NOTE: just somewhere on this planet, to kick off a calculation with much overhead.
 	sunpos, _ := sampa.GetSunPosition(date, jakarta, nil)
 	sl := sunpos.GeocentricLongitude
