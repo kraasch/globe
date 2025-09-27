@@ -150,7 +150,7 @@ func MoonLon(date time.Time) float64 {
 }
 
 func SunLon(date time.Time) float64 {
-	return +80.0 // TODO: implement for real.
+	return -80.0
 }
 
 func MoonPhaseVerbose(date time.Time) string {

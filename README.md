@@ -138,13 +138,23 @@ Made by the following people:
 
 ## Misc Info
 
-Used packages and other useful packages:
+Used packages:
 
   - for sunrise and sunset: https://github.com/nathan-osman/go-sunrise
   - for moon phases: https://github.com/janczer/goMoonPhase
   - for lon+lat to timezone conversion: https://github.com/evanoberholster/timezoneLookup
   - for timzeones: https://github.com/ringsaturn/tzf.
+
+Other useful packages:
+
+  - for sun and moon position, dependent on the observer's location on earth: https://github.com/hablullah/go-sampa
+    - NOTE: this package can calculate location-dependent sunrise and sunset.
+  - can provide the sun's position (latitude and longitude): https://github.com/sj14/astral
+
+Other useful resources:
+
   - more symbols: https://en.wikipedia.org/wiki/Geometric_Shapes_(Unicode_block)
+  - good info on calculating sun's position: https://observablehq.com/@danleesmith/meeus-solar-position-calculations
 
 ## License
 
