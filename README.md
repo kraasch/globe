@@ -180,6 +180,7 @@ Other useful resources:
   - info about different coordinate systems: https://pkg.go.dev/github.com/observerly/sidera@v0.7.0/pkg/coordinates
   - info on side real time: https://astro.dur.ac.uk/~ams/users/lst.html
   - calculator for sub-solar point from NASA: https://wgc.jpl.nasa.gov:8443/webgeocalc/#SubSolarPoint
+  - web tool for visualization of sun and earth related data: https://www.sunearthtools.com/dp/tools/pos_sun.php?lang=en
 
 ## License
 
