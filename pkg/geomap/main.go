@@ -303,7 +303,8 @@ func (w *World) Print() (string, error) {
 		if w.Padded {
 			sss = sidetopPadded + NL + bar + NL + sidebotPadded
 		} else {
-			// NOTE: if there is no sidebar padding is needed.
+			// NOTE: if there is no sidebar padding is still needed,
+			// but if there is not bot or top, padding must not be inserted.
 			if w.ShowBot && w.ShowTop {
 				sss = sidetopPadded + NL + bar + NL + sidebotPadded // as if padded.
 			} else if w.ShowBot && !w.ShowTop {

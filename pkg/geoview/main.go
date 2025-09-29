@@ -32,12 +32,19 @@ type GeoData struct {
 	world geomap.World
 }
 
-func Toast() string { // TODO: remove later.
-	return "Toast!"
-}
-
 func New() GeoData {
 	return GeoData{}
+}
+
+func (gd *GeoData) Toggle(barString string) {
+	switch barString {
+	case "top":
+		gd.world.ShowTop = !gd.world.ShowTop
+	case "bot":
+		gd.world.ShowBot = !gd.world.ShowBot
+	case "side":
+		gd.world.ShowSide = !gd.world.ShowSide
+	}
 }
 
 func (gd *GeoData) UpdateData() {
@@ -45,6 +52,12 @@ func (gd *GeoData) UpdateData() {
 	gd.world = geomap.NewWorld()
 	geocalc.WebBufUpdate()
 	lat, lon := geocalc.WebBufCoords()
+	gd.world.Padded = true
+	// gd.world.ShowTop = showTop
+	// gd.world.ShowBot = showBot
+	// gd.world.ShowSide = showSide
+	gd.world.ShowTop = true
+	gd.world.ShowBot = true
 	gd.world.ShowSide = true
 	gd.world.Lat = lat
 	gd.world.Lon = lon
@@ -65,14 +78,6 @@ func (gd *GeoData) PrintDataVertically() string {
 		return err.Error()
 	}
 	return data + NL + moon + NL + utc + NL + sun
-}
-
-func (gd *GeoData) PrintWorld() string {
-	data, err := gd.world.Print()
-	if err != nil {
-		return err.Error()
-	}
-	return data
 }
 
 func surround(str, find, prefix, suffix string) string {
@@ -103,8 +108,7 @@ func (gd *GeoData) PrintInfo() string {
 }
 
 func (gd *GeoData) PrintDataHorizontally() string {
-	gd.UpdateData()
-	world := gd.PrintWorld()
+	world, _ := gd.world.Print()
 	info := gd.PrintInfo()
 	str := geomap.ConcatenateHorizontally(world, info)
 	// TODO: implement color flag and check for it here.

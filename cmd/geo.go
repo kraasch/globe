@@ -50,6 +50,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "u": // update.
 			m.geoData.UpdateData()
 			return m, nil
+		case "t": // toggle show top.
+			m.geoData.Toggle("top")
+			return m, nil
+		case "b": // toggle show bot.
+			m.geoData.Toggle("bot")
+			return m, nil
+		case "s": // toggle show side.
+			m.geoData.Toggle("side")
+			return m, nil
 		}
 	}
 	return m, cmd
@@ -77,6 +86,7 @@ func main() {
 
 	// init model.
 	m := model{0, 0, geo.New()}
+	m.geoData.UpdateData()
 
 	// start bubbletea.
 	if _, err := tea.NewProgram(m, tea.WithAltScreen()).Run(); err != nil {
