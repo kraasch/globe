@@ -17,8 +17,8 @@ const (
 	div              = "│"
 	top              = "┌────────────────────────┐"
 	num              = "│1-987654321 123456789+12│"
-	none             = "                          "
 	bot              = "└────────────────────────┘"
+	padding          = "  "
 	sidetop          = "   \n   \n┌──" // with padding.
 	sidebot          = "└──\n   \n   " // with padding.
 	sideline         = "│\n│\n│\n│\n│\n│\n│"
@@ -297,14 +297,14 @@ func (w *World) PrintPadded() string {
 	if w.ShowTop {
 		ttt = top + NL + num + NL
 	} else {
-		ttt = defaultSubLine + NL + defaultSubLine + NL
+		ttt = defaultSubLine + padding + NL + defaultSubLine + padding + NL
 	}
 	// create a padded bot.
 	bbb := ""
 	if w.ShowBot {
 		bbb = div + defaultSubLine + div + NL + bot
 	} else {
-		bbb = defaultSubLine + NL + defaultSubLine
+		bbb = defaultSubLine + padding + NL + defaultSubLine + padding
 	}
 	// create a padded side.
 	sss := ""

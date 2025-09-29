@@ -3,7 +3,9 @@ package geomap
 import (
 
 	// this is a test.
+	"fmt"
 	"strconv"
+	"strings"
 	"testing"
 
 	// other imports.
@@ -20,6 +22,26 @@ type TestList struct {
 type TestSuite struct {
 	testingFunction func(in TestList) string
 	tests           []TestList
+}
+
+func prefixLinesWithNumber(input string) string {
+	lines := strings.Split(input, "\n")
+	totalLines := len(lines)
+	// Determine the width needed for zero-padding.
+	width := len(fmt.Sprintf("%d", totalLines))
+	for i, line := range lines {
+		lineNumber := i + 1
+		// Zero-pad the line number.
+		paddedNumber := fmt.Sprintf("%0*d", width, lineNumber)
+		lines[i] = fmt.Sprintf("%s: %s", paddedNumber, line)
+	}
+	return strings.Join(lines, "\n")
+}
+
+func space2dot(in string) string {
+	res := strings.ReplaceAll(in, " ", ".")
+	res = prefixLinesWithNumber(res)
+	return res
 }
 
 var suites = []TestSuite{ // All tests.
@@ -453,7 +475,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = false
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -461,7 +483,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"                             " + NL +
+				space2dot("                             " + NL +
 					"                             " + NL +
 					"   ┌────────────────────────┐" + NL +
 					"   │    _,--._  _._.--.--.._│" + NL +
@@ -473,7 +495,7 @@ var suites = []TestSuite{ // All tests.
 					"   │     -                  │" + NL +
 					"   └────────────────────────┘" + NL +
 					"                             " + NL +
-					"                             ",
+					"                             "),
 			},
 		},
 	}, // End of this test.
@@ -490,7 +512,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = false
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -498,7 +520,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"   ┌────────────────────────┐" + NL +
+				space2dot("   ┌────────────────────────┐" + NL +
 					"   │1-987654321 123456789+12│" + NL +
 					"   ┌────────────────────────┐" + NL +
 					"   │    _,--._  _._.--.--.._│" + NL +
@@ -510,7 +532,7 @@ var suites = []TestSuite{ // All tests.
 					"   │     -                  │" + NL +
 					"   └────────────────────────┘" + NL +
 					"                             " + NL +
-					"                             ",
+					"                             "),
 			},
 		},
 	}, // End of this test.
@@ -527,7 +549,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = true
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -535,7 +557,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"                             " + NL +
+				space2dot("                             " + NL +
 					"                             " + NL +
 					"   ┌────────────────────────┐" + NL +
 					"   │    _,--._  _._.--.--.._│" + NL +
@@ -547,7 +569,7 @@ var suites = []TestSuite{ // All tests.
 					"   │     -                  │" + NL +
 					"   └────────────────────────┘" + NL +
 					"   │                        │" + NL +
-					"   └────────────────────────┘",
+					"   └────────────────────────┘"),
 			},
 		},
 	}, // End of this test.
@@ -564,7 +586,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = true
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -572,7 +594,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"   ┌────────────────────────┐" + NL +
+				space2dot("   ┌────────────────────────┐" + NL +
 					"   │1-987654321 123456789+12│" + NL +
 					"   ┌────────────────────────┐" + NL +
 					"   │    _,--._  _._.--.--.._│" + NL +
@@ -584,7 +606,7 @@ var suites = []TestSuite{ // All tests.
 					"   │     -                  │" + NL +
 					"   └────────────────────────┘" + NL +
 					"   │                        │" + NL +
-					"   └────────────────────────┘",
+					"   └────────────────────────┘"),
 			},
 		},
 	}, // End of this test.
@@ -601,7 +623,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = false
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -609,7 +631,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"                             " + NL +
+				space2dot("                             " + NL +
 					"                             " + NL +
 					"┌──┌────────────────────────┐" + NL +
 					"│  │    _,--._  _._.--.--.._│" + NL +
@@ -621,7 +643,7 @@ var suites = []TestSuite{ // All tests.
 					"│  │     -                  │" + NL +
 					"└──└────────────────────────┘" + NL +
 					"                             " + NL +
-					"                             ",
+					"                             "),
 			},
 		},
 	}, // End of this test.
@@ -638,7 +660,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = false
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -646,7 +668,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"   ┌────────────────────────┐" + NL +
+				space2dot("   ┌────────────────────────┐" + NL +
 					"   │1-987654321 123456789+12│" + NL +
 					"┌──┌────────────────────────┐" + NL +
 					"│  │    _,--._  _._.--.--.._│" + NL +
@@ -658,7 +680,7 @@ var suites = []TestSuite{ // All tests.
 					"│  │     -                  │" + NL +
 					"└──└────────────────────────┘" + NL +
 					"                             " + NL +
-					"                             ",
+					"                             "),
 			},
 		},
 	}, // End of this test.
@@ -675,7 +697,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = true
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -683,7 +705,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"                             " + NL +
+				space2dot("                             " + NL +
 					"                             " + NL +
 					"┌──┌────────────────────────┐" + NL +
 					"│  │    _,--._  _._.--.--.._│" + NL +
@@ -695,7 +717,7 @@ var suites = []TestSuite{ // All tests.
 					"│  │     -                  │" + NL +
 					"└──└────────────────────────┘" + NL +
 					"   │                        │" + NL +
-					"   └────────────────────────┘",
+					"   └────────────────────────┘"),
 			},
 		},
 	}, // End of this test.
@@ -712,7 +734,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = true
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -720,7 +742,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"   ┌────────────────────────┐" + NL +
+				space2dot("   ┌────────────────────────┐" + NL +
 					"   │1-987654321 123456789+12│" + NL +
 					"┌──┌────────────────────────┐" + NL +
 					"│  │    _,--._  _._.--.--.._│" + NL +
@@ -732,7 +754,7 @@ var suites = []TestSuite{ // All tests.
 					"│  │     -                  │" + NL +
 					"└──└────────────────────────┘" + NL +
 					"   │                        │" + NL +
-					"   └────────────────────────┘",
+					"   └────────────────────────┘"),
 			},
 		},
 	}, // End of this test.
@@ -749,7 +771,7 @@ var suites = []TestSuite{ // All tests.
 			world.ShowBot = true
 			world.Inactive = true
 			out, _ := world.Print()
-			return out
+			return space2dot(out)
 		},
 		tests: []TestList{
 			{
@@ -757,7 +779,7 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"   ┌────────────────────────┐" + NL +
+				space2dot("   ┌────────────────────────┐" + NL +
 					"   │1-987654321 123456789+12│" + NL +
 					"┌──┌────────────────────────┐" + NL +
 					"│  │    _,--._  _._.--.--.._│" + NL +
@@ -769,7 +791,7 @@ var suites = []TestSuite{ // All tests.
 					"│  │     -                  │" + NL +
 					"└──└────────────────────────┘" + NL +
 					"   │                        │" + NL +
-					"   └────────────────────────┘",
+					"   └────────────────────────┘"),
 			},
 		},
 	}, // End of this test.
