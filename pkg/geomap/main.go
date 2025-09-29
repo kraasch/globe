@@ -19,8 +19,10 @@ const (
 	num              = "│1-987654321 123456789+12│"
 	bot              = "└────────────────────────┘"
 	padding          = "  "
-	sidetop          = "   \n   \n┌──" // with padding.
-	sidebot          = "└──\n   \n   " // with padding.
+	sidetop          = "┌──"           // without padding.
+	sidebot          = "└──"           // without padding.
+	sidetopPadded    = "   \n   \n┌──" // with padding.
+	sidebotPadded    = "└──\n   \n   " // with padding.
 	sideline         = "│\n│\n│\n│\n│\n│\n│"
 	cornerBL         = "└"
 	cornerBR         = "┘"
@@ -46,7 +48,7 @@ type World struct {
 	ShowSide   bool
 	ShowTop    bool
 	ShowBot    bool
-	ShowAsMini bool
+	ShowAsMini bool // TODO: remove this field.
 	Lat        float64
 	Lon        float64
 	MoonLat    float64
@@ -255,41 +257,12 @@ func makeBox(lat, lon float64, str string, skipMark bool) (string, error) { // T
 
 // Print returns a string of the ASCII world data with its current state (defined in the struct variables).
 // TODO: do major refactor in this entire function.
-func (w *World) Print() (string, error) { // TODO: do error handling.
-	if w.Padded {
-		return w.PrintPadded(), nil
-	}
-	if w.ShowAsMini {
+// TODO: implement errors.
+func (w *World) Print() (string, error) {
+	if w.ShowAsMini { // TODO: remove this flag from the struct entirely.
 		box, _ := w.PrintCoordBox()
 		return box, nil
 	}
-	// create main map in box.
-	box, _ := w.PrintCoordBox()
-	// create subline.
-	line := NewSubLine()
-	_ = line.AddMoon(w.MoonLon, w.Inactive)
-	_ = line.AddSun(w.SunLon, w.Inactive)
-	sub := line.Line
-	// put it all together.
-	res := top + NL + num + NL + box + NL + div + sub + div + NL + bot
-	if !w.ShowSide {
-		return res, nil
-	} else {
-		side := NewSidebar()
-		_ = side.AddMoon(w.MoonLat, w.Inactive)
-		_ = side.AddSun(w.SunLat, w.Inactive)
-		bar := side.Bar
-		bar = ConcatenateHorizontally(sideline, bar)
-		bar = ConcatenateHorizontally(bar, defaultSidebar)
-		bar = sidetop + NL + bar + NL + sidebot
-		res2 := ConcatenateHorizontally(bar, res)
-		return res2, nil
-	}
-}
-
-// PrintPadded prints, but padded.
-// // TODO: remove this function.
-func (w *World) PrintPadded() string {
 	// create the main box.
 	box, _ := w.PrintCoordBox()
 	// create a padded top.
@@ -297,14 +270,26 @@ func (w *World) PrintPadded() string {
 	if w.ShowTop {
 		ttt = top + NL + num + NL
 	} else {
-		ttt = defaultSubLine + padding + NL + defaultSubLine + padding + NL
+		if w.Padded {
+			ttt = defaultSubLine + padding + NL + defaultSubLine + padding + NL
+		} else {
+			ttt = ""
+		}
 	}
 	// create a padded bot.
 	bbb := ""
 	if w.ShowBot {
-		bbb = div + defaultSubLine + div + NL + bot
+		line := NewSubLine()
+		_ = line.AddMoon(w.MoonLon, w.Inactive)
+		_ = line.AddSun(w.SunLon, w.Inactive)
+		sub := line.Line
+		bbb = div + sub + div + NL + bot
 	} else {
-		bbb = defaultSubLine + padding + NL + defaultSubLine + padding
+		if w.Padded {
+			bbb = defaultSubLine + padding + NL + defaultSubLine + padding
+		} else {
+			bbb = ""
+		}
 	}
 	// create a padded side.
 	sss := ""
@@ -315,14 +300,31 @@ func (w *World) PrintPadded() string {
 		bar := side.Bar
 		bar = ConcatenateHorizontally(sideline, bar)
 		bar = ConcatenateHorizontally(bar, defaultSidebar)
-		sss = sidetop + NL + bar + NL + sidebot
+		if w.Padded {
+			sss = sidetopPadded + NL + bar + NL + sidebotPadded
+		} else {
+			// NOTE: if there is no sidebar padding is needed.
+			if w.ShowBot && w.ShowTop {
+				sss = sidetopPadded + NL + bar + NL + sidebotPadded // as if padded.
+			} else if w.ShowBot && !w.ShowTop {
+				sss = sidetop + NL + bar + NL + sidebotPadded
+			} else if !w.ShowBot && w.ShowTop {
+				sss = sidetopPadded + NL + bar + NL + sidebot
+			} else { // not padded + no bars => no padding.
+				sss = sidetop + NL + bar + NL + sidebot
+			}
+		}
 	} else {
-		sss = defaultEmptySide
+		if w.Padded {
+			sss = defaultEmptySide
+		} else {
+			sss = ""
+		}
 	}
 	// add all together.
 	res := ttt + box + NL + bbb             // add top and bot.
 	res = ConcatenateHorizontally(sss, res) // add sidebar.
-	return res
+	return res, nil
 }
 
 // PrintCoordBox uses PrintCoord and then creates a box around it.

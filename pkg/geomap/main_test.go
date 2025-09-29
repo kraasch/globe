@@ -68,6 +68,8 @@ var suites = []TestSuite{ // All tests.
 			world.SunLat = sunLat
 			world.SunLon = sunLon
 			world.ShowSide = true
+			world.ShowTop = true
+			world.ShowBot = true
 			world.Inactive = false
 			out, err := world.Print()
 			if err != nil {
@@ -122,6 +124,8 @@ var suites = []TestSuite{ // All tests.
 			world.MoonLon = moon
 			world.SunLon = sun
 			world.Inactive = false
+			world.ShowTop = true
+			world.ShowBot = true
 			out, err := world.Print()
 			if err != nil {
 				return err.Error()
