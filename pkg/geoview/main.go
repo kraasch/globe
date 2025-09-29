@@ -2,6 +2,7 @@
 package geoview
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -34,6 +35,18 @@ type GeoData struct {
 
 func New() GeoData {
 	return GeoData{}
+}
+
+func (gd *GeoData) GetToggle(barString string) (bool, error) {
+	switch barString {
+	case "top":
+		return gd.world.ShowTop, nil
+	case "bot":
+		return gd.world.ShowBot, nil
+	case "side":
+		return gd.world.ShowSide, nil
+	}
+	return false, errors.New("Toggle not found")
 }
 
 func (gd *GeoData) Toggle(barString string) {

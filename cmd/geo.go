@@ -16,9 +16,10 @@ import (
 const (
 	defaultKeybar = "<u>pdate si<d>ebar <t>op <b>ot <m>oon <s>un <p>osition"
 	D0            = "\x1b[1;38;2;100;100;100m" // ANSI foreground color (= dark)
-	M0            = "\x1b[1;38;2;200;200;200m" // ANSI foreground color (= middle)
+	M0            = "\x1b[1;38;2;150;150;170m" // ANSI foreground color (= middle)
 	L0            = "\x1b[1;38;2;255;255;255m" // ANSI foreground color (= light)
 	N0            = "\x1b[0m"                  // ANSI clear formatting.
+	R1            = "\x1b[1;38;2;255;0;0m"     // ANSI foreground color (= red).
 )
 
 var (
@@ -43,12 +44,35 @@ type model struct {
 	geoData geo.GeoData
 }
 
+func aIfToggleOtherwiseB(toggle bool, a, b string) string {
+	if toggle {
+		return a
+	} else {
+		return b
+	}
+}
+
+// getToggle gets the value of a toggle, but defaults to false.
+func (m model) getToggle(toggleStr string) bool {
+	str, _ := m.geoData.GetToggle(toggleStr)
+	return str
+}
+
+// getKeybar highlights each letter <x>, depending on the toggle status (except update, which depends on a web request).
 func (m model) getKeybar() string {
-	// TODO: highlight each letter <x>, depending on the toggle status.
 	// TODO: highlight each letter <u>pdate depending on if there is a running web request for the update.
 	N := N0 + D0
-	C := N0 + L0 // TODO: if flag is true, set to L0, otherwise to M0.
-	return fmt.Sprintf("%s<%su%s>pdate si<%sd%s>ebar <%st%s>op <%sb%s>ot <%sm%s>oon <%ss%s>un <%sp%s>osition"+NL, N, C, N, C, N, C, N, C, N, C, N, C, N, C, N)
+	on := N0 + L0       // on.
+	off := N0 + M0      // off.
+	disabled := N0 + R1 // off.
+	updateC := disabled // TODO: implement.
+	sideC := aIfToggleOtherwiseB(m.getToggle("side"), on, off)
+	topC := aIfToggleOtherwiseB(m.getToggle("top"), on, off)
+	botC := aIfToggleOtherwiseB(m.getToggle("bot"), on, off)
+	moonC := disabled // TODO: implement.
+	sunC := disabled  // TODO: implement.
+	posC := disabled  // TODO: implement.
+	return fmt.Sprintf("%s<%su%s>pdate si<%sd%s>ebar <%st%s>op <%sb%s>ot <%sm%s>oon <%ss%s>un <%sp%s>osition"+NL, N, updateC, N, sideC, N, topC, N, botC, N, moonC, N, sunC, N, posC, N)
 }
 
 func (m model) Init() tea.Cmd {
