@@ -15,8 +15,8 @@ import (
 
 const (
 	defaultKeybar = "<u>pdate si<d>ebar <t>op <b>ot <m>oon <s>un <p>osition"
-	D0            = "\x1b[1;38;2;100;100;100m" // ANSI foreground color (= dark)
-	M0            = "\x1b[1;38;2;150;150;170m" // ANSI foreground color (= middle)
+	D0            = "\x1b[1;38;2;120;120;120m" // ANSI foreground color (= dark)
+	M0            = "\x1b[1;38;2;110;110;140m" // ANSI foreground color (= middle)
 	L0            = "\x1b[1;38;2;255;255;255m" // ANSI foreground color (= light)
 	N0            = "\x1b[0m"                  // ANSI clear formatting.
 	R1            = "\x1b[1;38;2;255;0;0m"     // ANSI foreground color (= red).
