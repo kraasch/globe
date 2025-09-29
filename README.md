@@ -33,6 +33,7 @@ See the section on usage limits on [ip-api.com/legal](https://ip-api.com/docs/le
 
 List of things to do
 
+  - [ ] fix: buffer TUI key presses (for the toggle keys).
   - [ ] fix: buffer web retrieved lat+lon data as a text file somewhere.
   - [ ] fix: sunrise and sunset time is not accurate (1 or 2 hours off), match the local time in the timezone.
   - [ ] fix: sun and moon location (lat+lon) seem delayed. Either visual bug or wrong calculation. Create some tests.
