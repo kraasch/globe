@@ -69,9 +69,9 @@ func (m model) getKeybar() string {
 	sideC := aIfToggleOtherwiseB(m.getToggle("side"), on, off)
 	topC := aIfToggleOtherwiseB(m.getToggle("top"), on, off)
 	botC := aIfToggleOtherwiseB(m.getToggle("bot"), on, off)
-	moonC := disabled // TODO: implement.
-	sunC := disabled  // TODO: implement.
-	posC := disabled  // TODO: implement.
+	moonC := aIfToggleOtherwiseB(m.getToggle("moon"), on, off)
+	sunC := aIfToggleOtherwiseB(m.getToggle("sun"), on, off)
+	posC := aIfToggleOtherwiseB(m.getToggle("pos"), on, off)
 	return fmt.Sprintf("%s<%su%s>pdate si<%sd%s>ebar <%st%s>op <%sb%s>ot <%sm%s>oon <%ss%s>un <%sp%s>osition"+NL, N, updateC, N, sideC, N, topC, N, botC, N, moonC, N, sunC, N, posC, N)
 }
 
@@ -101,6 +101,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 		case "d": // toggle show side.
 			m.geoData.Toggle("side")
+			return m, nil
+		case "m": // toggle show moon.
+			m.geoData.Toggle("moon")
+			return m, nil
+		case "s": // toggle show sun.
+			m.geoData.Toggle("sun")
+			return m, nil
+		case "p": // toggle show position.
+			m.geoData.Toggle("pos")
 			return m, nil
 		}
 	}

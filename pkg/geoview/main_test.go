@@ -36,6 +36,7 @@ var suites = []TestSuite{
 	{
 		testingFunction: func(in TestList) (out string) {
 			geodata := New()
+			geodata.Toggle("pos")
 			out = geodata.PrintDataVertically()
 			out = util.Anonymize(out)
 			return out

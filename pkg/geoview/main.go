@@ -45,6 +45,12 @@ func (gd *GeoData) GetToggle(barString string) (bool, error) {
 		return gd.world.ShowBot, nil
 	case "side":
 		return gd.world.ShowSide, nil
+	case "moon":
+		return gd.world.ShowMoon, nil
+	case "sun":
+		return gd.world.ShowSun, nil
+	case "pos":
+		return gd.world.ShowPos, nil
 	}
 	return false, errors.New("Toggle not found")
 }
@@ -57,6 +63,12 @@ func (gd *GeoData) Toggle(barString string) {
 		gd.world.ShowBot = !gd.world.ShowBot
 	case "side":
 		gd.world.ShowSide = !gd.world.ShowSide
+	case "moon":
+		gd.world.ShowMoon = !gd.world.ShowMoon
+	case "sun":
+		gd.world.ShowSun = !gd.world.ShowSun
+	case "pos":
+		gd.world.ShowPos = !gd.world.ShowPos
 	}
 }
 
@@ -66,12 +78,12 @@ func (gd *GeoData) UpdateData() {
 	geocalc.WebBufUpdate()
 	lat, lon := geocalc.WebBufCoords()
 	gd.world.Padded = true
-	// gd.world.ShowTop = showTop
-	// gd.world.ShowBot = showBot
-	// gd.world.ShowSide = showSide
 	gd.world.ShowTop = true
 	gd.world.ShowBot = true
 	gd.world.ShowSide = true
+	gd.world.ShowMoon = true
+	gd.world.ShowSun = true
+	gd.world.ShowPos = true
 	gd.world.Lat = lat
 	gd.world.Lon = lon
 	gd.world.MoonLat = geocalc.MoonLat(gd.time)
@@ -82,7 +94,7 @@ func (gd *GeoData) UpdateData() {
 
 func (gd *GeoData) PrintDataVertically() string {
 	NL := fmt.Sprintln()
-	gd.world.ShowAsMini = true
+	gd.world.ShowAsMini()
 	data, err := gd.world.Print()
 	moon := geocalc.MoonPhase(gd.time)
 	utc := geocalc.LocalAndUtcTime()
@@ -90,7 +102,7 @@ func (gd *GeoData) PrintDataVertically() string {
 	if err != nil {
 		return err.Error()
 	}
-	return data + NL + moon + NL + utc + NL + sun
+	return data + moon + NL + utc + NL + sun
 }
 
 func surround(str, find, prefix, suffix string) string {

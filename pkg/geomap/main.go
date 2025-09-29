@@ -43,18 +43,27 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 	"     -                  "
 
 type World struct {
-	Padded     bool
-	Inactive   bool
-	ShowSide   bool
-	ShowTop    bool
-	ShowBot    bool
-	ShowAsMini bool // TODO: remove this field.
-	Lat        float64
-	Lon        float64
-	MoonLat    float64
-	MoonLon    float64
-	SunLat     float64
-	SunLon     float64
+	Padded   bool
+	Inactive bool
+	ShowSide bool
+	ShowTop  bool
+	ShowBot  bool
+	ShowMoon bool // TODO: create tests for this field.
+	ShowSun  bool // TODO: create tests for this field.
+	ShowPos  bool // TODO: create tests for this field.
+	Lat      float64
+	Lon      float64
+	MoonLat  float64
+	MoonLon  float64
+	SunLat   float64
+	SunLon   float64
+}
+
+// ShowAsMini sets the internal toggles for a mini map.
+func (w *World) ShowAsMini() {
+	w.ShowTop = false
+	w.ShowBot = false
+	w.ShowSide = false
 }
 
 type Sidebar struct {
@@ -66,7 +75,9 @@ type Subline struct {
 }
 
 func NewWorld() World {
-	return World{}
+	w := World{}
+	w.ShowPos = true
+	return w
 }
 
 func NewSidebar() Sidebar {
@@ -259,10 +270,6 @@ func makeBox(lat, lon float64, str string, skipMark bool) (string, error) { // T
 // TODO: do major refactor in this entire function.
 // TODO: implement errors.
 func (w *World) Print() (string, error) {
-	if w.ShowAsMini { // TODO: remove this flag from the struct entirely.
-		box, _ := w.PrintCoordBox()
-		return box, nil
-	}
 	// create the main box.
 	box, _ := w.PrintCoordBox()
 	// create a padded top.
@@ -280,8 +287,12 @@ func (w *World) Print() (string, error) {
 	bbb := ""
 	if w.ShowBot {
 		line := NewSubLine()
-		_ = line.AddMoon(w.MoonLon, w.Inactive)
-		_ = line.AddSun(w.SunLon, w.Inactive)
+		if w.ShowMoon {
+			_ = line.AddMoon(w.MoonLon, w.Inactive)
+		}
+		if w.ShowSun {
+			_ = line.AddSun(w.SunLon, w.Inactive)
+		}
 		sub := line.Line
 		bbb = div + sub + div + NL + bot
 	} else {
@@ -295,8 +306,12 @@ func (w *World) Print() (string, error) {
 	sss := ""
 	if w.ShowSide {
 		side := NewSidebar()
-		_ = side.AddMoon(w.MoonLat, w.Inactive)
-		_ = side.AddSun(w.SunLat, w.Inactive)
+		if w.ShowMoon {
+			_ = side.AddMoon(w.MoonLat, w.Inactive)
+		}
+		if w.ShowSun {
+			_ = side.AddSun(w.SunLat, w.Inactive)
+		}
 		bar := side.Bar
 		bar = ConcatenateHorizontally(sideline, bar)
 		bar = ConcatenateHorizontally(bar, defaultSidebar)
@@ -342,6 +357,10 @@ func (w *World) PrintCoordBox() (string, error) {
 }
 
 // PrintCoord calculates x and y coordinates within 2D string world map from latitude and longitude values and marks the location within the 2D string.
+// Includes toggles for moon+sun+position here and only print if they are on.
+// Also includes toggles for sidebar and subline here and print moon+sun into map if sidesbar and subline are disabled (and if moon and sun not disabled).
+// TODO: if moon and sun are at the same spot, have an extra symbol.
+// TODO: if moon or sun are at the same spot as pos use filled pos marker, otherwise use empty pos marker.
 func (w *World) PrintCoord() (string, error) {
 	col, err0 := lon2col(w.Lon)
 	row, err1 := lat2row(w.Lat)
@@ -351,7 +370,23 @@ func (w *World) PrintCoord() (string, error) {
 	if err1 != nil {
 		return MAP, err1
 	}
-	markedMap, err2 := markMap(col, row, MAP, markerSpot, w.Inactive)
+	markedMap := MAP
+	var err2 error = nil
+	if w.ShowPos {
+		markedMap, err2 = markMap(col, row, markedMap, markerSpot, w.Inactive)
+	}
+	if w.ShowMoon && !w.ShowSide && !w.ShowBot {
+		// if sidebar and subline are disabled, then show the moon in the main map, if moon is enabled.
+		colmoon, _ := lon2col(w.MoonLon) // TODO: handle errors.
+		rowmoon, _ := lat2row(w.MoonLat) // TODO: handle errors.
+		markedMap, _ = markMap(colmoon, rowmoon, markedMap, markerMoon, w.Inactive)
+	}
+	if w.ShowSun && !w.ShowSide && !w.ShowBot {
+		// if sidebar and subline are disabled, then show the sun in the main map, if sun is enabled.
+		colsun, _ := lon2col(w.SunLon) // TODO: handle errors.
+		rowsun, _ := lat2row(w.SunLat) // TODO: handle errors.
+		markedMap, _ = markMap(colsun, rowsun, markedMap, markerSun, w.Inactive)
+	}
 	return markedMap, err2
 }
 
