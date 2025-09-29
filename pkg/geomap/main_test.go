@@ -456,7 +456,7 @@ var suites = []TestSuite{ // All tests.
 		},
 		tests: []TestList{
 			{
-				testName: "map_pretty-print_blank_00",
+				testName: "map_pretty-print_blank+padded_00",
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
@@ -492,7 +492,7 @@ var suites = []TestSuite{ // All tests.
 		},
 		tests: []TestList{
 			{
-				testName: "map_pretty-print_blank_00",
+				testName: "map_pretty-print_blank+padded_00",
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
@@ -526,7 +526,7 @@ var suites = []TestSuite{ // All tests.
 		},
 		tests: []TestList{
 			{
-				testName: "map_pretty-print_blank_00",
+				testName: "map_pretty-print_blank+padded_00",
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
@@ -562,7 +562,7 @@ var suites = []TestSuite{ // All tests.
 		},
 		tests: []TestList{
 			{
-				testName: "map_pretty-print_blank_00",
+				testName: "map_pretty-print_blank+padded_00",
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
