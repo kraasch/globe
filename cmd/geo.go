@@ -13,6 +13,14 @@ import (
 	geo "github.com/kraasch/geo/pkg/geoview"
 )
 
+const (
+	defaultKeybar = "<u>pdate si<d>ebar <t>op <b>ot <m>oon <s>un <p>osition"
+	D0            = "\x1b[1;38;2;100;100;100m" // ANSI foreground color (= dark)
+	M0            = "\x1b[1;38;2;200;200;200m" // ANSI foreground color (= middle)
+	L0            = "\x1b[1;38;2;255;255;255m" // ANSI foreground color (= light)
+	N0            = "\x1b[0m"                  // ANSI clear formatting.
+)
+
 var (
 	// return value.
 	output = ""
@@ -24,12 +32,23 @@ var (
 	styleBox = lip.NewStyle().
 			BorderStyle(lip.NormalBorder()).
 			BorderForeground(lip.Color("56"))
+	// print.
+	NL = fmt.Sprintln()
 )
 
 type model struct {
+	keybar  string
 	width   int
 	height  int
 	geoData geo.GeoData
+}
+
+func (m model) getKeybar() string {
+	// TODO: highlight each letter <x>, depending on the toggle status.
+	// TODO: highlight each letter <u>pdate depending on if there is a running web request for the update.
+	N := N0 + D0
+	C := N0 + L0 // TODO: if flag is true, set to L0, otherwise to M0.
+	return fmt.Sprintf("%s<%su%s>pdate si<%sd%s>ebar <%st%s>op <%sb%s>ot <%sm%s>oon <%ss%s>un <%sp%s>osition"+NL, N, C, N, C, N, C, N, C, N, C, N, C, N, C, N)
 }
 
 func (m model) Init() tea.Cmd {
@@ -56,7 +75,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "b": // toggle show bot.
 			m.geoData.Toggle("bot")
 			return m, nil
-		case "s": // toggle show side.
+		case "d": // toggle show side.
 			m.geoData.Toggle("side")
 			return m, nil
 		}
@@ -66,12 +85,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	var str string
+	str += m.getKeybar()
 	if infoonly {
 		// TODO: implement.
 	} else if maponly {
 		// TODO: implement.
 	} else {
-		str = m.geoData.PrintDataHorizontally()
+		str += m.geoData.PrintDataHorizontally()
 	}
 	str = styleBox.Render(str) // To add an outer box.
 	return lip.Place(m.width, m.height, lip.Center, lip.Center, str)
@@ -85,7 +105,8 @@ func main() {
 	flag.Parse()
 
 	// init model.
-	m := model{0, 0, geo.New()}
+	kb := defaultKeybar
+	m := model{kb, 0, 0, geo.New()}
 	m.geoData.UpdateData()
 
 	// start bubbletea.
