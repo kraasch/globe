@@ -447,6 +447,44 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList) string {
 			world := NewWorld()
+			world.Padded = true
+			world.ShowSide = false
+			world.ShowTop = false
+			world.ShowBot = false
+			world.Inactive = true
+			out, _ := world.Print()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_pretty-print_blank+padded_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // NOTE: this comment breaks the line.
+				"                             " + NL +
+					"                             " + NL +
+					"   ┌────────────────────────┐" + NL +
+					"   │    _,--._  _._.--.--.._│" + NL +
+					"   │=.--'=_',-,:`;_      .,'│" + NL +
+					"   │,-.  _.)  (``-;_   .'   │" + NL +
+					"   │   '-:_    `) ) .''=.   │" + NL +
+					"   │     ) )    ()'    ='   │" + NL +
+					"   │     |/            (_) =│" + NL +
+					"   │     -                  │" + NL +
+					"   └────────────────────────┘" + NL +
+					"                             " + NL +
+					"                             ",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for the function Print() and its sidebars with blank content.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			world.Padded = true
 			world.ShowSide = false
 			world.ShowTop = true
 			world.ShowBot = false
@@ -483,8 +521,9 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList) string {
 			world := NewWorld()
+			world.Padded = true
 			world.ShowSide = false
-			world.ShowTop = true
+			world.ShowTop = false
 			world.ShowBot = true
 			world.Inactive = true
 			out, _ := world.Print()
@@ -496,7 +535,9 @@ var suites = []TestSuite{ // All tests.
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"   ┌────────────────────────┐" + NL +
+				"                             " + NL +
+					"                             " + NL +
+					"   ┌────────────────────────┐" + NL +
 					"   │    _,--._  _._.--.--.._│" + NL +
 					"   │=.--'=_',-,:`;_      .,'│" + NL +
 					"   │,-.  _.)  (``-;_   .'   │" + NL +
@@ -517,6 +558,7 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList) string {
 			world := NewWorld()
+			world.Padded = true
 			world.ShowSide = false
 			world.ShowTop = true
 			world.ShowBot = true
@@ -553,7 +595,8 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList) string {
 			world := NewWorld()
-			world.ShowSide = false
+			world.Padded = true
+			world.ShowSide = true
 			world.ShowTop = false
 			world.ShowBot = false
 			world.Inactive = true
@@ -568,17 +611,165 @@ var suites = []TestSuite{ // All tests.
 				expectedValue: // NOTE: this comment breaks the line.
 				"                             " + NL +
 					"                             " + NL +
-					"   ┌────────────────────────┐" + NL +
-					"   │    _,--._  _._.--.--.._│" + NL +
-					"   │=.--'=_',-,:`;_      .,'│" + NL +
-					"   │,-.  _.)  (``-;_   .'   │" + NL +
-					"   │   '-:_    `) ) .''=.   │" + NL +
-					"   │     ) )    ()'    ='   │" + NL +
-					"   │     |/            (_) =│" + NL +
-					"   │     -                  │" + NL +
-					"   └────────────────────────┘" + NL +
+					"┌──┌────────────────────────┐" + NL +
+					"│  │    _,--._  _._.--.--.._│" + NL +
+					"│  │=.--'=_',-,:`;_      .,'│" + NL +
+					"│  │,-.  _.)  (``-;_   .'   │" + NL +
+					"│  │   '-:_    `) ) .''=.   │" + NL +
+					"│  │     ) )    ()'    ='   │" + NL +
+					"│  │     |/            (_) =│" + NL +
+					"│  │     -                  │" + NL +
+					"└──└────────────────────────┘" + NL +
 					"                             " + NL +
 					"                             ",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for the function Print() and its sidebars with blank content.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			world.Padded = true
+			world.ShowSide = true
+			world.ShowTop = true
+			world.ShowBot = false
+			world.Inactive = true
+			out, _ := world.Print()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_pretty-print_blank+padded_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // NOTE: this comment breaks the line.
+				"   ┌────────────────────────┐" + NL +
+					"   │1-987654321 123456789+12│" + NL +
+					"┌──┌────────────────────────┐" + NL +
+					"│  │    _,--._  _._.--.--.._│" + NL +
+					"│  │=.--'=_',-,:`;_      .,'│" + NL +
+					"│  │,-.  _.)  (``-;_   .'   │" + NL +
+					"│  │   '-:_    `) ) .''=.   │" + NL +
+					"│  │     ) )    ()'    ='   │" + NL +
+					"│  │     |/            (_) =│" + NL +
+					"│  │     -                  │" + NL +
+					"└──└────────────────────────┘" + NL +
+					"                             " + NL +
+					"                             ",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for the function Print() and its sidebars with blank content.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			world.Padded = true
+			world.ShowSide = true
+			world.ShowTop = false
+			world.ShowBot = true
+			world.Inactive = true
+			out, _ := world.Print()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_pretty-print_blank+padded_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // NOTE: this comment breaks the line.
+				"                             " + NL +
+					"                             " + NL +
+					"┌──┌────────────────────────┐" + NL +
+					"│  │    _,--._  _._.--.--.._│" + NL +
+					"│  │=.--'=_',-,:`;_      .,'│" + NL +
+					"│  │,-.  _.)  (``-;_   .'   │" + NL +
+					"│  │   '-:_    `) ) .''=.   │" + NL +
+					"│  │     ) )    ()'    ='   │" + NL +
+					"│  │     |/            (_) =│" + NL +
+					"│  │     -                  │" + NL +
+					"└──└────────────────────────┘" + NL +
+					"   │                        │" + NL +
+					"   └────────────────────────┘",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for the function Print() and its sidebars with blank content.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			world.Padded = true // should not matter.
+			world.ShowSide = true
+			world.ShowTop = true
+			world.ShowBot = true
+			world.Inactive = true
+			out, _ := world.Print()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_pretty-print_blank+padded_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // NOTE: this comment breaks the line.
+				"   ┌────────────────────────┐" + NL +
+					"   │1-987654321 123456789+12│" + NL +
+					"┌──┌────────────────────────┐" + NL +
+					"│  │    _,--._  _._.--.--.._│" + NL +
+					"│  │=.--'=_',-,:`;_      .,'│" + NL +
+					"│  │,-.  _.)  (``-;_   .'   │" + NL +
+					"│  │   '-:_    `) ) .''=.   │" + NL +
+					"│  │     ) )    ()'    ='   │" + NL +
+					"│  │     |/            (_) =│" + NL +
+					"│  │     -                  │" + NL +
+					"└──└────────────────────────┘" + NL +
+					"   │                        │" + NL +
+					"   └────────────────────────┘",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for the function Print() and its sidebars with blank content.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			world.Padded = false // should not matter.
+			world.ShowSide = true
+			world.ShowTop = true
+			world.ShowBot = true
+			world.Inactive = true
+			out, _ := world.Print()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_pretty-print_blank+padded_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // NOTE: this comment breaks the line.
+				"   ┌────────────────────────┐" + NL +
+					"   │1-987654321 123456789+12│" + NL +
+					"┌──┌────────────────────────┐" + NL +
+					"│  │    _,--._  _._.--.--.._│" + NL +
+					"│  │=.--'=_',-,:`;_      .,'│" + NL +
+					"│  │,-.  _.)  (``-;_   .'   │" + NL +
+					"│  │   '-:_    `) ) .''=.   │" + NL +
+					"│  │     ) )    ()'    ='   │" + NL +
+					"│  │     |/            (_) =│" + NL +
+					"│  │     -                  │" + NL +
+					"└──└────────────────────────┘" + NL +
+					"   │                        │" + NL +
+					"   └────────────────────────┘",
 			},
 		},
 	}, // End of this test.

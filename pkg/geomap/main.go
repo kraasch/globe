@@ -39,6 +39,7 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 	"     -                  "
 
 type World struct {
+	Padded     bool
 	Inactive   bool
 	ShowSide   bool
 	ShowTop    bool
