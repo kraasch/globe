@@ -8,24 +8,26 @@ import (
 )
 
 const (
-	markerSpot     = '▣'
-	markerMoon     = '●'
-	markerSun      = '☼'
-	defaultSubLine = "                        " // 24 spaces.
-	defaultSidebar = " \n \n \n \n \n \n "      // 7 spaces.
-	div            = "│"
-	top            = "┌────────────────────────┐"
-	num            = "│1-987654321 123456789+12│"
-	bot            = "└────────────────────────┘"
-	sidetop        = "   \n   \n┌──"
-	sidebot        = "└──\n   \n   "
-	sideline       = "│\n│\n│\n│\n│\n│\n│"
-	cornerBL       = "└"
-	cornerBR       = "┘"
-	cornerTR       = "┐"
-	cornerTL       = "┌"
-	topMark        = "▼"
-	botMark        = "▲"
+	markerSpot       = '▣'
+	markerMoon       = '●'
+	markerSun        = '☼'
+	defaultSubLine   = "                        " // 24 spaces.
+	defaultSidebar   = " \n \n \n \n \n \n "      // 7 spaces.
+	defaultEmptySide = "   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   "
+	div              = "│"
+	top              = "┌────────────────────────┐"
+	num              = "│1-987654321 123456789+12│"
+	none             = "                          "
+	bot              = "└────────────────────────┘"
+	sidetop          = "   \n   \n┌──" // with padding.
+	sidebot          = "└──\n   \n   " // with padding.
+	sideline         = "│\n│\n│\n│\n│\n│\n│"
+	cornerBL         = "└"
+	cornerBR         = "┘"
+	cornerTR         = "┐"
+	cornerTL         = "┌"
+	topMark          = "▼"
+	botMark          = "▲"
 )
 
 var NL = fmt.Sprintln()
@@ -254,6 +256,9 @@ func makeBox(lat, lon float64, str string, skipMark bool) (string, error) { // T
 // Print returns a string of the ASCII world data with its current state (defined in the struct variables).
 // TODO: do major refactor in this entire function.
 func (w *World) Print() (string, error) { // TODO: do error handling.
+	if w.Padded {
+		return w.PrintPadded(), nil
+	}
 	if w.ShowAsMini {
 		box, _ := w.PrintCoordBox()
 		return box, nil
@@ -280,6 +285,44 @@ func (w *World) Print() (string, error) { // TODO: do error handling.
 		res2 := ConcatenateHorizontally(bar, res)
 		return res2, nil
 	}
+}
+
+// PrintPadded prints, but padded.
+// // TODO: remove this function.
+func (w *World) PrintPadded() string {
+	// create the main box.
+	box, _ := w.PrintCoordBox()
+	// create a padded top.
+	ttt := ""
+	if w.ShowTop {
+		ttt = top + NL + num + NL
+	} else {
+		ttt = defaultSubLine + NL + defaultSubLine + NL
+	}
+	// create a padded bot.
+	bbb := ""
+	if w.ShowBot {
+		bbb = div + defaultSubLine + div + NL + bot
+	} else {
+		bbb = defaultSubLine + NL + defaultSubLine
+	}
+	// create a padded side.
+	sss := ""
+	if w.ShowSide {
+		side := NewSidebar()
+		_ = side.AddMoon(w.MoonLat, w.Inactive)
+		_ = side.AddSun(w.SunLat, w.Inactive)
+		bar := side.Bar
+		bar = ConcatenateHorizontally(sideline, bar)
+		bar = ConcatenateHorizontally(bar, defaultSidebar)
+		sss = sidetop + NL + bar + NL + sidebot
+	} else {
+		sss = defaultEmptySide
+	}
+	// add all together.
+	res := ttt + box + NL + bbb             // add top and bot.
+	res = ConcatenateHorizontally(sss, res) // add sidebar.
+	return res
 }
 
 // PrintCoordBox uses PrintCoord and then creates a box around it.
