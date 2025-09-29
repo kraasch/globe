@@ -59,6 +59,7 @@ List of things to do
     - [ ] `● new on:  2001-01-11, Thu`
     - [ ] `● full on: 2001-01-26, Fri`
     - [ ] `● lat+lon.`
+  - [ ] reduce dependencies.
 
 List of things done
 
