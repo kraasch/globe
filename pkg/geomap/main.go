@@ -17,8 +17,8 @@ const (
 	TOP            = "┌────────────────────────┐"
 	NUM            = "│1-987654321 123456789+12│"
 	BOT            = "└────────────────────────┘"
-	SIDETOP        = "  \n  \n┌─"
-	SIDEBOT        = "└─\n  \n  "
+	SIDETOP        = "   \n   \n┌──"
+	SIDEBOT        = "└──\n   \n   "
 	SIDESIDE       = "│\n│\n│\n│\n│\n│\n│"
 )
 
@@ -261,6 +261,7 @@ func (w *World) Print() (string, error) { // TODO: do error handling.
 		_ = side.AddSun(w.SunLat, w.Inactive)
 		bar := side.Bar
 		bar = ConcatenateHorizontally(SIDESIDE, bar)
+		bar = ConcatenateHorizontally(bar, defaultSidebar)
 		bar = SIDETOP + NL + bar + NL + SIDEBOT
 		res2 := ConcatenateHorizontally(bar, res)
 		return res2, nil
