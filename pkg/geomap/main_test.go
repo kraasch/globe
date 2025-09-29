@@ -45,7 +45,7 @@ var suites = []TestSuite{ // All tests.
 			world.MoonLon = moonLon
 			world.SunLat = sunLat
 			world.SunLon = sunLon
-			world.ShowSidebar = true
+			world.ShowSide = true
 			world.Inactive = false
 			out, err := world.Print()
 			if err != nil {
@@ -447,6 +447,9 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList) string {
 			world := NewWorld()
+			world.ShowSide = false
+			world.ShowTop = true
+			world.ShowBot = true
 			world.Inactive = true
 			out, _ := world.Print()
 			return out
@@ -473,6 +476,39 @@ var suites = []TestSuite{ // All tests.
 			},
 		},
 	}, // End of this test.
+
+	// /*
+	//  * Test for the function Print(), but without values, thus result should be a blank map.
+	//  */
+	// {
+	// 	testingFunction: func(in TestList) string {
+	// 		world := NewWorld()
+	// 		world.Inactive = true
+	// 		out, _ := world.Print()
+	// 		return out
+	// 	},
+	// 	tests: []TestList{
+	// 		{
+	// 			testName: "map_pretty-print_blank_00",
+	// 			isMulti:  true,
+	// 			inputArr: []string{},
+	// 			expectedValue: // NOTE: this comment breaks the line.
+	// 			"┌────────────────────────┐" + NL +
+	// 				"│1-987654321 123456789+12│" + NL +
+	// 				"┌────────────────────────┐" + NL +
+	// 				"│    _,--._  _._.--.--.._│" + NL +
+	// 				"│=.--'=_',-,:`;_      .,'│" + NL +
+	// 				"│,-.  _.)  (``-;_   .'   │" + NL +
+	// 				"│   '-:_    `) ) .''=.   │" + NL +
+	// 				"│     ) )    ()'    ='   │" + NL +
+	// 				"│     |/            (_) =│" + NL +
+	// 				"│     -                  │" + NL +
+	// 				"└────────────────────────┘" + NL +
+	// 				"│                        │" + NL +
+	// 				"└────────────────────────┘",
+	// 		},
+	// 	},
+	// }, // End of this test.
 
 } // End of test suite.
 

@@ -39,15 +39,17 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 	"     -                  "
 
 type World struct {
-	Inactive    bool
-	ShowSidebar bool
-	ShowAsMini  bool
-	Lat         float64
-	Lon         float64
-	MoonLat     float64
-	MoonLon     float64
-	SunLat      float64
-	SunLon      float64
+	Inactive   bool
+	ShowSide   bool
+	ShowTop    bool
+	ShowBot    bool
+	ShowAsMini bool
+	Lat        float64
+	Lon        float64
+	MoonLat    float64
+	MoonLon    float64
+	SunLat     float64
+	SunLon     float64
 }
 
 type Sidebar struct {
@@ -264,7 +266,7 @@ func (w *World) Print() (string, error) { // TODO: do error handling.
 	sub := line.Line
 	// put it all together.
 	res := top + NL + num + NL + box + NL + div + sub + div + NL + bot
-	if !w.ShowSidebar {
+	if !w.ShowSide {
 		return res, nil
 	} else {
 		side := NewSidebar()
