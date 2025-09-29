@@ -3,15 +3,28 @@ package testutil
 
 import (
 	"regexp"
+	"strings"
 )
 
 func Anonymize(input string) string {
+	input = AnonymizeMoonphaseStrings(input)
 	input = AnonymizeTimeStrings(input)
 	input = AnonymizeDateStrings(input)
 	input = AnonymizeShortDateStrings(input)
 	input = AnonymizeFloatStrings(input)
 	input = AnonymizeNumberStrings(input)
 	input = AnonymizeWeekdayStrings(input)
+	return input
+}
+
+func AnonymizeMoonphaseStrings(input string) string {
+	input = strings.ReplaceAll(input, "❩", "○")
+	input = strings.ReplaceAll(input, "◗", "○")
+	input = strings.ReplaceAll(input, "◑", "○")
+	input = strings.ReplaceAll(input, "●", "○")
+	input = strings.ReplaceAll(input, "◐", "○")
+	input = strings.ReplaceAll(input, "◖", "○")
+	input = strings.ReplaceAll(input, "❨", "○")
 	return input
 }
 

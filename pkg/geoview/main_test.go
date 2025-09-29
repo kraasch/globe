@@ -36,7 +36,7 @@ var suites = []TestSuite{
 	{
 		testingFunction: func(in TestList) (out string) {
 			geodata := New()
-			geodata.Toggle("pos")
+			geodata.UpdateDataNoWebNoTime(0.0, 0.0, "2025-09-29, 18:34h")
 			out = geodata.PrintDataVertically()
 			out = util.Anonymize(out)
 			return out
@@ -56,7 +56,7 @@ var suites = []TestSuite{
 					"│     |/            (_) =│" + NL +
 					"│     -                  │" + NL +
 					"└────────────▲───────────┘" + NL +
-					" ○ phase:   Waning Gibbous" + NL +
+					" ○ phase:   Waxing Crescent" + NL +
 					util.Anonymize(" ○ age:     19.76 days (◐)") + NL +
 					util.Anonymize(" ○ dist.:   371578 km") + NL +
 					util.Anonymize(" ○ illum.:  74%") + NL +

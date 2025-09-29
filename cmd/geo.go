@@ -140,7 +140,7 @@ func main() {
 	// init model.
 	kb := defaultKeybar
 	m := model{kb, 0, 0, geo.New()}
-	m.geoData.UpdateData()
+	m.geoData.ShowAllSetup()
 
 	// start bubbletea.
 	if _, err := tea.NewProgram(m, tea.WithAltScreen()).Run(); err != nil {

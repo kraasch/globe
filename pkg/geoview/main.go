@@ -34,7 +34,9 @@ type GeoData struct {
 }
 
 func New() GeoData {
-	return GeoData{}
+	gd := GeoData{}
+	gd.world = geomap.NewWorld()
+	return gd
 }
 
 func (gd *GeoData) GetToggle(barString string) (bool, error) {
@@ -72,11 +74,7 @@ func (gd *GeoData) Toggle(barString string) {
 	}
 }
 
-func (gd *GeoData) UpdateData() {
-	gd.time = time.Now()
-	gd.world = geomap.NewWorld()
-	geocalc.WebBufUpdate()
-	lat, lon := geocalc.WebBufCoords()
+func (gd *GeoData) ShowAllSetup() {
 	gd.world.Padded = true
 	gd.world.ShowTop = true
 	gd.world.ShowBot = true
@@ -84,6 +82,24 @@ func (gd *GeoData) UpdateData() {
 	gd.world.ShowMoon = true
 	gd.world.ShowSun = true
 	gd.world.ShowPos = true
+}
+
+func (gd *GeoData) UpdateDataNoWebNoTime(lat, lon float64, timeStr string) {
+	layout := "2006-01-02, 15:04h" // A constant. Go's format string.
+	parsedTime, _ := time.Parse(layout, timeStr)
+	gd.time = parsedTime
+	gd.world.Lat = lat
+	gd.world.Lon = lon
+	gd.world.MoonLat = geocalc.MoonLat(gd.time)
+	gd.world.MoonLon = geocalc.MoonLon(gd.time)
+	gd.world.SunLat = geocalc.SunLat(gd.time)
+	gd.world.SunLon = geocalc.SunLon(gd.time)
+}
+
+func (gd *GeoData) UpdateData() {
+	gd.time = time.Now()
+	geocalc.WebBufUpdate()
+	lat, lon := geocalc.WebBufCoords() // TODO: if location cannot be updated set gd.world.Inactive to be true.
 	gd.world.Lat = lat
 	gd.world.Lon = lon
 	gd.world.MoonLat = geocalc.MoonLat(gd.time)

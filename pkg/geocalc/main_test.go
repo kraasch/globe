@@ -52,7 +52,7 @@ var suites = []TestSuite{ // All tests.
 				},
 				expectedValue: //
 				" ○ phase:   Last Quarter" + NL +
-					util.AnonymizeFloatStrings(" ○ age:     24.38 days (◖)") + NL +
+					util.Anonymize(" ○ age:     24.38 days (◖)") + NL +
 					util.AnonymizeNumberStrings(" ○ dist.:   398596 km") + NL +
 					util.AnonymizeNumberStrings(" ○ illum.:  27%") + NL +
 					util.Anonymize(" ○ new in:  05.8d 2000-01-06") + NL +
