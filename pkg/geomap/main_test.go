@@ -224,8 +224,8 @@ var suites = []TestSuite{ // All tests.
 				return "error in type converstion within the test: second float."
 			}
 			line := NewSubLine()
-			reserr0 := line.AddMoon(lon0, false)
-			reserr1 := line.AddSun(lon1, false)
+			reserr0 := line.AddMoonLon(lon0, false)
+			reserr1 := line.AddSunLon(lon1, false)
 			out := line.Line
 			if reserr0 != nil || reserr1 != nil {
 				return "error getting a result."

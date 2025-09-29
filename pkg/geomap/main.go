@@ -88,26 +88,26 @@ func NewSubLine() Subline {
 	return Subline{defaultSubLine}
 }
 
-func (s *Sidebar) AddMoon(lat float64, skipMark bool) error {
-	return s.Add(lat, markerMoon, skipMark)
+func (s *Sidebar) AddMoonLat(lat float64, skipMark bool) error {
+	return s.AddLat(lat, markerMoon, skipMark)
 }
 
-func (s *Sidebar) AddSun(lat float64, skipMark bool) error {
-	return s.Add(lat, markerSun, skipMark)
+func (s *Sidebar) AddSunLat(lat float64, skipMark bool) error {
+	return s.AddLat(lat, markerSun, skipMark)
 }
 
-// AddMoon adds a moon symbol.
-func (s *Subline) AddMoon(lon float64, skipMark bool) error {
-	return s.Add(lon, markerMoon, skipMark)
+// AddMoonLon adds a moon symbol.
+func (s *Subline) AddMoonLon(lon float64, skipMark bool) error {
+	return s.AddLon(lon, markerMoon, skipMark)
 }
 
-// AddSun adds a sun symbol.
-func (s *Subline) AddSun(lon float64, skipMark bool) error {
-	return s.Add(lon, markerSun, skipMark)
+// AddSunLon adds a sun symbol.
+func (s *Subline) AddSunLon(lon float64, skipMark bool) error {
+	return s.AddLon(lon, markerSun, skipMark)
 }
 
-// Add adds a character into the marker line under the world map (which is of length 24).
-func (s *Subline) Add(lon float64, marker rune, skipMark bool) error {
+// AddLon adds a character into the marker line under the world map (which is of length 24).
+func (s *Subline) AddLon(lon float64, marker rune, skipMark bool) error {
 	col, err0 := lon2col(lon)
 	if err0 != nil {
 		return err0
@@ -117,7 +117,7 @@ func (s *Subline) Add(lon float64, marker rune, skipMark bool) error {
 	return reserr
 }
 
-func (s *Sidebar) Add(lat float64, marker rune, skipMark bool) error {
+func (s *Sidebar) AddLat(lat float64, marker rune, skipMark bool) error {
 	row, err0 := lat2row(lat)
 	if err0 != nil {
 		return err0
@@ -288,10 +288,10 @@ func (w *World) Print() (string, error) {
 	if w.ShowBot {
 		line := NewSubLine()
 		if w.ShowMoon {
-			_ = line.AddMoon(w.MoonLon, w.Inactive)
+			_ = line.AddMoonLon(w.MoonLon, w.Inactive)
 		}
 		if w.ShowSun {
-			_ = line.AddSun(w.SunLon, w.Inactive)
+			_ = line.AddSunLon(w.SunLon, w.Inactive)
 		}
 		sub := line.Line
 		bbb = div + sub + div + NL + bot
@@ -307,10 +307,10 @@ func (w *World) Print() (string, error) {
 	if w.ShowSide {
 		side := NewSidebar()
 		if w.ShowMoon {
-			_ = side.AddMoon(w.MoonLat, w.Inactive)
+			_ = side.AddMoonLat(w.MoonLat, w.Inactive)
 		}
 		if w.ShowSun {
-			_ = side.AddSun(w.SunLat, w.Inactive)
+			_ = side.AddSunLat(w.SunLat, w.Inactive)
 		}
 		bar := side.Bar
 		bar = ConcatenateHorizontally(sideline, bar)
