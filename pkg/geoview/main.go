@@ -56,6 +56,7 @@ func (gd *GeoData) UpdateData() {
 
 func (gd *GeoData) PrintDataVertically() string {
 	NL := fmt.Sprintln()
+	gd.world.ShowAsMini = true
 	data, err := gd.world.Print()
 	moon := geocalc.MoonPhase(gd.time)
 	utc := geocalc.LocalAndUtcTime()

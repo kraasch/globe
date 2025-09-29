@@ -46,9 +46,7 @@ var suites = []TestSuite{
 				isMulti:  true,
 				inputArr: []string{},
 				expectedValue: // NOTE: this comment breaks the line.
-				"┌────────────────────────┐" + NL +
-					util.AnonymizeNumberStrings("│1-987654321 123456789+12│") + NL +
-					"├────────────▼───────────┤" + NL +
+				"┌────────────▼───────────┐" + NL +
 					"│    _,--._  _._.--.--.._│" + NL +
 					"│=.--'=_',-,:`;_      .,'│" + NL +
 					"│,-.  _.)  (``-;_   .'   │" + NL +
@@ -56,9 +54,7 @@ var suites = []TestSuite{
 					"│     ) )    ()'    ='   │" + NL +
 					"│     |/            (_) =│" + NL +
 					"│     -                  │" + NL +
-					"├────────────▲───────────┤" + NL +
-					"│            ☼           │" + NL +
-					"└────────────────────────┘" + NL +
+					"└────────────▲───────────┘" + NL +
 					" ○ phase:   Waning Gibbous" + NL +
 					util.Anonymize(" ○ age:     19.76 days (◐)") + NL +
 					util.Anonymize(" ○ dist.:   371578 km") + NL +

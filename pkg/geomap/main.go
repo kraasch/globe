@@ -13,13 +13,19 @@ const (
 	markerSun      = '☼'
 	defaultSubLine = "                        " // 24 spaces.
 	defaultSidebar = " \n \n \n \n \n \n "      // 7 spaces.
-	DIV            = "│"
-	TOP            = "┌────────────────────────┐"
-	NUM            = "│1-987654321 123456789+12│"
-	BOT            = "└────────────────────────┘"
-	SIDETOP        = "   \n   \n┌──"
-	SIDEBOT        = "└──\n   \n   "
-	SIDESIDE       = "│\n│\n│\n│\n│\n│\n│"
+	div            = "│"
+	top            = "┌────────────────────────┐"
+	num            = "│1-987654321 123456789+12│"
+	bot            = "└────────────────────────┘"
+	sidetop        = "   \n   \n┌──"
+	sidebot        = "└──\n   \n   "
+	sideline       = "│\n│\n│\n│\n│\n│\n│"
+	cornerBL       = "└"
+	cornerBR       = "┘"
+	cornerTR       = "┐"
+	cornerTL       = "┌"
+	topMark        = "▼"
+	botMark        = "▲"
 )
 
 var NL = fmt.Sprintln()
@@ -35,6 +41,7 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 type World struct {
 	Inactive    bool
 	ShowSidebar bool
+	ShowAsMini  bool
 	Lat         float64
 	Lon         float64
 	MoonLat     float64
@@ -207,19 +214,18 @@ func makeBox(lat, lon float64, str string, skipMark bool) (string, error) { // T
 	lineLen := 24
 	// Create top and bottom border
 	topBorder := ""
-	topBorder += "├" + strings.Repeat("─", col)
+	bottomBorder := ""
+	topBorder += cornerTL + strings.Repeat("─", col)
+	bottomBorder += cornerBL + strings.Repeat("─", col)
 	if skipMark {
 		topBorder += "─"
+		bottomBorder += "─"
 	} else {
-		topBorder += "▼"
+		topBorder += topMark
+		bottomBorder += botMark
 	}
-	topBorder += strings.Repeat("─", lineLen-col-1) + "┤"
-	bottomBorder := topBorder
-	if skipMark {
-		bottomBorder = strings.Replace(bottomBorder, "▼", "─", 1)
-	} else {
-		bottomBorder = strings.Replace(bottomBorder, "▼", "▲", 1)
-	}
+	topBorder += strings.Repeat("─", lineLen-col-1) + cornerTR
+	bottomBorder += strings.Repeat("─", lineLen-col-1) + cornerBR
 	var boxedLines []string
 	for i, line := range lines {
 		// Surround the line with │ and spaces
@@ -243,7 +249,12 @@ func makeBox(lat, lon float64, str string, skipMark bool) (string, error) { // T
 }
 
 // Print returns a string of the ASCII world data with its current state (defined in the struct variables).
+// TODO: do major refactor in this entire function.
 func (w *World) Print() (string, error) { // TODO: do error handling.
+	if w.ShowAsMini {
+		box, _ := w.PrintCoordBox()
+		return box, nil
+	}
 	// create main map in box.
 	box, _ := w.PrintCoordBox()
 	// create subline.
@@ -252,7 +263,7 @@ func (w *World) Print() (string, error) { // TODO: do error handling.
 	_ = line.AddSun(w.SunLon, w.Inactive)
 	sub := line.Line
 	// put it all together.
-	res := TOP + NL + NUM + NL + box + NL + DIV + sub + DIV + NL + BOT
+	res := top + NL + num + NL + box + NL + div + sub + div + NL + bot
 	if !w.ShowSidebar {
 		return res, nil
 	} else {
@@ -260,9 +271,9 @@ func (w *World) Print() (string, error) { // TODO: do error handling.
 		_ = side.AddMoon(w.MoonLat, w.Inactive)
 		_ = side.AddSun(w.SunLat, w.Inactive)
 		bar := side.Bar
-		bar = ConcatenateHorizontally(SIDESIDE, bar)
+		bar = ConcatenateHorizontally(sideline, bar)
 		bar = ConcatenateHorizontally(bar, defaultSidebar)
-		bar = SIDETOP + NL + bar + NL + SIDEBOT
+		bar = sidetop + NL + bar + NL + sidebot
 		res2 := ConcatenateHorizontally(bar, res)
 		return res2, nil
 	}
