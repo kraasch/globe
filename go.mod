@@ -35,6 +35,8 @@ require (
 	github.com/paulmach/orb v0.11.1 // indirect
 	github.com/ringsaturn/tzf-rel-lite v0.0.2025-b // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
+	github.com/soniakeys/meeus/v3 v3.0.1 // indirect
+	github.com/soniakeys/unit v1.0.0 // indirect
 	github.com/tidwall/geoindex v1.7.0 // indirect
 	github.com/tidwall/geojson v1.4.5 // indirect
 	github.com/tidwall/rtree v1.10.0 // indirect

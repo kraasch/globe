@@ -1,8 +1,9 @@
-package dataprov
+package astro
 
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	// other imports.
 
@@ -26,29 +27,26 @@ type TestSuite struct {
 var suites = []TestSuite{ // All tests.
 
 	/*
-	 * Test moon data.
+	 * Test JulianDate().
 	 */
 	{
 		testingFunction: func(in TestList, t *testing.T) string {
 			inputTime := in.inputArr[0]
-			moonDp := NewSampaMoonDataProvider()
-			err0 := moonDp.SetTime(inputTime)
+			simpleTimeLayout := "2006-01-02 15:04:05"
+			theTime, err0 := time.Parse(simpleTimeLayout, inputTime)
+			jd := JulianDate(theTime)
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)
 			}
-			lat, lon := moonDp.GeocentricCoords()
-			return fmt.Sprintf("lat: %+06.01f, lon: %+06.01f", lat, lon)
+			return fmt.Sprintf("julian date: %11.3f", jd)
 		},
 		tests: []TestList{
 			{
-				// Test data source: https://doncarona.tamu.edu/cgi-bin/moon?current=0&jd=
-				// Time 2025-10-03T22:12:15.895 UTC
-				// Geocentric Latitude  -1.807
-				// Geocentric Longitude  327.767
-				testName:      "data-provider_moon_basic_00",
+				testName:      "astro_basic-calculations_time_00",
 				isMulti:       true,
-				inputArr:      []string{"2025-10-03 22:12:16"}, // input time.
-				expectedValue: "lat: -001.8, lon: +147.8",      // output coordinates.
+				inputArr:      []string{"2025-10-03 22:12:16"}, // input.
+				expectedValue: "julian date: 2460952.425",      // output.
+				// data source: https://www.calendarlabs.com/julian-date-converter
 			},
 		},
 	},
