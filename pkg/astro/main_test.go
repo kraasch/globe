@@ -33,7 +33,7 @@ var suites = []TestSuite{ // All tests.
 		testingFunction: func(in TestList, t *testing.T) string {
 			inputTime := in.inputArr[0]
 			simpleTimeLayout := "2006-01-02 15:04:05"
-			theTime, err0 := time.Parse(simpleTimeLayout, inputTime)
+			theTime, err0 := time.ParseInLocation(simpleTimeLayout, inputTime, time.UTC)
 			jd := JulianDate(theTime)
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)

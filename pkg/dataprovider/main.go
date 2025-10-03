@@ -6,6 +6,9 @@ import (
 
 	"github.com/hablullah/go-sampa"
 	"github.com/soniakeys/meeus/v3/julian"
+
+	// local packages.
+	"github.com/kraasch/geo/pkg/astro"
 )
 
 // some variables.
@@ -15,13 +18,50 @@ var (
 	// priciseTimeLayout = "2006-01-02 15:04:05.999999999" // NOTE: for reference.
 )
 
+///////////////////
+// DATA PROVIDER //
+///////////////////
+
+type DataProvider struct {
+	time time.Time
+}
+
+func (dp *DataProvider) SetTime(timeStr string) error {
+	t, err := time.ParseInLocation(simpleTimeLayout, timeStr, time.UTC)
+	if err != nil {
+		return err
+	}
+	dp.time = t
+	return nil
+}
+
 ///////////////////////////
 // GENERAL DATA PROVIDER //
 ///////////////////////////
 
 type GeneralDataProvider struct {
-	time time.Time
+	DataProvider
 }
+
+// #######################
+// No. 1 -- geo/astro
+// #######################
+
+type GeoGeneralDataProvider struct {
+	GeneralDataProvider
+}
+
+func NewGeoGeneralDataProvider() GeoGeneralDataProvider {
+	return GeoGeneralDataProvider{}
+}
+
+func (p *GeoGeneralDataProvider) JulianDate() float64 {
+	return astro.JulianDate(p.time)
+}
+
+// #######################
+// No. 2 -- soniakeys/meees/v3
+// #######################
 
 type KeysGeneralDataProvider struct {
 	GeneralDataProvider
@@ -31,21 +71,8 @@ func NewKeysGeneralDataProvider() KeysGeneralDataProvider {
 	return KeysGeneralDataProvider{}
 }
 
-func (gdp *GeneralDataProvider) SetTime(timeStr string) error {
-	t, err := time.Parse(simpleTimeLayout, timeStr)
-	if err != nil {
-		return err
-	}
-	gdp.time = t
-	return nil
-}
-
-// #######################
-// No. 1 -- soniakeys/meees/v3
-// #######################
-
-func (kp *KeysGeneralDataProvider) JulianDate() float64 {
-	return julian.TimeToJD(kp.time)
+func (p *KeysGeneralDataProvider) JulianDate() float64 {
+	return julian.TimeToJD(p.time)
 }
 
 ////////////////////////
@@ -53,7 +80,7 @@ func (kp *KeysGeneralDataProvider) JulianDate() float64 {
 ////////////////////////
 
 type MoonDataProvider struct {
-	time time.Time
+	DataProvider
 }
 
 type SampaMoonDataProvider struct {
@@ -64,22 +91,13 @@ func NewSampaMoonDataProvider() SampaMoonDataProvider {
 	return SampaMoonDataProvider{}
 }
 
-func (mdp *MoonDataProvider) SetTime(timeStr string) error {
-	t, err := time.Parse(simpleTimeLayout, timeStr)
-	if err != nil {
-		return err
-	}
-	mdp.time = t
-	return nil
-}
-
 // #######################
 // No. 1 -- hablullah/go-sampa
 // #######################
 
-func (sp *SampaMoonDataProvider) GeocentricCoords() (float64, float64) {
+func (p *SampaMoonDataProvider) GeocentricCoords() (float64, float64) {
 	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81}
-	moonpos, _ := sampa.GetMoonPosition(sp.time, jakarta, nil)
+	moonpos, _ := sampa.GetMoonPosition(p.time, jakarta, nil)
 	return moonpos.GeocentricLatitude - 360.0, moonpos.GeocentricLongitude - 180.0
 }
 
