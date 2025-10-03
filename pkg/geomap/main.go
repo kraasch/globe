@@ -286,14 +286,7 @@ func (w *World) Print() (string, error) {
 	// create a padded bot.
 	bbb := ""
 	if w.ShowBot {
-		line := NewSubLine()
-		if w.ShowMoon {
-			_ = line.AddMoonLon(w.MoonLon, w.Inactive)
-		}
-		if w.ShowSun {
-			_ = line.AddSunLon(w.SunLon, w.Inactive)
-		}
-		sub := line.Line
+		sub := w.newSublineWithSunAndMoon().Line
 		bbb = div + sub + div + NL + bot
 	} else {
 		if w.Padded {
@@ -305,13 +298,7 @@ func (w *World) Print() (string, error) {
 	// create a padded side.
 	sss := ""
 	if w.ShowSide {
-		side := NewSidebar()
-		if w.ShowMoon {
-			_ = side.AddMoonLat(w.MoonLat, w.Inactive)
-		}
-		if w.ShowSun {
-			_ = side.AddSunLat(w.SunLat, w.Inactive)
-		}
+		side := w.newSidebarWithSunAndMoon()
 		bar := side.Bar
 		bar = ConcatenateHorizontally(sideline, bar)
 		bar = ConcatenateHorizontally(bar, defaultSidebar)
@@ -341,6 +328,28 @@ func (w *World) Print() (string, error) {
 	res := ttt + box + NL + bbb             // add top and bot.
 	res = ConcatenateHorizontally(sss, res) // add sidebar.
 	return res, nil
+}
+
+func (w *World) newSublineWithSunAndMoon() Subline {
+	line := NewSubLine()
+	if w.ShowMoon {
+		_ = line.AddMoonLon(w.MoonLon, w.Inactive)
+	}
+	if w.ShowSun {
+		_ = line.AddSunLon(w.SunLon, w.Inactive)
+	}
+	return line
+}
+
+func (w *World) newSidebarWithSunAndMoon() Sidebar {
+	side := NewSidebar()
+	if w.ShowMoon {
+		_ = side.AddMoonLat(w.MoonLat, w.Inactive)
+	}
+	if w.ShowSun {
+		_ = side.AddSunLat(w.SunLat, w.Inactive)
+	}
+	return side
 }
 
 // PrintCoordBox uses PrintCoord and then creates a box around it.
