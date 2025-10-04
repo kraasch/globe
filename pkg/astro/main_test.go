@@ -10,7 +10,10 @@ import (
 	godiff "github.com/kraasch/godiff/godiff"
 )
 
-var NL = fmt.Sprintln()
+var (
+	NL               = fmt.Sprintln()
+	simpleTimeLayout = "2006-01-02 15:04:05"
+)
 
 type TestList struct {
 	testName      string
@@ -32,12 +35,11 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList, t *testing.T) string {
 			inputTime := in.inputArr[0]
-			simpleTimeLayout := "2006-01-02 15:04:05"
 			theTime, err0 := time.ParseInLocation(simpleTimeLayout, inputTime, time.UTC)
-			jd := JulianDate(theTime)
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)
 			}
+			jd := JulianDate(theTime)
 			return fmt.Sprintf("julian date: %11.3f", jd)
 		},
 		tests: []TestList{
@@ -47,6 +49,33 @@ var suites = []TestSuite{ // All tests.
 				inputArr:      []string{"2025-10-03 22:12:16"}, // input.
 				expectedValue: "julian date: 2460952.425",      // output.
 				// data source: https://www.calendarlabs.com/julian-date-converter
+			},
+		},
+	},
+
+	/*
+	* Test moon position.
+	 */
+	{
+		testingFunction: func(in TestList, t *testing.T) string {
+			inputTime := in.inputArr[0]
+			theTime, err0 := time.ParseInLocation(simpleTimeLayout, inputTime, time.UTC)
+			if err0 != nil {
+				t.Fatalf("Setup failed: %v", err0)
+			}
+			lat, lon := MoonPosition(theTime)
+			return fmt.Sprintf("lat: %+06.01f, lon: %+06.01f", lat, lon)
+		},
+		tests: []TestList{
+			{
+				// Test data source: https://doncarona.tamu.edu/cgi-bin/moon?current=0&jd=
+				// Time 2025-10-03T22:12:15.895 UTC
+				// Geocentric Latitude  -1.807
+				// Geocentric Longitude  327.767
+				testName:      "astro_more-calculations_moon_00",
+				isMulti:       true,
+				inputArr:      []string{"2025-10-03 22:12:16"}, // input time.
+				expectedValue: "lat: -001.8, lon: +147.8",      // output coordinates.
 			},
 		},
 	},

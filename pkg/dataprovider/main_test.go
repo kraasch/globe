@@ -76,7 +76,7 @@ var suites = []TestSuite{ // All tests.
 	},
 
 	/*
-	 * Test moon data providers.
+	* Test moon data providers: sampa.
 	 */
 	{
 		testingFunction: func(in TestList, t *testing.T) string {

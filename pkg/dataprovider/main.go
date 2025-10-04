@@ -83,6 +83,26 @@ type MoonDataProvider struct {
 	DataProvider
 }
 
+// #######################
+// No. 1 -- geo/astro
+// #######################
+
+type GeoMoonDataProvider struct {
+	MoonDataProvider
+}
+
+func NewGeoMoonDataProvider() GeoMoonDataProvider {
+	return GeoMoonDataProvider{}
+}
+
+func (p *GeoMoonDataProvider) GeocentricCoords() (float64, float64) {
+	return astro.MoonPosition(p.time)
+}
+
+// #######################
+// No. 2 -- hablullah/go-sampa
+// #######################
+
 type SampaMoonDataProvider struct {
 	MoonDataProvider
 }
@@ -90,10 +110,6 @@ type SampaMoonDataProvider struct {
 func NewSampaMoonDataProvider() SampaMoonDataProvider {
 	return SampaMoonDataProvider{}
 }
-
-// #######################
-// No. 1 -- hablullah/go-sampa
-// #######################
 
 func (p *SampaMoonDataProvider) GeocentricCoords() (float64, float64) {
 	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81}
