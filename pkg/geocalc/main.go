@@ -7,10 +7,13 @@ import (
 
 	"github.com/hablullah/go-sampa"
 	mp "github.com/janczer/goMoonPhase"
-	geoweb "github.com/kraasch/geo/pkg/geoweb"
 	sr "github.com/nathan-osman/go-sunrise"
 	solar "github.com/observerly/sidera/pkg/solar"
 	tzf "github.com/ringsaturn/tzf"
+
+	// local packages.
+	dataprov "github.com/kraasch/geo/pkg/dataprovider"
+	geoweb "github.com/kraasch/geo/pkg/geoweb"
 )
 
 const (
@@ -146,16 +149,10 @@ func diffInDays(date1, date2 time.Time) float64 {
 	return diff.Hours() / 24
 }
 
-func MoonLat(date time.Time) float64 { // TODO: fix.
-	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81} // NOTE: just somewhere on this planet, to kick off a calculation with much overhead.
-	moonpos, _ := sampa.GetMoonPosition(date, jakarta, nil)
-	ml := moonpos.GeocentricLongitude
-	return ml - 180.0
-}
-
-func MoonLon(date time.Time) float64 { // TODO: fix.
-	phase := mp.New(date)
-	return phase.Longitude() - 180.0
+func MoonLatAndLon(t time.Time) (float64, float64) {
+	provider := dataprov.NewSampaMoonDataProvider()
+	provider.SetTime(t.Format("2006-01-02 15:04:05"))
+	return provider.GeocentricCoords()
 }
 
 func SunLat(date time.Time) float64 { // TODO: fix.
