@@ -2,10 +2,12 @@
 package dataprov
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/hablullah/go-sampa"
 	"github.com/soniakeys/meeus/v3/julian"
+	"github.com/soniakeys/meeus/v3/moonposition"
 
 	// local packages.
 	"github.com/kraasch/geo/pkg/astro"
@@ -60,7 +62,7 @@ func (p *GeoGeneralDataProvider) JulianDate() float64 {
 }
 
 // #######################
-// No. 2 -- soniakeys/meees/v3
+// No. 2 -- soniakeys/meeus/v3
 // #######################
 
 type KeysGeneralDataProvider struct {
@@ -73,6 +75,7 @@ func NewKeysGeneralDataProvider() KeysGeneralDataProvider {
 
 func (p *KeysGeneralDataProvider) JulianDate() float64 {
 	return julian.TimeToJD(p.time)
+	// jd := julian.CalendarGregorianToJD(now.Year(), int(now.Month()), now.Day()) // NOTE: this also exists.
 }
 
 ////////////////////////
@@ -84,23 +87,43 @@ type MoonDataProvider struct {
 }
 
 // #######################
-// No. 1 -- geo/astro
+// No. 1 -- geo/astro // TODO: impelemnt.
 // #######################
 
-type GeoMoonDataProvider struct {
+type GeoMoonDataProvider struct { // TODO: impelemnt.
 	MoonDataProvider
 }
 
-func NewGeoMoonDataProvider() GeoMoonDataProvider {
+func NewGeoMoonDataProvider() GeoMoonDataProvider { // TODO: impelemnt.
 	return GeoMoonDataProvider{}
 }
 
-func (p *GeoMoonDataProvider) GeocentricCoords() (float64, float64) {
-	return astro.MoonPosition(p.time)
+func (p *GeoMoonDataProvider) GeocentricCoords() (float64, float64) { // TODO: impelemnt.
+	return 0.0, 0.0 // astro.MoonPosition(p.time)
 }
 
 // #######################
-// No. 2 -- hablullah/go-sampa
+// No. 2 -- soniakeys/meeus/v3
+// #######################
+
+type KeysMoonDataProvider struct {
+	MoonDataProvider
+}
+
+func NewKeysMoonDataProvider() KeysMoonDataProvider {
+	return KeysMoonDataProvider{}
+}
+
+func (p *KeysMoonDataProvider) GeocentricCoords() (float64, float64) {
+	jd := julian.TimeToJD(p.time)
+	// NOTE: third return value of moonposition.Position() is the distance between earth and moon in km.
+	lon, lat, dist := moonposition.Position(jd + 100.5)
+	fmt.Printf("MOON: lat: %f, lon: %f, dist: %f\n", lat, lon, dist)
+	return float64(lat), float64(lon)
+}
+
+// #######################
+// No. 3 -- hablullah/go-sampa
 // #######################
 
 type SampaMoonDataProvider struct {

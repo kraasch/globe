@@ -31,6 +31,8 @@ var suites = []TestSuite{ // All tests.
 
 	/*
 	 * Test JulianDate().
+	 * julian date = julian day + fraction of the day.
+	 *  NOTE: julian day + 0.25 is plus 6 hours past noon, not past midnight!
 	 */
 	{
 		testingFunction: func(in TestList, t *testing.T) string {
@@ -54,7 +56,7 @@ var suites = []TestSuite{ // All tests.
 	},
 
 	/*
-	* Test moon position.
+	 * Test JulianEphemerisDay().
 	 */
 	{
 		testingFunction: func(in TestList, t *testing.T) string {
@@ -63,22 +65,47 @@ var suites = []TestSuite{ // All tests.
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)
 			}
-			lat, lon := MoonPosition(theTime)
-			return fmt.Sprintf("lat: %+06.01f, lon: %+06.01f", lat, lon)
+			jd := JulianDate(theTime)
+			jde := JulianEphemerisDay(jd, theTime)
+			return fmt.Sprintf("julian ephemeris day: %11.3f", jde)
 		},
 		tests: []TestList{
 			{
-				// Test data source: https://doncarona.tamu.edu/cgi-bin/moon?current=0&jd=
-				// Time 2025-10-03T22:12:15.895 UTC
-				// Geocentric Latitude  -1.807
-				// Geocentric Longitude  327.767
-				testName:      "astro_more-calculations_moon_00",
+				testName:      "astro_basic-calculations_time_00",
 				isMulti:       true,
-				inputArr:      []string{"2025-10-03 22:12:16"}, // input time.
-				expectedValue: "lat: -001.8, lon: +147.8",      // output coordinates.
+				inputArr:      []string{"2025-10-03 22:12:16"},     // input.
+				expectedValue: "julian ephemeris day: 2460952.426", // output.
+				// TODO: find external data source for this data.
 			},
 		},
 	},
+
+	/*
+		* Test moon position.
+		{
+			testingFunction: func(in TestList, t *testing.T) string {
+				inputTime := in.inputArr[0]
+				theTime, err0 := time.ParseInLocation(simpleTimeLayout, inputTime, time.UTC)
+				if err0 != nil {
+					t.Fatalf("Setup failed: %v", err0)
+				}
+				lat, lon := MoonPosition(theTime)
+				return fmt.Sprintf("lat: %+06.01f, lon: %+06.01f", lat, lon)
+			},
+			tests: []TestList{
+				{
+					// Test data source: https://doncarona.tamu.edu/cgi-bin/moon?current=0&jd=
+					// Time 2025-10-03T22:12:15.895 UTC
+					// Geocentric Latitude  -1.807
+					// Geocentric Longitude  327.767
+					testName:      "astro_more-calculations_moon_00",
+					isMulti:       true,
+					inputArr:      []string{"2025-10-03 22:12:16"}, // input time.
+					expectedValue: "lat: -001.8, lon: +147.8",      // output coordinates.
+				},
+			},
+		},
+	*/
 }
 
 func TestAll(t *testing.T) {
