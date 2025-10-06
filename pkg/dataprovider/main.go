@@ -80,7 +80,7 @@ func (p *KeysGeneralDataProvider) JulianDate() float64 {
 
 type MoonDataProviderInterface interface {
 	DataProviderInterface
-	GeocentricCoords() (float64, float64)
+	MoonsGeocentricCoords() (float64, float64)
 }
 
 // #######################
@@ -143,4 +143,35 @@ func (p SampaMoonDataProvider) GeocentricCoords() (float64, float64) {
 //////////////////////////////////////// SUN DATA PROVIDER //
 /////////////////////////////////////////////////////////////
 
-// TODO: implement sun data providers.
+type SunDataProviderInterface interface {
+	DataProviderInterface
+	SunsGeocentricCoords() (float64, float64)
+}
+
+// #######################
+// No. 1 -- soniakeys/meeus/v3
+// #######################
+
+type KeysSunDataProvider struct {
+	DataProvider
+}
+
+func (p KeysSunDataProvider) GeocentricCoords() (float64, float64) {
+	jd := julian.TimeToJD(p.time)
+	lon, lat, _ := sunposition.Position(jd)
+	return float64(lat.Deg()), float64(lon.Deg() - 180.0)
+}
+
+// #######################
+// No. 2 -- hablullah/go-sampa
+// #######################
+
+type SampaSunDataProvider struct {
+	DataProvider
+}
+
+func (p SampaSunDataProvider) GeocentricCoords() (float64, float64) { // TODO: implement.
+	// jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81}
+	// sunpos, _ := sampa.GetSunPosition(p.time, jakarta, nil)
+	return 0.0, 0.0 // sunpos.GeocentricLatitude - 360.0, sunpos.GeocentricLongitude - 180.0
+}

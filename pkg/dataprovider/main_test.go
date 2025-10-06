@@ -52,8 +52,8 @@ func TestTableDrivenOfMoonDataProviders(t *testing.T) {
 	exp := // expected output string.
 	// Geocentric Latitude  -1.807
 	// Geocentric Longitude  147.767
-	"lat: -001.8" + NL +
-		"lon: +147.8"
+	"moon lat: -001.8" + NL +
+		"moon lon: +147.8"
 	tests := []struct {
 		name     string
 		provider MoonDataProviderInterface
@@ -74,10 +74,50 @@ func TestTableDrivenOfMoonDataProviders(t *testing.T) {
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)
 			}
-			lat, lon := test.provider.GeocentricCoords()
+			lat, lon := test.provider.MoonsGeocentricCoords()
 			got := fmt.Sprintf(
-				"lat: %+06.01f"+NL+
-					"lon: %+06.01f",
+				"moon lat: %+06.01f"+NL+
+					"moon lon: %+06.01f",
+				lat, lon)
+			if exp != got {
+				t.Errorf("In '%s':\n", test.name)
+				diff := godiff.CDiff(exp, got)
+				t.Errorf("\nExp: '%#v'\nGot: '%#v'\n", exp, got)
+				t.Errorf("exp/got:\n%s\n", diff)
+			}
+		})
+	}
+}
+
+func TestTableDrivenOfSunDataProviders(t *testing.T) {
+	input := "2025-10-03 22:12:16"
+	exp := // expected output string.
+	"sun lat: -001.8" + NL +
+		"sun lon: +147.8"
+	tests := []struct {
+		name     string
+		provider SunDataProviderInterface
+	}{
+		{
+			name:     "data-provider_sun_keys_00",
+			provider: &KeysSunDataProvider{},
+		},
+		{
+			name:     "data-provider_sun_sampa_00",
+			provider: &SampaSunDataProvider{},
+		},
+	}
+	// Loop over test cases.
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err0 := test.provider.SetTime(input)
+			if err0 != nil {
+				t.Fatalf("Setup failed: %v", err0)
+			}
+			lat, lon := test.provider.SunsGeocentricCoords()
+			got := fmt.Sprintf(
+				"sun lat: %+06.01f"+NL+
+					"sun lon: %+06.01f",
 				lat, lon)
 			if exp != got {
 				t.Errorf("In '%s':\n", test.name)
