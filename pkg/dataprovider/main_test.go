@@ -23,6 +23,9 @@ type TestSuite struct {
 	tests           []TestList
 }
 
+// ////////////////////////////////////////////
+// TEST SUITE WITH MULIT-LINE STRING TESTS. //
+// ////////////////////////////////////////////
 var suites = []TestSuite{ // All tests.
 
 	/*
@@ -74,72 +77,6 @@ var suites = []TestSuite{ // All tests.
 			},
 		},
 	},
-
-	/*
-	* Test moon data providers: keys.
-	 */
-	{
-		testingFunction: func(in TestList, t *testing.T) string {
-			inputTime := in.inputArr[0]
-			provider := NewKeysMoonDataProvider()
-			err0 := provider.SetTime(inputTime)
-			if err0 != nil {
-				t.Fatalf("Setup failed: %v", err0)
-			}
-			lat, lon := provider.GeocentricCoords()
-			return fmt.Sprintf(
-				"lat: %+06.01f"+NL+
-					"lon: %+06.01f",
-				lat, lon)
-		},
-		tests: []TestList{
-			{
-				// Test data source: https://doncarona.tamu.edu/cgi-bin/moon?current=0&jd=
-				// Time 2025-10-03T22:12:15.895 UTC
-				// Geocentric Latitude  -1.807
-				// Geocentric Longitude  327.767
-				testName: "data-provider_moon_basic_00",
-				isMulti:  true,
-				inputArr: []string{"2025-10-03 22:12:16"}, // input time.
-				expectedValue: // output coordinates.
-				"lat: -001.8" + NL +
-					"lon: +147.8",
-			},
-		},
-	},
-
-	/*
-	* Test moon data providers: sampa.
-	 */
-	{
-		testingFunction: func(in TestList, t *testing.T) string {
-			inputTime := in.inputArr[0]
-			provider := NewSampaMoonDataProvider()
-			err0 := provider.SetTime(inputTime)
-			if err0 != nil {
-				t.Fatalf("Setup failed: %v", err0)
-			}
-			lat, lon := provider.GeocentricCoords()
-			return fmt.Sprintf(
-				"lat: %+06.01f"+NL+
-					"lon: %+06.01f",
-				lat, lon)
-		},
-		tests: []TestList{
-			{
-				// Test data source: https://doncarona.tamu.edu/cgi-bin/moon?current=0&jd=
-				// Time 2025-10-03T22:12:15.895 UTC
-				// Geocentric Latitude  -1.807
-				// Geocentric Longitude  327.767
-				testName: "data-provider_moon_basic_00",
-				isMulti:  true,
-				inputArr: []string{"2025-10-03 22:12:16"}, // input time.
-				expectedValue: // output coordinates.
-				"lat: -001.8" + NL +
-					"lon: +147.8",
-			},
-		},
-	},
 }
 
 func TestAll(t *testing.T) {
@@ -161,5 +98,57 @@ func TestAll(t *testing.T) {
 				}
 			})
 		}
+	}
+}
+
+// /////////////////////
+// TABLE-DRIVEN TESTS //
+// /////////////////////
+func TestTableDrivenOfMoonDataProviders(t *testing.T) {
+	input := "2025-10-03 22:12:16"
+	exp := // expected output string.
+	"lat: -001.8" + NL +
+		"lon: +147.8"
+	tests := []struct {
+		name     string
+		provider MoonDataProviderInterface
+	}{
+		{
+			name:     "data-provider_moon_keys_00",
+			provider: &KeysMoonDataProvider{},
+		},
+		{
+			name:     "data-provider_moon_sampa_00",
+			provider: &SampaMoonDataProvider{},
+		},
+	}
+	// Loop over test cases
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			var err0 error = nil
+			switch p := test.provider.(type) {
+			case *KeysMoonDataProvider:
+				err0 = p.SetTime(input)
+			case *SampaMoonDataProvider:
+				err0 = p.SetTime(input)
+			}
+			// provider := dataprov.KeysMoonDataProvider{}
+			// _ = provider.SetTime(t.Format("2006-01-02 15:04:05"))
+			// return provider.GeocentricCoords()
+			if err0 != nil {
+				t.Fatalf("Setup failed: %v", err0)
+			}
+			lat, lon := test.provider.GeocentricCoords()
+			got := fmt.Sprintf(
+				"lat: %+06.01f"+NL+
+					"lon: %+06.01f",
+				lat, lon)
+			if exp != got {
+				t.Errorf("In '%s':\n", test.name)
+				diff := godiff.CDiff(exp, got)
+				t.Errorf("\nExp: '%#v'\nGot: '%#v'\n", exp, got)
+				t.Errorf("exp/got:\n%s\n", diff)
+			}
+		})
 	}
 }
