@@ -1,5 +1,5 @@
 
-# geo
+# globe
 
 An uncluttered, minimal and clean display of commonly used every-day astronomical data about the moon, sun, earth and the computer's location.
 
@@ -33,7 +33,6 @@ See the section on usage limits on [ip-api.com/legal](https://ip-api.com/docs/le
 
 List of things to do
 
-  - [ ] rename project to something else but geo (bc of https://pkg.go.dev/github.com/golang/geo)
   - [ ] fixes.
     - [ ] buffer calculation of astronomical data (eg. lat+lon of moon+sun).
     - [ ] buffer TUI key presses (for the toggle keys).
@@ -64,6 +63,7 @@ List of things to do
 
 List of things done
 
+  - [X] rename project to globe, not geo (bc of https://pkg.go.dev/github.com/golang/geo)
   - [X] make sure every data in the display is read in automatically.
   - [X] add time zone detection.
   - [X] find out user's time zone code, eg 'GMT'.
@@ -76,7 +76,7 @@ List of things done
     - [X] visualization of lat+lon (eg user location).
     - [X] visualization of moon position with longitude.
     - [X] visualization of sun position with longitude.
-  - [X] pull out TUI world map into its own package (within the geo project), eg name the package `geomap`.
+  - [X] pull out TUI world map into its own package (within the globe project), eg name the package `geomap`.
   - [X] find out where user is located (ask system).
   - [X] find web for lat+lon (ask web).
   - [X] pretty print earth.
@@ -88,13 +88,13 @@ List of things done
 Install the program:
 
 ```bash
-go install github.com/kraasch/geo@latest
+go install github.com/kraasch/globe@latest
 ```
 
 Get the package:
 
 ```bash
-go get github.com/kraasch/geo
+go get github.com/kraasch/globe
 ```
 
 ## In-Code Usage
@@ -103,16 +103,16 @@ Use the program:
 
 ```bash
 make build
-./build/geo --help
+./build/globe --help
 ```
 
 Use the package:
 
 ```go
 import (
-  geo "github.com/kraasch/geo"
+  globe "github.com/kraasch/globe"
 )
-var geoData geo.GeoData
+var geoData globe.GeoData
 geoData.PrintDataHorizontally()
 ```
 

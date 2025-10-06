@@ -7,20 +7,20 @@ test:
 	go test -v ./...
 
 run:
-	go run ./cmd/geo.go
+	go run ./cmd/globe.go
 
 .PHONY: build
 build:
 	rm -rf ./build/
 	mkdir -p ./build/
 	go build \
-		-o ./build/geo \
+		-o ./build/globe \
 		-gcflags -m=2 \
 		./cmd/ 
 
 install:
-	ln "$(realpath ./build/geo)" -s ~/.local/bin/geo
+	ln "$(realpath ./build/globe)" -s ~/.local/bin/globe
 
 hub_update:
-	@hub_ctrl ${HUB_MODE} ln "$(realpath ./build/geo)"
+	@hub_ctrl ${HUB_MODE} ln "$(realpath ./build/globe)"
 

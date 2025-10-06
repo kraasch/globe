@@ -3,14 +3,14 @@ package geoview
 import (
 
 	// this is a test.
+	"fmt"
 	"testing"
 
-	// printing and formatting.
-	"fmt"
-
 	// other imports.
-	util "github.com/kraasch/geo/pkg/testutil"
 	godiff "github.com/kraasch/godiff/godiff"
+
+	// local imports.
+	util "github.com/kraasch/globe/pkg/testutil"
 )
 
 var NL = fmt.Sprintln()

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	geocalc "github.com/kraasch/geo/pkg/geocalc"
-	geomap "github.com/kraasch/geo/pkg/geomap"
+	geocalc "github.com/kraasch/globe/pkg/geocalc"
+	geomap "github.com/kraasch/globe/pkg/geomap"
 )
 
 const (

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	// other imports.
-	util "github.com/kraasch/geo/pkg/testutil"
+	util "github.com/kraasch/globe/pkg/testutil"
 	godiff "github.com/kraasch/godiff/godiff"
 )
 

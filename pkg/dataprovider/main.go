@@ -9,7 +9,7 @@ import (
 	"github.com/soniakeys/meeus/v3/moonposition"
 
 	// local packages.
-	"github.com/kraasch/geo/pkg/astro"
+	"github.com/kraasch/globe/pkg/astro"
 )
 
 // some variables.

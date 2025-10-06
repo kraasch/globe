@@ -12,8 +12,8 @@ import (
 	tzf "github.com/ringsaturn/tzf"
 
 	// local packages.
-	dataprov "github.com/kraasch/geo/pkg/dataprovider"
-	geoweb "github.com/kraasch/geo/pkg/geoweb"
+	dataprov "github.com/kraasch/globe/pkg/dataprovider"
+	geoweb "github.com/kraasch/globe/pkg/geoweb"
 )
 
 const (
