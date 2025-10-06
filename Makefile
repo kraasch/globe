@@ -1,6 +1,6 @@
 
 tst:
-	@make test | grep -E '(FAIL|PASS)' --color=always
+	@make test | grep -E '(FAIL|    --- PASS)' --color=always
 
 test:
 	go clean -testcache
