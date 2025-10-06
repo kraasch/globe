@@ -13,6 +13,7 @@ var NL = fmt.Sprintln()
 func TestTableDrivenOfGeneralDataProviders(t *testing.T) {
 	input := "2025-10-03 22:12:16"
 	exp := "julian date: 2460952.425" // expected output string.
+	// data source: https://www.calendarlabs.com/julian-date-converter
 	tests := []struct {
 		name     string
 		provider GeneralDataProviderInterface
@@ -47,7 +48,10 @@ func TestTableDrivenOfGeneralDataProviders(t *testing.T) {
 
 func TestTableDrivenOfMoonDataProviders(t *testing.T) {
 	input := "2025-10-03 22:12:16"
+	// data source: https://doncarona.tamu.edu/cgi-bin/moon?current=0&jd=
 	exp := // expected output string.
+	// Geocentric Latitude  -1.807
+	// Geocentric Longitude  147.767
 	"lat: -001.8" + NL +
 		"lon: +147.8"
 	tests := []struct {
