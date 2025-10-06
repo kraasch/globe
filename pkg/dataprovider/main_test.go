@@ -87,7 +87,10 @@ var suites = []TestSuite{ // All tests.
 				t.Fatalf("Setup failed: %v", err0)
 			}
 			lat, lon := provider.GeocentricCoords()
-			return fmt.Sprintf("lat: %+06.01f, lon: %+06.01f", lat, lon)
+			return fmt.Sprintf(
+				"lat: %+06.01f"+NL+
+					"lon: %+06.01f",
+				lat, lon)
 		},
 		tests: []TestList{
 			{
@@ -95,10 +98,12 @@ var suites = []TestSuite{ // All tests.
 				// Time 2025-10-03T22:12:15.895 UTC
 				// Geocentric Latitude  -1.807
 				// Geocentric Longitude  327.767
-				testName:      "data-provider_moon_basic_00",
-				isMulti:       true,
-				inputArr:      []string{"2025-10-03 22:12:16"}, // input time.
-				expectedValue: "lat: -001.8, lon: +147.8",      // output coordinates.
+				testName: "data-provider_moon_basic_00",
+				isMulti:  true,
+				inputArr: []string{"2025-10-03 22:12:16"}, // input time.
+				expectedValue: // output coordinates.
+				"lat: -001.8" + NL +
+					"lon: +147.8",
 			},
 		},
 	},
@@ -115,7 +120,10 @@ var suites = []TestSuite{ // All tests.
 				t.Fatalf("Setup failed: %v", err0)
 			}
 			lat, lon := provider.GeocentricCoords()
-			return fmt.Sprintf("lat: %+06.01f, lon: %+06.01f", lat, lon)
+			return fmt.Sprintf(
+				"lat: %+06.01f"+NL+
+					"lon: %+06.01f",
+				lat, lon)
 		},
 		tests: []TestList{
 			{
@@ -123,10 +131,12 @@ var suites = []TestSuite{ // All tests.
 				// Time 2025-10-03T22:12:15.895 UTC
 				// Geocentric Latitude  -1.807
 				// Geocentric Longitude  327.767
-				testName:      "data-provider_moon_basic_00",
-				isMulti:       true,
-				inputArr:      []string{"2025-10-03 22:12:16"}, // input time.
-				expectedValue: "lat: -001.8, lon: +147.8",      // output coordinates.
+				testName: "data-provider_moon_basic_00",
+				isMulti:  true,
+				inputArr: []string{"2025-10-03 22:12:16"}, // input time.
+				expectedValue: // output coordinates.
+				"lat: -001.8" + NL +
+					"lon: +147.8",
 			},
 		},
 	},

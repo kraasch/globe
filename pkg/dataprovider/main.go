@@ -117,9 +117,9 @@ func NewKeysMoonDataProvider() KeysMoonDataProvider {
 func (p *KeysMoonDataProvider) GeocentricCoords() (float64, float64) {
 	jd := julian.TimeToJD(p.time)
 	// NOTE: third return value of moonposition.Position() is the distance between earth and moon in km.
-	lon, lat, dist := moonposition.Position(jd + 100.5)
+	lon, lat, dist := moonposition.Position(jd)
 	fmt.Printf("MOON: lat: %f, lon: %f, dist: %f\n", lat, lon, dist)
-	return float64(lat), float64(lon)
+	return float64(lat.Deg()), float64(lon.Deg() - 180.0)
 }
 
 // #######################
