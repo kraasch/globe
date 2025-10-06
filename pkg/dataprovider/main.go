@@ -1,5 +1,4 @@
-// Package dataprov
-// is an abstraction from different ways to calculate the same data about moon, sun, etc.
+// Package dataprov is an abstraction from different ways to calculate the same data about moon, sun, etc.
 package dataprov
 
 import (
@@ -28,6 +27,10 @@ type DataProvider struct {
 	time time.Time
 }
 
+type DataProviderInterface interface {
+	SetTime(timeStr string) error
+}
+
 func (dp *DataProvider) SetTime(timeStr string) error {
 	t, err := time.ParseInLocation(simpleTimeLayout, timeStr, time.UTC)
 	if err != nil {
@@ -41,8 +44,9 @@ func (dp *DataProvider) SetTime(timeStr string) error {
 //////////////////////////////////////// GENERAL DATA PROVIDER //
 /////////////////////////////////////////////////////////////////
 
-type GeneralDataProvider struct {
-	DataProvider
+type GeneralDataProviderInterface interface {
+	DataProviderInterface
+	JulianDate() float64
 }
 
 // #######################
@@ -50,11 +54,7 @@ type GeneralDataProvider struct {
 // #######################
 
 type GeoGeneralDataProvider struct {
-	GeneralDataProvider
-}
-
-func NewGeoGeneralDataProvider() GeoGeneralDataProvider {
-	return GeoGeneralDataProvider{}
+	DataProvider
 }
 
 func (p *GeoGeneralDataProvider) JulianDate() float64 {
@@ -66,11 +66,7 @@ func (p *GeoGeneralDataProvider) JulianDate() float64 {
 // #######################
 
 type KeysGeneralDataProvider struct {
-	GeneralDataProvider
-}
-
-func NewKeysGeneralDataProvider() KeysGeneralDataProvider {
-	return KeysGeneralDataProvider{}
+	DataProvider
 }
 
 func (p *KeysGeneralDataProvider) JulianDate() float64 {
@@ -83,6 +79,7 @@ func (p *KeysGeneralDataProvider) JulianDate() float64 {
 //////////////////////////////////////////////////////////////
 
 type MoonDataProviderInterface interface {
+	DataProviderInterface
 	GeocentricCoords() (float64, float64)
 }
 

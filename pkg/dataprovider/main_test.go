@@ -34,7 +34,7 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList, t *testing.T) string {
 			inputTime := in.inputArr[0]
-			provider := NewGeoGeneralDataProvider()
+			provider := GeoGeneralDataProvider{}
 			err0 := provider.SetTime(inputTime)
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)
@@ -59,7 +59,7 @@ var suites = []TestSuite{ // All tests.
 	{
 		testingFunction: func(in TestList, t *testing.T) string {
 			inputTime := in.inputArr[0]
-			provider := NewKeysGeneralDataProvider()
+			provider := KeysGeneralDataProvider{}
 			err0 := provider.SetTime(inputTime)
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)
@@ -122,19 +122,10 @@ func TestTableDrivenOfMoonDataProviders(t *testing.T) {
 			provider: &SampaMoonDataProvider{},
 		},
 	}
-	// Loop over test cases
+	// Loop over test cases.
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			var err0 error = nil
-			switch p := test.provider.(type) {
-			case *KeysMoonDataProvider:
-				err0 = p.SetTime(input)
-			case *SampaMoonDataProvider:
-				err0 = p.SetTime(input)
-			}
-			// provider := dataprov.KeysMoonDataProvider{}
-			// _ = provider.SetTime(t.Format("2006-01-02 15:04:05"))
-			// return provider.GeocentricCoords()
+			err0 := test.provider.SetTime(input)
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)
 			}
