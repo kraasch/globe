@@ -33,6 +33,7 @@ See the section on usage limits on [ip-api.com/legal](https://ip-api.com/docs/le
 
 List of things to do
 
+  - [ ] rename project to something else but geo (bc of https://pkg.go.dev/github.com/golang/geo)
   - [ ] fixes.
     - [ ] buffer calculation of astronomical data (eg. lat+lon of moon+sun).
     - [ ] buffer TUI key presses (for the toggle keys).
