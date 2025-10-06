@@ -5,105 +5,46 @@ import (
 	"testing"
 
 	// other imports.
-
 	godiff "github.com/kraasch/godiff/godiff"
 )
 
 var NL = fmt.Sprintln()
 
-type TestList struct {
-	testName      string
-	isMulti       bool
-	inputArr      []string
-	expectedValue string
-}
-
-type TestSuite struct {
-	testingFunction func(in TestList, t *testing.T) string
-	tests           []TestList
-}
-
-// ////////////////////////////////////////////
-// TEST SUITE WITH MULIT-LINE STRING TESTS. //
-// ////////////////////////////////////////////
-var suites = []TestSuite{ // All tests.
-
-	/*
-	* Test general data providers: geo.
-	 */
-	{
-		testingFunction: func(in TestList, t *testing.T) string {
-			inputTime := in.inputArr[0]
-			provider := GeoGeneralDataProvider{}
-			err0 := provider.SetTime(inputTime)
+func TestTableDrivenOfGeneralDataProviders(t *testing.T) {
+	input := "2025-10-03 22:12:16"
+	exp := "julian date: 2460952.425" // expected output string.
+	tests := []struct {
+		name     string
+		provider GeneralDataProviderInterface
+	}{
+		{
+			name:     "data-provider_moon_keys_00",
+			provider: &GeoGeneralDataProvider{},
+		},
+		{
+			name:     "data-provider_moon_sampa_00",
+			provider: &KeysGeneralDataProvider{},
+		},
+	}
+	// Loop over test cases.
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err0 := test.provider.SetTime(input)
 			if err0 != nil {
 				t.Fatalf("Setup failed: %v", err0)
 			}
-			jd := provider.JulianDate()
-			return fmt.Sprintf("julian date: %11.3f", jd)
-		},
-		tests: []TestList{
-			{
-				testName:      "astro_basic-calculations_time_00",
-				isMulti:       true,
-				inputArr:      []string{"2025-10-03 22:12:16"}, // input.
-				expectedValue: "julian date: 2460952.425",      // output.
-				// data source: https://www.calendarlabs.com/julian-date-converter
-			},
-		},
-	},
-
-	/*
-	* Test general data providers: keys.
-	 */
-	{
-		testingFunction: func(in TestList, t *testing.T) string {
-			inputTime := in.inputArr[0]
-			provider := KeysGeneralDataProvider{}
-			err0 := provider.SetTime(inputTime)
-			if err0 != nil {
-				t.Fatalf("Setup failed: %v", err0)
+			jd := test.provider.JulianDate()
+			got := fmt.Sprintf("julian date: %11.3f", jd)
+			if exp != got {
+				t.Errorf("In '%s':\n", test.name)
+				diff := godiff.CDiff(exp, got)
+				t.Errorf("\nExp: '%#v'\nGot: '%#v'\n", exp, got)
+				t.Errorf("exp/got:\n%s\n", diff)
 			}
-			jd := provider.JulianDate()
-			return fmt.Sprintf("julian date: %11.3f", jd)
-		},
-		tests: []TestList{
-			{
-				testName:      "astro_basic-calculations_time_00",
-				isMulti:       true,
-				inputArr:      []string{"2025-10-03 22:12:16"}, // input.
-				expectedValue: "julian date: 2460952.425",      // output.
-				// data source: https://www.calendarlabs.com/julian-date-converter
-			},
-		},
-	},
-}
-
-func TestAll(t *testing.T) {
-	for _, suite := range suites {
-		for _, test := range suite.tests {
-			name := test.testName
-			t.Run(name, func(t *testing.T) {
-				exp := test.expectedValue
-				got := suite.testingFunction(test, t)
-				if exp != got {
-					if test.isMulti {
-						t.Errorf("In '%s':\n", name)
-						diff := godiff.CDiff(exp, got)
-						t.Errorf("\nExp: '%#v'\nGot: '%#v'\n", exp, got)
-						t.Errorf("exp/got:\n%s\n", diff)
-					} else {
-						t.Errorf("In '%s':\n  Exp: '%#v'\n  Got: '%#v'\n", name, exp, got)
-					}
-				}
-			})
-		}
+		})
 	}
 }
 
-// /////////////////////
-// TABLE-DRIVEN TESTS //
-// /////////////////////
 func TestTableDrivenOfMoonDataProviders(t *testing.T) {
 	input := "2025-10-03 22:12:16"
 	exp := // expected output string.
