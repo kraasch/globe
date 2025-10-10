@@ -154,6 +154,7 @@ func (p GlobeSunDataProvider) SunsGeocentricCoords() (float64, float64) {
 // // #######################
 // // No. 3 -- xxx
 // // #######################
+// 	solar "github.com/observerly/sidera/pkg/solar"
 // func SunLat(date time.Time) float64 { // TODO: fix.
 // 	equatorialCoord := solar.GetEquatorialCoordinate(date)
 // 	return equatorialCoord.Declination
