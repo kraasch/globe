@@ -141,6 +141,20 @@ func TestTableDrivenOfSunDataProviders(t *testing.T) {
 			// lat:   -7.000 degrees (south).
 			// lon: +144.466 degrees (west).
 		},
+		{
+			input: "2001-01-01 13:01:01",
+			exp:   "sun lat: -023.0" + NL + "sun lon: +014.3",
+			// data source: https://www.timeanddate.com/worldclock/sunearth.html?day=01&month=01&year=2001&hour=13&min=01&sec=01&n=&ntxt=&earth=0
+			// lat: -22.966 degrees (south).
+			// lon: +14.333 degrees (west).
+		},
+		{
+			input: "2100-01-01 13:01:01",
+			exp:   "sun lat: -023.0" + NL + "sun lon: +014.4",
+			// data source: https://www.timeanddate.com/worldclock/sunearth.html?day=1&month=1&year=2100&hour=13&min=1&sec=1&n=&ntxt=&earth=0
+			// lat: -22.966 degrees (south).
+			// lon: +14.400 degrees (west).
+		},
 	}
 	// Providers under test.
 	tests := []struct {
