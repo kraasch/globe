@@ -84,6 +84,7 @@ func (gd *GeoData) ShowAllSetup() {
 	gd.world.ShowPos = true
 }
 
+// TODO: extract this function UpdateData() together with UpdateDataNoWebNoTime().
 func (gd *GeoData) UpdateDataNoWebNoTime(lat, lon float64, timeStr string) {
 	layout := "2006-01-02, 15:04h" // A constant. Go's format string.
 	parsedTime, _ := time.Parse(layout, timeStr)
@@ -93,10 +94,12 @@ func (gd *GeoData) UpdateDataNoWebNoTime(lat, lon float64, timeStr string) {
 	moonLat, moonLon := geocalc.MoonLatAndLon(parsedTime)
 	gd.world.MoonLat = moonLat
 	gd.world.MoonLon = moonLon
-	gd.world.SunLat = geocalc.SunLat(gd.time)
-	gd.world.SunLon = geocalc.SunLon(gd.time)
+	sunLat, sunLon := geocalc.MoonLatAndLon(parsedTime)
+	gd.world.SunLat = sunLat
+	gd.world.SunLon = sunLon
 }
 
+// TODO: extract this function UpdateData() together with UpdateDataNoWebNoTime().
 func (gd *GeoData) UpdateData() {
 	gd.time = time.Now()
 	geocalc.WebBufUpdate()
@@ -106,8 +109,9 @@ func (gd *GeoData) UpdateData() {
 	moonLat, moonLon := geocalc.MoonLatAndLon(gd.time)
 	gd.world.MoonLat = moonLat
 	gd.world.MoonLon = moonLon
-	gd.world.SunLat = geocalc.SunLat(gd.time)
-	gd.world.SunLon = geocalc.SunLon(gd.time)
+	sunLat, sunLon := geocalc.MoonLatAndLon(gd.time)
+	gd.world.SunLat = sunLat
+	gd.world.SunLon = sunLon
 }
 
 func (gd *GeoData) PrintDataVertically() string {

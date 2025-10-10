@@ -123,7 +123,7 @@ func TestTableDrivenOfSunDataProviders(t *testing.T) {
 		provider SunDataProviderInterface
 	}{
 		{
-			name:     "data-provider_sun_keys_00",
+			name:     "data-provider_sun_globe_00",
 			provider: &GlobeSunDataProvider{},
 		},
 	}

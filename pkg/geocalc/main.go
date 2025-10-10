@@ -5,10 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/hablullah/go-sampa"
 	mp "github.com/janczer/goMoonPhase"
 	sr "github.com/nathan-osman/go-sunrise"
-	solar "github.com/observerly/sidera/pkg/solar"
 	tzf "github.com/ringsaturn/tzf"
 
 	// local packages.
@@ -149,22 +147,16 @@ func diffInDays(date1, date2 time.Time) float64 {
 	return diff.Hours() / 24
 }
 
+func SunLatAndLon(t time.Time) (float64, float64) {
+	provider := dataprov.GlobeSunDataProvider{}
+	_ = provider.SetTime(t.Format("2006-01-02 15:04:05"))
+	return provider.SunsGeocentricCoords()
+}
+
 func MoonLatAndLon(t time.Time) (float64, float64) {
 	provider := dataprov.KeysMoonDataProvider{}
 	_ = provider.SetTime(t.Format("2006-01-02 15:04:05"))
 	return provider.MoonsGeocentricCoords()
-}
-
-func SunLat(date time.Time) float64 { // TODO: fix.
-	equatorialCoord := solar.GetEquatorialCoordinate(date)
-	return equatorialCoord.Declination
-}
-
-func SunLon(date time.Time) float64 { // TODO: fix.
-	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81} // NOTE: just somewhere on this planet, to kick off a calculation with much overhead.
-	sunpos, _ := sampa.GetSunPosition(date, jakarta, nil)
-	sl := sunpos.GeocentricLongitude
-	return sl - 180.0
 }
 
 func MoonPhaseVerbose(date time.Time) string {

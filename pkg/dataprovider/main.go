@@ -144,3 +144,28 @@ type GlobeSunDataProvider struct {
 func (p GlobeSunDataProvider) SunsGeocentricCoords() (float64, float64) {
 	return astro.SunsGeocentricCoords(p.time)
 }
+
+// // MAKE THIS INTO ANOTHER PROVIDER. // TODO: implement.
+// // #######################
+// // No. 2 -- soniakeys/meeus, ie. v3/solar package.
+// // #######################
+
+// // MAKE THIS INTO ANOTHER PROVIDER. // TODO: implement.
+// // #######################
+// // No. 3 -- xxx
+// // #######################
+// func SunLat(date time.Time) float64 { // TODO: fix.
+// 	equatorialCoord := solar.GetEquatorialCoordinate(date)
+// 	return equatorialCoord.Declination
+// }
+
+// // MAKE THIS INTO ANOTHER PROVIDER. // TODO: implement.
+// // #######################
+// // No. 4 -- xxx
+// // #######################
+// func SunLon(date time.Time) float64 { // TODO: fix.
+// 	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81} // NOTE: just somewhere on this planet, to kick off a calculation with much overhead.
+// 	sunpos, _ := sampa.GetSunPosition(date, jakarta, nil)
+// 	sl := sunpos.GeocentricLongitude
+// 	return sl - 180.0
+// }
