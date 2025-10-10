@@ -15,6 +15,7 @@ const (
 	defaultSidebar   = " \n \n \n \n \n \n "      // 7 spaces.
 	defaultEmptySide = "   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   "
 	div              = "│"
+	divH             = "─"
 	top              = "┌────────────────────────┐"
 	num              = "│1-987654321 123456789+12│"
 	bot              = "└────────────────────────┘"
@@ -44,8 +45,10 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 	"     -                  "
 
 var (
-	ErrLonBoundsLeft  = errors.New("longitude value out of bounds (lon < -180)")
-	ErrLonBoundsRight = errors.New("longitude value out of bounds (lon > +180)")
+	ErrLonBoundsLeft   = errors.New("longitude value out of bounds (lon < -180)")
+	ErrLonBoundsRight  = errors.New("longitude value out of bounds (lon > +180)")
+	ErrLatBoundsTop    = errors.New("latitude value out of bounds (lat > +90)")
+	ErrLatBoundsBottom = errors.New("latitude value out of bounds (lat < -90)")
 )
 
 type World struct {
@@ -73,7 +76,9 @@ func (w *World) ShowAsMini() {
 }
 
 type Sidebar struct {
-	Bar string
+	Bar            string
+	OverflowTop    bool
+	OverflowBottom bool
 }
 
 type Subline struct {
@@ -89,7 +94,7 @@ func NewWorld() World {
 }
 
 func NewSidebar() Sidebar {
-	return Sidebar{defaultSidebar}
+	return Sidebar{Bar: defaultSidebar}
 }
 
 func NewSubLine() Subline {
@@ -114,7 +119,7 @@ func (s *Subline) AddSunLon(lon float64, skipMark bool) error {
 	return s.AddLon(lon, markerSun, skipMark)
 }
 
-// isMarked returns if a string has a mark at the specified column.
+// isSpaceAtCol returns if a string has a mark at the specified column.
 // If a string has a space it has not been marked.
 // If a string has something else but a space it has been marked.
 func isSpaceAtCol(n int, str string) bool {
@@ -122,6 +127,16 @@ func isSpaceAtCol(n int, str string) bool {
 		return false
 	}
 	return str[n] == ' '
+}
+
+// isSpaceAtRow returns a value like is isSpaceAtCol, just vertically.
+// NOTE: does not throw an error for malformed input, eg if there is a line which is longer than one chracter.
+func isSpaceAtRow(n int, str string) bool {
+	lines := strings.Split(str, "\n") // Split the string into lines.
+	if n <= 0 || n > len(lines) {
+		return false
+	}
+	return lines[n][0] == ' '
 }
 
 // AddLon adds a character into the marker line under the world map (which is of length 24).
@@ -145,8 +160,16 @@ func (s *Subline) AddLon(lon float64, marker rune, skipMark bool) error {
 
 func (s *Sidebar) AddLat(lat float64, marker rune, skipMark bool) error {
 	row, err0 := lat2row(lat)
-	if err0 != nil {
+	if err0 == ErrLatBoundsTop {
+		s.OverflowTop = true
 		return err0
+	}
+	if err0 == ErrLatBoundsBottom {
+		s.OverflowBottom = true
+		return err0
+	}
+	if !isSpaceAtRow(row, s.Bar) { // TODO: implement.
+		marker = doubledMark
 	}
 	markedBar, reserr := markMap(0, row, s.Bar, marker, skipMark)
 	s.Bar = markedBar
@@ -203,8 +226,11 @@ func lat2row(lat float64) (int, error) {
 	// "     ) )    ()'    ='   " // 4 for lat. -20 to -35. (= 15 degrees in total).
 	// "     |/            (_) =" // 5 for lat. -35 to -50. (= 15 degrees in total).
 	// "     -                  " // 6 for lat. -50 to -90. (= 40 degrees in total).  all lat. degrees add up to 180.
-	if lat < -90 || lat > +90 {
-		return 0, errors.New("latitude value out of bounds (lat < -90 or lat > +90)")
+	if lat > +90 { // allows +90 as a value.
+		return 0, ErrLatBoundsTop
+	}
+	if lat < -90 { // allows -90 as a value.
+		return 0, ErrLatBoundsBottom
 	}
 	row := 0
 	switch {
@@ -247,7 +273,7 @@ func markMap(x, y int, str string, marker rune, markerSkip bool) (string, error)
 }
 
 // makeBox creates a box around some string and adds markers around the box.
-func makeBox(lat, lon float64, str string, skipMark bool) (string, error) { // TODO: implement.
+func makeBox(lat, lon float64, str string, skipMark bool) (string, error) {
 	col, err0 := lon2col(lon)
 	row, err1 := lat2row(lat)
 	if err0 != nil {
@@ -296,7 +322,7 @@ func makeBox(lat, lon float64, str string, skipMark bool) (string, error) { // T
 
 // Print returns a string of the ASCII world data with its current state (defined in the struct variables).
 // TODO: do major refactor in this entire function.
-// TODO: implement errors.
+// TODO: implement error handling.
 func (w *World) Print() (string, error) {
 	// create the main box.
 	box, _ := w.PrintCoordBox()
@@ -356,6 +382,20 @@ func (w *World) Print() (string, error) {
 	res := ttt + box + NL + bbb             // add top and bot.
 	res = ConcatenateHorizontally(sss, res) // add sidebar.
 	return res, nil
+}
+
+func (w *World) PrintSidebar() string {
+	sidebar := w.newSidebarWithSunAndMoon()
+	line := sidebar.Bar
+	if !sidebar.OverflowTop && !sidebar.OverflowBottom { // no side has an overflow.
+		return divH + NL + line + NL + divH
+	} else if sidebar.OverflowTop && !sidebar.OverflowBottom { // top has overflow, bottom does not.
+		return botMark + NL + line + NL + divH
+	} else if !sidebar.OverflowTop && sidebar.OverflowBottom { // bottom has overflow, top does not.
+		return divH + NL + line + NL + topMark
+	} else { // both sides have overflows.
+		return botMark + NL + line + NL + topMark
+	}
 }
 
 func (w *World) PrintSubline() string {

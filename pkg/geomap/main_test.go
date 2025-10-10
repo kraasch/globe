@@ -46,8 +46,230 @@ func space2dot(in string) string {
 
 var suites = []TestSuite{ // All tests.
 
+	// TODO: test sidebar printing for outof-bounds longitude values (if longitude is out of bounds markers should still show up in the sidebar).
 	/*
-	 * Test for PrintSubline() doubled position.
+	 * Test for PrintSidebar() doubled position.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = 0.0
+			world.MoonLon = 0.0
+			world.SunLat = 0.0
+			world.SunLon = 0.0
+			world.ShowSun = true
+			world.ShowMoon = true
+			world.ShowSide = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowBot = false
+			world.ShowPos = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSidebar()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_print-part_print-sidebar_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // line-break here.
+				"─" + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					"𐽘" + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					"─",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for PrintSidebar() out of bounds north + south.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = +91.0
+			world.MoonLon = 0.0
+			world.SunLat = -999.0
+			world.SunLon = 0.0
+			world.ShowSun = true
+			world.ShowMoon = true
+			world.ShowSide = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowBot = false
+			world.ShowPos = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSidebar()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_print-part_print-sidebar_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // line-break here.
+				"▲" + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					"▼",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for PrintSidebar() out of bounds north.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = +91.0
+			world.MoonLon = 0.0
+			world.SunLat = 0.0
+			world.SunLon = 0.0
+			world.ShowSun = true
+			world.ShowMoon = true
+			world.ShowSide = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowBot = false
+			world.ShowPos = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSidebar()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_print-part_print-sidebar_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // line-break here.
+				"▲" + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					"☼" + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					"─",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for PrintSidebar() out of bounds south.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = -91.0
+			world.MoonLon = 0.0
+			world.SunLat = 0.0
+			world.SunLon = 0.0
+			world.ShowSun = true
+			world.ShowMoon = true
+			world.ShowSide = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowBot = false
+			world.ShowPos = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSidebar()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_print-part_print-sidebar_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // line-break here.
+				"─" + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					"☼" + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					"▼",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for PrintSidebar() no out of bounds.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = -89.0
+			world.MoonLon = 0.0
+			world.SunLat = 0.0
+			world.SunLon = 0.0
+			world.ShowSun = true
+			world.ShowMoon = true
+			world.ShowSide = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowBot = false
+			world.ShowPos = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSidebar()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_print-part_print-sidebar_00",
+				isMulti:  true,
+				inputArr: []string{},
+				expectedValue: // line-break here.
+				"─" + NL +
+					" " + NL +
+					" " + NL +
+					" " + NL +
+					"☼" + NL +
+					" " + NL +
+					" " + NL +
+					"●" + NL +
+					"─",
+			},
+		},
+	}, // End of this test.
+
+	// TODO: test subline printing for outof-bounds latitude values (if latitude is out of bounds markers should still show up in the subline).
+	/*
+	* Test for PrintSubline() doubled position.
 	 */
 	{
 		testingFunction: func(in TestList) string {
@@ -187,7 +409,7 @@ var suites = []TestSuite{ // All tests.
 	}, // End of this test.
 
 	/*
-	 * Test for PrintSubline()
+	 * Test for PrintSubline() no out of bounds.
 	 */
 	{
 		testingFunction: func(in TestList) string {
