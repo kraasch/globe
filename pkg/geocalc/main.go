@@ -177,6 +177,14 @@ func MoonPhaseVerbose(date time.Time) string {
 	)
 }
 
+func FormatSunPos(lat, lon float64) string {
+	return fmt.Sprintf(" ☼ lat+lon: %.2f, %.2f", lat, lon)
+}
+
+func FormatMoonPos(lat, lon float64) string {
+	return fmt.Sprintf(" ○ lat+lon: %.2f, %.2f", lat, lon)
+}
+
 func MoonPhase(date time.Time) string {
 	phase := mp.New(date)
 	nextNew := unixToDate(phase.NextNewMoon())   // in unix format (ms since 1970) -- i guess.

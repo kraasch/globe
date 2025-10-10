@@ -8,30 +8,31 @@ import (
 )
 
 const (
-	markerSpot       = '▣'
-	markerMoon       = '●'
-	markerSun        = '☼'
-	defaultSubLine   = "                        " // 24 spaces.
-	defaultSidebar   = " \n \n \n \n \n \n "      // 7 spaces.
-	defaultEmptySide = "   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   "
-	div              = "│"
-	divH             = "─"
-	top              = "┌────────────────────────┐"
-	num              = "│1-987654321 123456789+12│"
-	bot              = "└────────────────────────┘"
-	padding          = "  "
-	sidetop          = "┌──"           // without padding.
-	sidebot          = "└──"           // without padding.
-	sidetopPadded    = "   \n   \n┌──" // with padding.
-	sidebotPadded    = "└──\n   \n   " // with padding.
-	sideline         = "│\n│\n│\n│\n│\n│\n│"
-	cornerBL         = "└"
-	cornerBR         = "┘"
-	cornerTR         = "┐"
-	cornerTL         = "┌"
-	topMark          = "▼"
-	botMark          = "▲"
-	doubledMark      = '𐽘'
+	PaddingFullLength = "                             " // 29 spaces.
+	markerSpot        = '▣'
+	markerMoon        = '●'
+	markerSun         = '☼'
+	defaultSubLine    = "                        " // 24 spaces.
+	defaultSidebar    = " \n \n \n \n \n \n "      // 7 spaces.
+	defaultEmptySide  = "   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   \n   "
+	div               = "│"
+	divH              = "─"
+	top               = "┌────────────────────────┐"
+	num               = "│1-987654321 123456789+12│"
+	bot               = "└────────────────────────┘"
+	padding           = "  "
+	sidetop           = "┌──"           // without padding.
+	sidebot           = "└──"           // without padding.
+	sidetopPadded     = "   \n   \n┌──" // with padding.
+	sidebotPadded     = "└──\n   \n   " // with padding.
+	sideline          = "│\n│\n│\n│\n│\n│\n│"
+	cornerBL          = "└"
+	cornerBR          = "┘"
+	cornerTR          = "┐"
+	cornerTL          = "┌"
+	topMark           = "▼"
+	botMark           = "▲"
+	doubledMark       = '𐽘'
 )
 
 var NL = fmt.Sprintln()

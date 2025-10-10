@@ -118,13 +118,15 @@ func (gd *GeoData) PrintDataVertically() string {
 	NL := fmt.Sprintln()
 	gd.world.ShowAsMini()
 	data, err := gd.world.Print()
+	moonpos := geocalc.FormatMoonPos(80.0, 80.0)
 	moon := geocalc.MoonPhase(gd.time)
 	utc := geocalc.LocalAndUtcTime()
 	sun := geocalc.SunRiseAndSet(0.0, 0.0, gd.time) // TODO: insert lon and lat from gd.world.
+	sunpos := geocalc.FormatSunPos(80.0, 80.0)
 	if err != nil {
 		return err.Error()
 	}
-	return data + moon + NL + utc + NL + sun
+	return data + moonpos + NL + moon + NL + utc + NL + sunpos + NL + sun
 }
 
 func surround(str, find, prefix, suffix string) string {
@@ -148,15 +150,20 @@ func colorizeSymbols(in string) string {
 func (gd *GeoData) PrintInfo() string {
 	NL := fmt.Sprintln()
 	where := geocalc.LatAndLonAndTz()
+	moonpos := geocalc.FormatMoonPos(gd.world.MoonLat, gd.world.MoonLon)
 	moon := geocalc.MoonPhase(gd.time)
 	utc := geocalc.LocalAndUtcTime()
+	sunpos := geocalc.FormatSunPos(gd.world.SunLat, gd.world.SunLon)
 	sun := geocalc.SunRiseAndSet(0.0, 0.0, gd.time) // TODO: insert lon and lat from gd.world.
-	return where + utc + NL + sun + NL + moon
+	return where + utc + NL + sunpos + NL + sun + NL + moonpos + NL + moon
 }
 
 func (gd *GeoData) PrintDataHorizontally() string {
 	world, _ := gd.world.Print()
 	info := gd.PrintInfo()
+	NL := fmt.Sprintln()
+	world = world + NL + geomap.PaddingFullLength // TODO: fill this with more info.
+	world = world + NL + geomap.PaddingFullLength // TODO: fill this with more info.
 	str := geomap.ConcatenateHorizontally(world, info)
 	// TODO: implement color flag and check for it here.
 	str = colorizeSymbols(str)
