@@ -89,21 +89,6 @@ func cosDeg(deg float64) float64 {
 	return math.Cos(deg2rad * deg)
 }
 
-// Calculate Julian Day
-func julianDay(t time.Time) float64 { // TODO: remove this function.
-	y := float64(t.Year())
-	m := float64(t.Month())
-	d := float64(t.Day()) + (float64(t.Hour())+float64(t.Minute())/60+float64(t.Second())/3600)/24
-	if m <= 2 {
-		y -= 1
-		m += 12
-	}
-	A := math.Floor(y / 100)
-	B := 2 - A + math.Floor(A/4)
-	JD := math.Floor(365.25*(y+4716)) + math.Floor(30.6001*(m+1)) + d + B - 1524.5
-	return JD
-}
-
 // Calculate number of days since J2000.0
 func daysSinceJ2000(jd float64) float64 {
 	return jd - 2451545.0
@@ -163,7 +148,7 @@ func siderealTime(jd float64, longitude float64) float64 {
 }
 
 func SunsGeocentricCoords(t time.Time) (float64, float64) {
-	jd := julianDay(t)
+	jd := JulianDate(t)
 	days := daysSinceJ2000(jd)
 	// Compute Sun's position
 	L := meanLongitude(days)
