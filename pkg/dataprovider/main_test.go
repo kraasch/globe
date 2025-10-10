@@ -116,6 +116,13 @@ func TestTableDrivenOfSunDataProviders(t *testing.T) {
 			// lat: +22.533 (north).
 			// lon: -53.533 (east).
 		},
+		{
+			input: "2025-10-10 21:24:41",
+			exp:   "sun lat: -007.0" + NL + "sun lon: +144.5",
+			// data source: https://www.timeanddate.com/
+			// lat:   -7.000 degrees (south).
+			// lon: +144.466 degrees (west).
+		},
 	}
 	// Providers under test.
 	tests := []struct {
