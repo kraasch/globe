@@ -41,6 +41,10 @@ func JulianEphemerisDay(jd float64, t time.Time) float64 { // TODO: test.
 	return jd + dt/86400.0
 }
 
+// ###################################################################
+// ## MOON POSITION
+// ###################################################################
+
 /*
 // TODO: implement.
 func MoonPosition(t time.Time) (longitude, latitude float64) { // NOTE: this is garbage.
