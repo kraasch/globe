@@ -94,7 +94,7 @@ func (gd *GeoData) UpdateDataNoWebNoTime(lat, lon float64, timeStr string) {
 	moonLat, moonLon := geocalc.MoonLatAndLon(parsedTime)
 	gd.world.MoonLat = moonLat
 	gd.world.MoonLon = moonLon
-	sunLat, sunLon := geocalc.MoonLatAndLon(parsedTime)
+	sunLat, sunLon := geocalc.SunLatAndLon(parsedTime)
 	gd.world.SunLat = sunLat
 	gd.world.SunLon = sunLon
 }
@@ -109,7 +109,7 @@ func (gd *GeoData) UpdateData() {
 	moonLat, moonLon := geocalc.MoonLatAndLon(gd.time)
 	gd.world.MoonLat = moonLat
 	gd.world.MoonLon = moonLon
-	sunLat, sunLon := geocalc.MoonLatAndLon(gd.time)
+	sunLat, sunLon := geocalc.SunLatAndLon(gd.time)
 	gd.world.SunLat = sunLat
 	gd.world.SunLon = sunLon
 }
