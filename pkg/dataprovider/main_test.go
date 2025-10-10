@@ -59,6 +59,13 @@ func TestTableDrivenOfMoonDataProviders(t *testing.T) {
 			// lat:   -1.807 (south).
 			// lon: +147.767 (west).
 		},
+		{
+			input: "2025-10-10 21:33:42",
+			exp:   "moon lat: +005.1" + NL + "moon lon: +070.0",
+			// data source: https://doncarona.tamu.edu/cgi-bin/moon?current=0&jd=
+			// lat:  +5.111 (north).
+			// lon: +69.992 (west).
+		},
 	}
 	// Providers under test.
 	tests := []struct {
