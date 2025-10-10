@@ -30,6 +30,7 @@ const (
 	cornerTL         = "┌"
 	topMark          = "▼"
 	botMark          = "▲"
+	doubledMark      = '𐽘'
 )
 
 var NL = fmt.Sprintln()
@@ -41,6 +42,11 @@ var MAP = "    _,--._  _._.--.--.._" + NL +
 	"     ) )    ()'    ='   " + NL +
 	"     |/            (_) =" + NL +
 	"     -                  "
+
+var (
+	ErrLonBoundsLeft  = errors.New("longitude value out of bounds (lon < -180)")
+	ErrLonBoundsRight = errors.New("longitude value out of bounds (lon > +180)")
+)
 
 type World struct {
 	Padded   bool
@@ -71,7 +77,9 @@ type Sidebar struct {
 }
 
 type Subline struct {
-	Line string
+	Line          string
+	OverflowRight bool
+	OverflowLeft  bool
 }
 
 func NewWorld() World {
@@ -85,7 +93,7 @@ func NewSidebar() Sidebar {
 }
 
 func NewSubLine() Subline {
-	return Subline{defaultSubLine}
+	return Subline{Line: defaultSubLine}
 }
 
 func (s *Sidebar) AddMoonLat(lat float64, skipMark bool) error {
@@ -106,11 +114,29 @@ func (s *Subline) AddSunLon(lon float64, skipMark bool) error {
 	return s.AddLon(lon, markerSun, skipMark)
 }
 
+// isMarked returns if a string has a mark at the specified column.
+// If a string has a space it has not been marked.
+// If a string has something else but a space it has been marked.
+func isSpaceAtCol(n int, str string) bool {
+	if n < 0 || n >= len(str) {
+		return false
+	}
+	return str[n] == ' '
+}
+
 // AddLon adds a character into the marker line under the world map (which is of length 24).
 func (s *Subline) AddLon(lon float64, marker rune, skipMark bool) error {
 	col, err0 := lon2col(lon)
-	if err0 != nil {
+	if err0 == ErrLonBoundsLeft {
+		s.OverflowLeft = true
 		return err0
+	}
+	if err0 == ErrLonBoundsRight {
+		s.OverflowRight = true
+		return err0
+	}
+	if !isSpaceAtCol(col, s.Line) {
+		marker = doubledMark
 	}
 	markedLine, reserr := markMap(col, 0, s.Line, marker, skipMark)
 	s.Line = markedLine
@@ -144,8 +170,10 @@ func lon2col(lon float64) (int, error) {
 	//  |                      | func lon2col( lon ):   // write a function to translate latitude to columns.
 	//  .__ -180(E)  +180(W) __.   lon = lon+180        // start with 0 at the left.
 	//                             return int(lon / 15) // divide without rest.
-	if lon < -180 || lon > +180 { // this allows lon to be equal to +180.
-		return 0, errors.New("longitude value out of bounds (lon < -180 || lon > +180)")
+	if lon < -180 { // this allows lon to be equal to -180 (including the full number).
+		return 0, ErrLonBoundsLeft
+	} else if lon > +180 { // this allows lon to be equal to +180 (including the full number).
+		return 0, ErrLonBoundsRight
 	}
 	lon = lon + 180
 
@@ -286,8 +314,8 @@ func (w *World) Print() (string, error) {
 	// create a padded bot.
 	bbb := ""
 	if w.ShowBot {
-		sub := w.newSublineWithSunAndMoon().Line
-		bbb = div + sub + div + NL + bot
+		sub := w.PrintSubline()
+		bbb = sub + NL + bot
 	} else {
 		if w.Padded {
 			bbb = defaultSubLine + padding + NL + defaultSubLine + padding
@@ -328,6 +356,20 @@ func (w *World) Print() (string, error) {
 	res := ttt + box + NL + bbb             // add top and bot.
 	res = ConcatenateHorizontally(sss, res) // add sidebar.
 	return res, nil
+}
+
+func (w *World) PrintSubline() string {
+	subline := w.newSublineWithSunAndMoon()
+	line := subline.Line
+	if !subline.OverflowLeft && !subline.OverflowRight { // no side has an overflow.
+		return div + line + div
+	} else if subline.OverflowLeft && !subline.OverflowRight { // left has overflow, right does not.
+		return "◀" + line + div
+	} else if !subline.OverflowLeft && subline.OverflowRight { // right has overflow, left does not.
+		return div + line + "▶"
+	} else { // both sides have overflows.
+		return "◀" + line + "▶"
+	}
 }
 
 func (w *World) newSublineWithSunAndMoon() Subline {

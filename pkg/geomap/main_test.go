@@ -47,6 +47,236 @@ func space2dot(in string) string {
 var suites = []TestSuite{ // All tests.
 
 	/*
+	 * Test for PrintSubline() doubled position.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = 0.0
+			world.MoonLon = 0.0
+			world.SunLat = 0.0
+			world.SunLon = 0.0
+			world.ShowMoon = true
+			world.ShowSun = true
+			world.ShowBot = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowPos = false
+			world.ShowSide = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSubline()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName:      "map_print-part_print-subline_00",
+				isMulti:       true,
+				inputArr:      []string{},
+				expectedValue: "│            𐽘           │", // doubled position marker: 𐽘 (two circles)
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for PrintSubline() overflow.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = 0.0
+			world.MoonLon = 181.0
+			world.SunLat = 0.0
+			world.SunLon = -181.0
+			world.ShowMoon = true
+			world.ShowSun = true
+			world.ShowBot = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowPos = false
+			world.ShowSide = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSubline()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName:      "map_print-part_print-subline_00",
+				isMulti:       true,
+				inputArr:      []string{},
+				expectedValue: "◀                        ▶", // overflow markers: ▶◀
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for PrintSubline() overflow.
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = 0.0
+			world.MoonLon = 181.0
+			world.SunLat = 0.0
+			world.SunLon = -180.0
+			world.ShowMoon = true
+			world.ShowSun = true
+			world.ShowBot = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowPos = false
+			world.ShowSide = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSubline()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName:      "map_print-part_print-subline_00",
+				isMulti:       true,
+				inputArr:      []string{},
+				expectedValue: "│☼                       ▶", // overflow markers: ▶◀
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for PrintSubline()
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = 0.0
+			world.MoonLon = 180.0
+			world.SunLat = 0.0
+			world.SunLon = -180.0
+			world.ShowMoon = true
+			world.ShowSun = true
+			world.ShowBot = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowPos = false
+			world.ShowSide = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSubline()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName:      "map_print-part_print-subline_00",
+				isMulti:       true,
+				inputArr:      []string{},
+				expectedValue: "│☼                      ●│",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for PrintSubline()
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			world := NewWorld()
+			// important stuff for the subline.
+			world.MoonLat = 0.0
+			world.MoonLon = 180.0
+			world.SunLat = 0.0
+			world.SunLon = 0.0
+			world.ShowMoon = true
+			world.ShowSun = true
+			world.ShowBot = true
+			// stuff which does not show, but still exists. // NOTE: this could be removed and still work.
+			world.Lat = 0.0
+			world.Lon = 0.0
+			world.ShowPos = false
+			world.ShowSide = false
+			world.ShowTop = false
+			world.Inactive = false
+			// get result.
+			out := world.PrintSubline()
+			return out
+		},
+		tests: []TestList{
+			{
+				testName:      "map_print-part_print-subline_00",
+				isMulti:       true,
+				inputArr:      []string{},
+				expectedValue: "│            ☼          ●│",
+			},
+		},
+	}, // End of this test.
+
+	/*
+	 * Test for the function Print().
+	 */
+	{
+		testingFunction: func(in TestList) string {
+			lat, A := strconv.ParseFloat(in.inputArr[0], 64)
+			lon, B := strconv.ParseFloat(in.inputArr[1], 64)
+			moon, C := strconv.ParseFloat(in.inputArr[2], 64)
+			sun, D := strconv.ParseFloat(in.inputArr[3], 64)
+			if A != nil || B != nil || C != nil || D != nil {
+				return "error in test's type conversions"
+			}
+			world := NewWorld()
+			world.Lat = lat
+			world.Lon = lon
+			world.MoonLon = moon
+			world.SunLon = sun
+			world.Inactive = false
+			world.ShowTop = true
+			world.ShowBot = true
+			world.ShowMoon = true
+			world.ShowSun = true
+			out, err := world.Print()
+			if err != nil {
+				return err.Error()
+			}
+			return out
+		},
+		tests: []TestList{
+			{
+				testName: "map_full-print_basic_00",
+				isMulti:  true,
+				inputArr: []string{
+					"0.0",    // spot, latitude, ie (=).
+					"+179.0", // spot, longitude, ie (").
+					"+179.0", // moon, longitude, ie (").
+					"0.0",    // sun, longitude, ie (").
+				},
+				expectedValue: // NOTE: this comment breaks the line.
+				"┌────────────────────────┐" + NL +
+					"│1-987654321 123456789+12│" + NL +
+					"┌───────────────────────▼┐" + NL +
+					"│    _,--._  _._.--.--.._│" + NL +
+					"│=.--'=_',-,:`;_      .,'│" + NL +
+					"│,-.  _.)  (``-;_   .'   │" + NL +
+					"▶   '-:_    `) ) .''=.  ▣◀" + NL +
+					"│     ) )    ()'    ='   │" + NL +
+					"│     |/            (_) =│" + NL +
+					"│     -                  │" + NL +
+					"└───────────────────────▲┘" + NL +
+					"│            ☼          ●│" + NL +
+					"└────────────────────────┘",
+			},
+		},
+	}, // End of this test.
+	/*
 	 * Test for the function Print().
 	 */
 	{
@@ -109,6 +339,7 @@ var suites = []TestSuite{ // All tests.
 			},
 		},
 	}, // End of this test.
+
 	/*
 	 * Test for the function Print().
 	 */
