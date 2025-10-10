@@ -50,14 +50,14 @@ type GeneralDataProviderInterface interface {
 }
 
 // #######################
-// No. 1 -- geo/astro
+// No. 1 -- globe/astro
 // #######################
 
-type GeoGeneralDataProvider struct {
+type GlobeGeneralDataProvider struct {
 	DataProvider
 }
 
-func (p *GeoGeneralDataProvider) JulianDate() float64 {
+func (p *GlobeGeneralDataProvider) JulianDate() float64 {
 	return astro.JulianDate(p.time)
 }
 
@@ -91,11 +91,13 @@ type KeysMoonDataProvider struct {
 	DataProvider
 }
 
-func (p KeysMoonDataProvider) GeocentricCoords() (float64, float64) {
+func (p KeysMoonDataProvider) MoonsGeocentricCoords() (float64, float64) {
 	jd := julian.TimeToJD(p.time)
 	// NOTE: third return value of moonposition.Position() is the distance between earth and moon in km.
-	lon, lat, _ := moonposition.Position(jd)
-	return float64(lat.Deg()), float64(lon.Deg() - 180.0)
+	lonAngle, latAngle, _ := moonposition.Position(jd)
+	lat := float64(latAngle.Deg())
+	lon := float64(lonAngle.Deg() - 180.0)
+	return lat, lon
 }
 
 // #######################
@@ -106,7 +108,7 @@ type SampaMoonDataProvider struct {
 	DataProvider
 }
 
-func (p SampaMoonDataProvider) GeocentricCoords() (float64, float64) {
+func (p SampaMoonDataProvider) MoonsGeocentricCoords() (float64, float64) {
 	jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81}
 	moonpos, _ := sampa.GetMoonPosition(p.time, jakarta, nil)
 	return moonpos.GeocentricLatitude - 360.0, moonpos.GeocentricLongitude - 180.0
@@ -115,23 +117,6 @@ func (p SampaMoonDataProvider) GeocentricCoords() (float64, float64) {
 // // MAKE THIS INTO ANOTHER PROVIDER. // TODO: implement.
 // // #######################
 // // No. 3 -- xxx
-// // #######################
-//
-// type GeoMoonDataProvider struct { // TODO: impelemnt.
-// 	MoonDataProvider
-// }
-//
-// func NewGeoMoonDataProvider() GeoMoonDataProvider { // TODO: impelemnt.
-// 	return GeoMoonDataProvider{}
-// }
-//
-// func (p *GeoMoonDataProvider) GeocentricCoords() (float64, float64) { // TODO: impelemnt.
-// 	return 0.0, 0.0 // astro.MoonPosition(p.time)
-// }
-
-// // MAKE THIS INTO ANOTHER PROVIDER. // TODO: implement.
-// // #######################
-// // No. 4 -- xxx
 // // #######################
 // 	mp "github.com/janczer/goMoonPhase"
 // func MoonLon(date time.Time) float64 {
@@ -149,29 +134,13 @@ type SunDataProviderInterface interface {
 }
 
 // #######################
-// No. 1 -- soniakeys/meeus/v3
+// No. 1 -- globe/astro
 // #######################
 
-type KeysSunDataProvider struct {
+type GlobeSunDataProvider struct {
 	DataProvider
 }
 
-func (p KeysSunDataProvider) GeocentricCoords() (float64, float64) {
-	jd := julian.TimeToJD(p.time)
-	lon, lat, _ := sunposition.Position(jd)
-	return float64(lat.Deg()), float64(lon.Deg() - 180.0)
-}
-
-// #######################
-// No. 2 -- hablullah/go-sampa
-// #######################
-
-type SampaSunDataProvider struct {
-	DataProvider
-}
-
-func (p SampaSunDataProvider) GeocentricCoords() (float64, float64) { // TODO: implement.
-	// jakarta := sampa.Location{Latitude: -6.14, Longitude: 106.81}
-	// sunpos, _ := sampa.GetSunPosition(p.time, jakarta, nil)
-	return 0.0, 0.0 // sunpos.GeocentricLatitude - 360.0, sunpos.GeocentricLongitude - 180.0
+func (p GlobeSunDataProvider) SunsGeocentricCoords() (float64, float64) {
+	return astro.SunsGeocentricCoords(p.time)
 }

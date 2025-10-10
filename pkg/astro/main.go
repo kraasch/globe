@@ -2,8 +2,13 @@
 package astro
 
 import (
+	"math"
 	"time"
 )
+
+// ###################################################################
+// ## GENERAL DATA
+// ###################################################################
 
 func JulianDate(t time.Time) float64 {
 	// JulianDate should only take a UTC time. // TODO: check for all dates to be UTC.
@@ -64,3 +69,128 @@ func MoonPosition(t time.Time) (longitude, latitude float64) { // NOTE: this is 
 	return longitude, latitude
 }
 */
+
+// ###################################################################
+// ## SUN POSITION
+// ###################################################################
+
+// Constants
+const (
+	deg2rad = math.Pi / 180
+	rad2deg = 180 / math.Pi
+)
+
+// Helper functions
+func sinDeg(deg float64) float64 {
+	return math.Sin(deg2rad * deg)
+}
+
+func cosDeg(deg float64) float64 {
+	return math.Cos(deg2rad * deg)
+}
+
+// Calculate Julian Day
+func julianDay(t time.Time) float64 { // TODO: remove this function.
+	y := float64(t.Year())
+	m := float64(t.Month())
+	d := float64(t.Day()) + (float64(t.Hour())+float64(t.Minute())/60+float64(t.Second())/3600)/24
+	if m <= 2 {
+		y -= 1
+		m += 12
+	}
+	A := math.Floor(y / 100)
+	B := 2 - A + math.Floor(A/4)
+	JD := math.Floor(365.25*(y+4716)) + math.Floor(30.6001*(m+1)) + d + B - 1524.5
+	return JD
+}
+
+// Calculate number of days since J2000.0
+func daysSinceJ2000(jd float64) float64 {
+	return jd - 2451545.0
+}
+
+// Compute the Sun's mean longitude (degrees)
+func meanLongitude(days float64) float64 {
+	L0 := 280.46646 + 0.9856474*days
+	return math.Mod(L0, 360)
+}
+
+// Compute the Sun's mean anomaly
+func meanAnomaly(days float64) float64 {
+	M := 357.52911 + 0.98560028*days
+	return math.Mod(M, 360)
+}
+
+// Compute the Sun's ecliptic longitude (degrees)
+func eclipticLongitude(L, M float64) float64 {
+	C := (1.9148 * sinDeg(M)) + (0.0200 * sinDeg(2*M)) + (0.0003 * sinDeg(3*M))
+	λ := L + C
+	return math.Mod(λ, 360)
+}
+
+// Compute the Sun's declination (δ)
+func sunDeclination(λ float64) float64 {
+	ε := 23.4397 // obliquity of the ecliptic
+	sinδ := sinDeg(ε) * sinDeg(λ)
+	δ := math.Asin(sinδ)
+	return δ * rad2deg
+}
+
+// Compute the right ascension (α) (degrees)
+func rightAscension(λ float64) float64 {
+	ε := 23.4397
+	sinλ := sinDeg(λ)
+	cosλ := cosDeg(λ)
+	tanα := cosDeg(ε) * sinλ / cosλ
+	α := math.Atan(tanα) * rad2deg
+	if cosλ < 0 {
+		α += 180
+	}
+	return math.Mod(α+360, 360)
+}
+
+// Calculate sidereal time at Greenwich (degrees)
+func siderealTime(jd float64, longitude float64) float64 {
+	T := (jd - 2451545.0) / 36525
+	S := 280.46061837 + 360.98564736629*(jd-2451545) + 0.000387933*T*T - T*T*T/38710000
+	S = math.Mod(S, 360)
+	if S < 0 {
+		S += 360
+	}
+	// Local sidereal time
+	lst := S + longitude
+	return math.Mod(lst, 360)
+}
+
+func SunsGeocentricCoords(t time.Time) (float64, float64) {
+	jd := julianDay(t)
+	days := daysSinceJ2000(jd)
+	// Compute Sun's position
+	L := meanLongitude(days)
+	M := meanAnomaly(days)
+	λ := eclipticLongitude(L, M)
+	// Sun's declination (subsolar latitude)
+	δ := sunDeclination(λ)
+	// Compute the Sun's right ascension
+	α := rightAscension(λ)
+	// Compute sidereal time at Greenwich
+	θ := siderealTime(jd, 0)
+	// Calculate hour angle (degrees)
+	H := θ - α
+	H = math.Mod(H+360, 360)
+	if H > 180 {
+		H -= 360
+	}
+	// Subsolar latitude is declination
+	subsolarLat := δ
+	// Subsolar longitude (degrees)
+	// Local solar time (hours)
+	lstHours := H / 15.0
+	subsolarLon := lstHours * 15.0
+	// Adjust to [-180, 180]
+	if subsolarLon > 180 {
+		subsolarLon -= 360
+	}
+	// fmt.Printf("Sun's Apparent Longitude: %.2f°\n", λ)
+	return subsolarLat, subsolarLon
+}

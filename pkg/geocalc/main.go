@@ -152,7 +152,7 @@ func diffInDays(date1, date2 time.Time) float64 {
 func MoonLatAndLon(t time.Time) (float64, float64) {
 	provider := dataprov.KeysMoonDataProvider{}
 	_ = provider.SetTime(t.Format("2006-01-02 15:04:05"))
-	return provider.GeocentricCoords()
+	return provider.MoonsGeocentricCoords()
 }
 
 func SunLat(date time.Time) float64 { // TODO: fix.
