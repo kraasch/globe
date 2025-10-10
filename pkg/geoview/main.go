@@ -159,11 +159,11 @@ func (gd *GeoData) PrintInfo() string {
 }
 
 func (gd *GeoData) PrintDataHorizontally() string {
-	world, _ := gd.world.Print()
-	info := gd.PrintInfo()
 	NL := fmt.Sprintln()
-	world = world + NL + geomap.PaddingFullLength // TODO: fill this with more info.
-	world = world + NL + geomap.PaddingFullLength // TODO: fill this with more info.
+	globe, _ := gd.world.Print()
+	padding := geomap.PaddingFullLength // TODO: fill this with more info.
+	world := padding + NL + globe + NL + padding
+	info := gd.PrintInfo()
 	str := geomap.ConcatenateHorizontally(world, info)
 	// TODO: implement color flag and check for it here.
 	str = colorizeSymbols(str)
