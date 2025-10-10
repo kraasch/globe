@@ -41,15 +41,12 @@ List of things to do
     - [ ] sun and moon location (lat+lon) seem delayed. Either visual bug or wrong calculation. Create some tests.
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
-  - [ ] refine tests and explicitly test data of
-    - [ ] `▣ lat+lon: 53.48, 10.22`
+  - [ ] refine tests and explicitly test data of:
+    - [ ] `🜃 utc:     10:52 h`
     - [ ] `▣ zone:    Europe/Berlin`
     - [ ] `▣ offset:  UTC+2 (CEST)`
-    - [ ] `▣ time:    12:52 h`
-    - [ ] `🜃 utc:     10:52 h`
     - [ ] `☼ rise:    01:10 h`
     - [ ] `☼ set:     13:17 h`
-    - [ ] `☼ lat+lon.`
     - [ ] `● phase:   Waning Gibbous (◐)`
     - [ ] `● age:     19.76 days`
     - [ ] `● dist.:   371578 km`
@@ -58,11 +55,13 @@ List of things to do
     - [ ] `● full in: 25.2 days`
     - [ ] `● new on:  2001-01-11, Thu`
     - [ ] `● full on: 2001-01-26, Fri`
-    - [ ] `● lat+lon.`
   - [ ] reduce dependencies.
 
 List of things done
 
+  - [X] refine tests and explicitly test data of:
+    - [X] `☼ lat+lon.`
+    - [X] `● lat+lon.`
   - [X] rename project to globe, not geo (bc of https://pkg.go.dev/github.com/golang/geo)
   - [X] make sure every data in the display is read in automatically.
   - [X] add time zone detection.
@@ -158,6 +157,14 @@ Use: References observed objects in the night sky, local to observer, changes du
 **Equatorial Coordinate System**
 Data: Declination (how far north or south a celestial object is from the celestial equator), Right Ascension (hours, minutes and seconds along the celestial equator from a reference point called vernal equinox).
 Use: Reference system fixed with respect to distant stars, slowly changing over long periods of time.
+
+## Note on Tests
+
+For certain data there cannot be any meaningful tests, for example:
+
+  - [ ] tests not possible.
+    - [ ] `▣ lat+lon: 53.48, 10.22`
+    - [ ] `▣ time:    12:52 h`
 
 ## Misc Info
 
