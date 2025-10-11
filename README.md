@@ -42,11 +42,7 @@ List of things to do
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
   - [ ] refine tests and explicitly test data of:
-    - [ ] `🜃 utc:     10:52 h`
-    - [ ] `▣ zone:    Europe/Berlin`
-    - [ ] `▣ offset:  UTC+2 (CEST)`
-    - [ ] `☼ rise:    01:10 h`
-    - [ ] `☼ set:     13:17 h`
+    - [ ] `● lat+lon.`
     - [ ] `● phase:   Waning Gibbous (◐)`
     - [ ] `● age:     19.76 days`
     - [ ] `● dist.:   371578 km`
@@ -55,13 +51,16 @@ List of things to do
     - [ ] `● full in: 25.2 days`
     - [ ] `● new on:  2001-01-11, Thu`
     - [ ] `● full on: 2001-01-26, Fri`
+    - [ ] `▣ zone:    Europe/Berlin`
+    - [ ] `▣ offset:  UTC+2 (CEST)`
   - [ ] reduce dependencies.
 
 List of things done
 
   - [X] refine tests and explicitly test data of:
     - [X] `☼ lat+lon.`
-    - [X] `● lat+lon.`
+    - [X] `☼ rise:    01:10 h`
+    - [X] `☼ set:     13:17 h`
   - [X] rename project to globe, not geo (bc of https://pkg.go.dev/github.com/golang/geo)
   - [X] make sure every data in the display is read in automatically.
   - [X] add time zone detection.
@@ -164,6 +163,7 @@ For certain data there cannot be any meaningful tests, for example:
 
   - [ ] tests not possible.
     - [ ] `▣ lat+lon: 53.48, 10.22`
+    - [ ] `🜃 utc:     10:52 h`
     - [ ] `▣ time:    12:52 h`
 
 ## Misc Info
