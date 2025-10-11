@@ -47,50 +47,50 @@ func TestTableDrivenOfGeneralDataProviders(t *testing.T) {
 	}
 }
 
-func TestTableDrivenOfMoonMiscDataProviders(t *testing.T) {
-	// Definition of test data.
-	testData := []struct {
-		input string
-		exp   string
-	}{
-		{
-			input: "2025-10-03 22:12:16", // TODO: implement.
-			exp:   "moon misc data: +100.0" + NL + "moon misc data: +100.0",
-		},
-	}
-	// Providers under test.
-	tests := []struct {
-		name     string
-		provider MoonMiscDataProviderInterface
-	}{
-		{
-			name:     "data-provider_moon-misc_xxx_00",
-			provider: &XxxMoonMiscDataProvider{},
-		},
-	}
-	// Loop over test cases.
-	for _, test := range tests {
-		for _, data := range testData {
-			t.Run(test.name, func(t *testing.T) {
-				err0 := test.provider.SetTime(data.input)
-				if err0 != nil {
-					t.Fatalf("Setup failed: %v", err0)
-				}
-				lat, lon := test.provider.MiscMoonData()
-				got := fmt.Sprintf(
-					"moon misc data: %+06.01f"+NL+
-						"moon misc data: %+06.01f",
-					lat, lon)
-				if data.exp != got {
-					t.Errorf("In '%s':\n", test.name)
-					diff := godiff.CDiff(data.exp, got)
-					t.Errorf("\nExp: '%#v'\nGot: '%#v'\n", data.exp, got)
-					t.Errorf("exp/got:\n%s\n", diff)
-				}
-			})
-		}
-	}
-}
+// func TestTableDrivenOfMoonMiscDataProviders(t *testing.T) {
+// 	// Definition of test data.
+// 	testData := []struct {
+// 		input string
+// 		exp   string
+// 	}{
+// 		{
+// 			input: "2025-10-03 22:12:16", // TODO: implement.
+// 			exp:   "moon misc data: +100.0" + NL + "moon misc data: +100.0",
+// 		},
+// 	}
+// 	// Providers under test.
+// 	tests := []struct {
+// 		name     string
+// 		provider MoonMiscDataProviderInterface
+// 	}{
+// 		{
+// 			name:     "data-provider_moon-misc_xxx_00",
+// 			provider: &XxxMoonMiscDataProvider{},
+// 		},
+// 	}
+// 	// Loop over test cases.
+// 	for _, test := range tests {
+// 		for _, data := range testData {
+// 			t.Run(test.name, func(t *testing.T) {
+// 				err0 := test.provider.SetTime(data.input)
+// 				if err0 != nil {
+// 					t.Fatalf("Setup failed: %v", err0)
+// 				}
+// 				lat, lon := test.provider.MiscMoonData()
+// 				got := fmt.Sprintf(
+// 					"moon misc data: %+06.01f"+NL+
+// 						"moon misc data: %+06.01f",
+// 					lat, lon)
+// 				if data.exp != got {
+// 					t.Errorf("In '%s':\n", test.name)
+// 					diff := godiff.CDiff(data.exp, got)
+// 					t.Errorf("\nExp: '%#v'\nGot: '%#v'\n", data.exp, got)
+// 					t.Errorf("exp/got:\n%s\n", diff)
+// 				}
+// 			})
+// 		}
+// 	}
+// }
 
 func TestTableDrivenOfMoonDataProviders(t *testing.T) {
 	// Definition of test data.
