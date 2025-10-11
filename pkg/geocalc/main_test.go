@@ -51,10 +51,8 @@ var suites = []TestSuite{ // All tests.
 					"2000-01-01", // Some date.
 				},
 				expectedValue: //
-				" ○ phase:   Last Quarter" + NL +
-					util.Anonymize(" ○ age:     24.38 days (◖)") + NL +
-					util.AnonymizeNumberStrings(" ○ dist.:   398596 km") + NL +
-					util.AnonymizeNumberStrings(" ○ illum.:  27%") + NL +
+				util.Anonymize(" ○ phase:   Last Quarter (◖)") + NL +
+					util.Anonymize(" ○ age:     24.38 days (27%)") + NL +
 					util.Anonymize(" ○ new in:  05.8d 2000-01-06") + NL +
 					util.Anonymize(" ○ full in: 20.2d 1999-01-21"),
 			},
