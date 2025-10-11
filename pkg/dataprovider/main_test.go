@@ -3,6 +3,7 @@ package dataprov
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	// other imports.
 	godiff "github.com/kraasch/godiff/godiff"
@@ -105,6 +106,101 @@ func TestTableDrivenOfMoonDataProviders(t *testing.T) {
 			})
 		}
 	}
+}
+
+func TestTableDrivenOfSunsetDataProviders(t *testing.T) {
+	// Definition of test data.
+	testTolerance := 6 * time.Minute // TODO: decrease tolerance to 1 minute.
+	testData := []struct {
+		inputTime string
+		// NOTE: maybe use unit.Angle for lat and lon instead of long64's.
+		inputLat   float64
+		inputLon   float64
+		expSunrise string
+		expSunset  string
+		expPrint   string
+	}{
+		// TODO: make sure not to use elevation of observation for sunrise/sunset in data source, but calculate for some sort of zero-level (eg MSL, mean sea level).
+		// TODO: make sure to also show the year-month-day for each time (to not confuse it with a time of the next or previous day).
+		{
+			inputTime: "2025-10-14 20:40:50",
+			// somewhere close to or in texas.
+			inputLat:   +32.66578, // lat: N 32°39'56.8'' or +32.66578°.
+			inputLon:   -96.28518, // lon: W 96°17'6.65'' or -96.28518°.
+			expSunrise: "2025-10-14 12:26:11",
+			expSunset:  "2025-10-14 23:56:50",
+			expPrint:   "sunrise: 12:26:11" + NL + "sunset:  23:56:50", // UTC.
+			// exp:   "sunrise: 07:26:11" + NL + "sunset:  18:56:50", // local time.
+			// data source: https://www.suncalc.org/#/32.6658,-96.2852,3/2025.10.11/00:41/1/3
+		},
+		{
+			inputTime: "2025-10-14 20:40:50",
+			// houston, texas.
+			inputLat:   +29.75000, // lat: N 29°45'00.0'' or +29.75000°.
+			inputLon:   -95.35000, // lon: W 95°21'0.00'' or -95.35000°.
+			expSunrise: "2025-10-14 12:21:00",
+			expSunset:  "2025-10-14 23:55:00",
+			expPrint:   "sunrise: 12:21:00" + NL + "sunset:  23:55:00", // UTC.
+			// exp:   "sunrise: 06:21:11" + NL + "sunset:  17:55:00", // local in houston, tx.
+			// data source: https://gml.noaa.gov/grad/solcalc/sunrise.html
+		},
+	}
+	// Providers under test.
+	tests := []struct {
+		name     string
+		provider SunsetSunriseDataProviderInterface
+	}{
+		{
+			name:     "data-provider_sunset_globe_00",
+			provider: &OsmanSunsetSunriseDataProvider{},
+		},
+	}
+	// Other stuff.
+	simpleTimeLayout := "2006-01-02 15:04:05"
+	timeFormat := "15:04:05"
+	// Loop over test cases.
+	for _, test := range tests {
+		for _, data := range testData {
+			t.Run(test.name, func(t *testing.T) {
+				err0 := test.provider.SetTime(data.inputTime)
+				if err0 != nil {
+					t.Fatalf("Setup failed: %v", err0)
+				}
+				sunrise := test.provider.Sunrise(data.inputLat, data.inputLon)
+				sunset := test.provider.Sunset(data.inputLat, data.inputLon)
+				expSr, _ := time.ParseInLocation(simpleTimeLayout, data.expSunrise, time.UTC)
+				expSs, _ := time.ParseInLocation(simpleTimeLayout, data.expSunset, time.UTC)
+				failSr := !isWithinInterval(testTolerance, sunrise, expSr)
+				failSs := !isWithinInterval(testTolerance, sunset, expSs)
+				if failSr || failSs {
+					got := fmt.Sprintf("sunrise: %s"+NL+"sunset:  %s", sunrise.Format(timeFormat), sunset.Format(timeFormat))
+					t.Errorf("In '%s':\n", test.name)
+					diff := godiff.CDiff(data.expPrint, got)
+					t.Errorf("\nExp: '%#v'\nGot: '%#v'\n", data.expPrint, got)
+					t.Errorf("exp/got:\n%s\n", diff)
+					t.Errorf("diff sunrise: %s (HH:MM:SS)", prettyPrintTimeDiff(sunrise, expSr))
+					t.Errorf("diff sunset:  %s (HH:MM:SS)", prettyPrintTimeDiff(sunset, expSs))
+				}
+			})
+		}
+	}
+}
+
+func isWithinInterval(interval time.Duration, t1, t2 time.Time) bool {
+	diff := t1.Sub(t2)
+	if diff < 0 {
+		diff = -diff
+	}
+	return diff <= interval
+}
+
+func prettyPrintTimeDiff(t1 time.Time, t2 time.Time) string {
+	timeDiff := t1.Sub(t2)
+	totalSeconds := int(timeDiff.Seconds())
+	h := totalSeconds / 3600
+	m := (totalSeconds % 3600) / 60
+	s := totalSeconds % 60
+	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
 }
 
 func TestTableDrivenOfSunDataProviders(t *testing.T) {

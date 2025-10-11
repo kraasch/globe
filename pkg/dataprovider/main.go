@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/hablullah/go-sampa"
+	osman "github.com/nathan-osman/go-sunrise"
 	"github.com/soniakeys/meeus/v3/julian"
 	"github.com/soniakeys/meeus/v3/moonposition"
 
@@ -123,6 +124,36 @@ func (p SampaMoonDataProvider) MoonsGeocentricCoords() (float64, float64) {
 // 	phase := mp.New(date)
 // 	return phase.Longitude() - 180.0
 // }
+
+/////////////////////////////////////////////////////////////
+//////////////////////////////// SUNSET + SUNRISE PROVIDER //
+/////////////////////////////////////////////////////////////
+
+type SunsetSunriseDataProviderInterface interface {
+	DataProviderInterface
+	Sunset(float64, float64) time.Time
+	Sunrise(float64, float64) time.Time
+}
+
+// #######################
+// No. 1 -- globe/astro
+// #######################
+
+type OsmanSunsetSunriseDataProvider struct {
+	DataProvider
+}
+
+func (p OsmanSunsetSunriseDataProvider) Sunrise(lat, lon float64) time.Time {
+	date := p.time
+	sr, _ := osman.SunriseSunset(lat, lon, date.Year(), date.Month(), date.Day())
+	return sr
+}
+
+func (p OsmanSunsetSunriseDataProvider) Sunset(lat, lon float64) time.Time {
+	date := p.time
+	_, ss := osman.SunriseSunset(lat, lon, date.Year(), date.Month(), date.Day())
+	return ss
+}
 
 /////////////////////////////////////////////////////////////
 //////////////////////////////////////// SUN DATA PROVIDER //

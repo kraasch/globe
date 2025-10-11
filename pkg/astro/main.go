@@ -75,6 +75,105 @@ func MoonPosition(t time.Time) (longitude, latitude float64) { // NOTE: this is 
 */
 
 // ###################################################################
+// ## SUNSET AND SUNRISE
+// ###################################################################
+
+// func Sunset(t time.Time, lat float64, lon float64) time.Time {
+// 	// Convert the date to Julian Day
+// 	year, month, day := t.Date()
+// 	// Calculate the approximate Julian Day
+// 	JD := julianDay(year, int(month), day) // TODO: remove this function
+// 	// Calculate days since J2000.0
+// 	n := JD - 2451545.0 + 0.0008
+// 	// Mean solar noon
+// 	Jstar := n - lon/360.0
+// 	// Solar mean anomaly
+// 	tempM := 357.5291 + 0.98560028*Jstar
+// 	M := math.Mod(tempM, 360)
+// 	// Convert to radians
+// 	M_rad := M * math.Pi / 180
+// 	// Equation of center
+// 	C := (1.9148*math.Sin(M_rad) + 0.0200*math.Sin(2*M_rad) + 0.0003*math.Sin(3*M_rad))
+// 	// Ecliptic longitude
+// 	tempLambda := M + C + 180 + 102.9372
+// 	λ := math.Mod(tempLambda, 360)
+// 	// Convert to radians
+// 	λ_rad := λ * math.Pi / 180
+// 	// Sun declination
+// 	sinδ := math.Sin(λ_rad) * math.Sin(23.45*math.Pi/180)
+// 	// Calculate the hour angle
+// 	lat_rad := lat * math.Pi / 180
+// 	cosH := (math.Cos(math.Pi/180*90.833) - math.Sin(lat_rad)*sinδ) / (math.Cos(lat_rad) * math.Cos(asin(sinδ)))
+// 	if cosH > 1 {
+// 		// Sun always below horizon
+// 		return time.Time{} // no sunset
+// 	}
+// 	if cosH < -1 {
+// 		// Sun always above horizon
+// 		return time.Time{} // no sunset
+// 	}
+// 	H := math.Acos(cosH) // in radians
+// 	// Convert hour angle to hours
+// 	H_deg := H * 180 / math.Pi
+// 	// Calculate sunset time in UTC
+// 	// Solar noon in UTC
+// 	Jt := Jstar + H_deg/360
+// 	// Convert Julian day back to time
+// 	sunsetUTC := julianToTime(Jt)
+// 	return sunsetUTC
+// }
+//
+// func julianDay(year, month, day int) float64 { // TODO: remove.
+// 	if month <= 2 {
+// 		year -= 1
+// 		month += 12
+// 	}
+// 	A := math.Floor(float64(year) / 100)
+// 	B := 2 - A + math.Floor(A/4)
+// 	JD := math.Floor(365.25*float64(year+4716)) + math.Floor(30.6001*float64(month+1)) + float64(day) + B - 1524.5
+// 	return JD
+// }
+//
+// func julianToTime(J float64) time.Time {
+// 	// Convert Julian Day to date
+// 	J += 0.5
+// 	Z := math.Floor(J)
+// 	F := J - Z
+// 	var A float64
+// 	if Z >= 2299161 {
+// 		alpha := math.Floor((Z - 1867216.25) / 36524.25)
+// 		A = Z + 1 + alpha - math.Floor(alpha/4)
+// 	} else {
+// 		A = Z
+// 	}
+// 	B := A + 1524
+// 	C := math.Floor((B - 122.1) / 365.25)
+// 	D := math.Floor(365.25 * C)
+// 	E := math.Floor((B - D) / 30.6001)
+//
+// 	day := B - D - math.Floor(30.6001*E) + F
+// 	month := E - 1
+// 	if month > 12 {
+// 		month -= 12
+// 	}
+// 	year := C - 4716
+// 	hourFraction := day - math.Floor(day)
+// 	hour := int(hourFraction * 24)
+// 	minute := int((hourFraction*24 - float64(hour)) * 60)
+// 	second := int((((hourFraction*24 - float64(hour)) * 60) - float64(minute)) * 60)
+//
+// 	return time.Date(int(year), time.Month(int(month)), int(math.Floor(day)), hour, minute, second, 0, time.UTC)
+// }
+//
+// func asin(x float64) float64 {
+// 	return math.Asin(x)
+// }
+//
+// func Sunrise(t time.Time, lat float64, lon float64) time.Time {
+//   return t // TODO: implement.
+// }
+
+// ###################################################################
 // ## SUN POSITION
 // ###################################################################
 
