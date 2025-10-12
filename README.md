@@ -34,11 +34,10 @@ See the section on usage limits on [ip-api.com/legal](https://ip-api.com/docs/le
 List of things to do
 
   - [ ] fixes.
-    - [ ] buffer calculation of astronomical data (eg. lat+lon of moon+sun).
     - [ ] buffer TUI key presses (for the toggle keys).
     - [ ] buffer web retrieved lat+lon data as a text file somewhere.
-    - [ ] sunrise and sunset time is not accurate (1 or 2 hours off), match the local time in the timezone.
-    - [ ] sun and moon location (lat+lon) seem delayed. Either visual bug or wrong calculation. Create some tests.
+    - [ ] buffer calculation of astronomical data (eg. lat+lon of moon+sun).
+    - [ ] display sunrise and sunset time in the local timezone (not UTC).
   - [ ] data in display updates on interval.
   - [ ] provide an option for an update interval of all displayed data.
   - [ ] refine tests and explicitly test data of:
@@ -57,6 +56,8 @@ List of things to do
 
 List of things done
 
+  - [X] sun and moon location (lat+lon) seem delayed. Either visual bug or wrong calculation. Create some tests.
+  - [X] sunrise and sunset time is not accurate (1 or 2 hours off), match the local time in the timezone.
   - [X] refine tests and explicitly test data of:
     - [X] `☼ lat+lon.`
     - [X] `☼ rise:    01:10 h`
