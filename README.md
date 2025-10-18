@@ -34,6 +34,9 @@ See the section on usage limits on [ip-api.com/legal](https://ip-api.com/docs/le
 List of things to do
 
   - [ ] fixes.
+    - [ ] the sunrise time seems to be 2h too early (is it UTC?).
+      - NOTE: whereas the sunset time seems to be the correct local time.
+      - TODO: create some test cases.
     - [ ] buffer TUI key presses (for the toggle keys).
     - [ ] buffer web retrieved lat+lon data as a text file somewhere.
     - [ ] buffer calculation of astronomical data (eg. lat+lon of moon+sun).
